@@ -3,7 +3,6 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Star, Apple, Smartphone } from 'lucide-react'
 import PageTransition from '../components/PageTransition'
 import ScrollReveal from '../components/ScrollReveal'
-
 import { appInfo, appFeatures, screenshots, userStats, testimonials } from '../data/mobileApp'
 
 export default function MobileApp() {
@@ -13,93 +12,72 @@ export default function MobileApp() {
   return (
     <PageTransition>
       {/* Hero */}
-      <section className="relative pt-32 pb-20 bg-gradient-to-br from-emerald-50 via-teal-50 to-cyan-50 overflow-hidden">
-        <div className="absolute top-10 right-10 w-[300px] h-[300px] bg-emerald-200/30 rounded-full blur-[100px]" />
-        <div className="absolute bottom-10 left-10 w-[250px] h-[250px] bg-teal-200/30 rounded-full blur-[80px]" />
+      <section className="relative pt-32 pb-24 overflow-hidden">
+        <div className="absolute top-10 right-0 w-[400px] h-[400px] bg-emerald-500/5 rounded-full blur-[150px]" />
+        <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-teal-500/5 rounded-full blur-[120px]" />
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
+        <div className="max-w-[1400px] mx-auto px-6 lg:px-10">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div>
               <motion.div
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8 }}
+                transition={{ duration: 0.7 }}
               >
-                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-100 text-emerald-700 text-xs font-semibold mb-6">
-                  🏆 {appInfo.awards[0]}
-                </div>
-                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 tracking-tight mb-4">
+                <span className="text-[11px] font-medium text-emerald-400 uppercase tracking-widest mb-6 block">
+                  {appInfo.awards[0]}
+                </span>
+                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-[0.95] mb-4">
                   {appInfo.name}
                 </h1>
-                <p className="text-xl text-slate-500 font-light mb-3">{appInfo.tagline}</p>
-                <p className="text-sm text-slate-400 leading-relaxed mb-8 max-w-md">
+                <p className="text-xl text-[#a1a1a1] mb-3">{appInfo.tagline}</p>
+                <p className="text-sm text-[#6b6b6b] leading-relaxed max-w-md mb-8">
                   {appInfo.description}
                 </p>
 
-                {/* Rating & downloads */}
-                <div className="flex flex-wrap items-center gap-6 mb-8">
-                  <div className="flex items-center gap-2">
+                <div className="flex items-center gap-4 mb-8">
+                  <div className="flex items-center gap-1.5">
                     <div className="flex">
                       {Array.from({ length: 5 }).map((_, i) => (
-                        <Star key={i} size={16} className="text-amber-400 fill-amber-400" />
+                        <Star key={i} size={14} className="text-amber-400 fill-amber-400" />
                       ))}
                     </div>
-                    <div>
-                      <div className="text-sm font-bold text-slate-800">{appInfo.rating}</div>
-                      <div className="text-xs text-slate-400">{appInfo.ratingCount} 评价</div>
-                    </div>
+                    <span className="text-sm font-bold text-white">{appInfo.rating}</span>
+                    <span className="text-xs text-[#525252]">({appInfo.ratingCount} 评价)</span>
                   </div>
-                  <div className="w-px h-8 bg-slate-200" />
-                  <div>
-                    <div className="text-sm font-bold text-slate-800">{appInfo.downloads}</div>
-                    <div className="text-xs text-slate-400">下载量</div>
-                  </div>
+                  <div className="w-px h-5 bg-white/[0.06]" />
+                  <span className="text-sm text-[#a1a1a1]">{appInfo.downloads} 下载</span>
                 </div>
 
-                {/* Download buttons */}
                 <div className="flex flex-wrap gap-3">
-                  <button className="px-5 py-3 bg-slate-900 text-white rounded-xl font-medium hover:bg-slate-800 hover:-translate-y-0.5 transition-all flex items-center gap-2 shadow-lg shadow-slate-900/20">
-                    <Apple size={20} />
+                  <button className="px-5 py-3 bg-white text-black rounded-xl text-sm font-semibold hover:bg-[#e5e5e5] transition-all inline-flex items-center gap-2.5">
+                    <Apple size={18} />
                     <div className="text-left">
-                      <div className="text-[10px] leading-tight opacity-70">Download on the</div>
-                      <div className="text-sm font-semibold leading-tight">App Store</div>
+                      <p className="text-[9px] leading-tight opacity-60">Download on the</p>
+                      <p className="text-xs font-bold leading-tight">App Store</p>
                     </div>
                   </button>
-                  <button className="px-5 py-3 bg-slate-900 text-white rounded-xl font-medium hover:bg-slate-800 hover:-translate-y-0.5 transition-all flex items-center gap-2 shadow-lg shadow-slate-900/20">
-                    <Smartphone size={20} />
+                  <button className="px-5 py-3 bg-white/[0.04] text-white rounded-xl text-sm font-medium border border-white/[0.08] hover:bg-white/[0.08] transition-all inline-flex items-center gap-2.5">
+                    <Smartphone size={18} />
                     <div className="text-left">
-                      <div className="text-[10px] leading-tight opacity-70">Get it on</div>
-                      <div className="text-sm font-semibold leading-tight">Google Play</div>
+                      <p className="text-[9px] leading-tight opacity-60">Get it on</p>
+                      <p className="text-xs font-bold leading-tight">Google Play</p>
                     </div>
                   </button>
-                </div>
-
-                {/* Awards */}
-                <div className="flex flex-wrap gap-2 mt-6">
-                  {appInfo.awards.map((award) => (
-                    <span
-                      key={award}
-                      className="text-xs text-slate-500 bg-white/80 px-3 py-1 rounded-full border border-slate-200 shadow-sm"
-                    >
-                      {award}
-                    </span>
-                  ))}
                 </div>
               </motion.div>
             </div>
 
-            {/* Phone mockup */}
             <motion.div
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
+              transition={{ duration: 0.7, delay: 0.2 }}
               className="flex justify-center"
             >
               <div className="relative">
-                {/* Phone frame */}
-                <div className="w-72 h-[560px] bg-slate-900 rounded-[3rem] p-3 shadow-2xl shadow-slate-900/20 relative">
-                  <div className="absolute top-0 left-1/2 -translate-x-1/2 w-28 h-6 bg-slate-900 rounded-b-2xl z-10" />
-                  <div className="w-full h-full bg-white rounded-[2.5rem] overflow-hidden">
+                <div className="w-72 h-[560px] bg-[#1a1a1a] rounded-[2.5rem] p-3 border border-white/[0.06] shadow-2xl">
+                  <div className="absolute top-0 left-1/2 -translate-x-1/2 w-24 h-5 bg-[#1a1a1a] rounded-b-2xl z-10" />
+                  <div className="w-full h-full bg-[#0d0d0d] rounded-[2.2rem] overflow-hidden">
                     <AnimatePresence mode="wait">
                       <motion.img
                         key={activeScreen}
@@ -108,21 +86,20 @@ export default function MobileApp() {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        transition={{ duration: 0.4 }}
+                        transition={{ duration: 0.3 }}
                         className="w-full h-full object-cover"
                       />
                     </AnimatePresence>
                   </div>
                 </div>
 
-                {/* Screen nav dots */}
-                <div className="flex justify-center gap-2 mt-6">
+                <div className="flex justify-center gap-1.5 mt-5">
                   {screenshots.map((_, i) => (
                     <button
                       key={i}
                       onClick={() => setActiveScreen(i)}
-                      className={`w-2 h-2 rounded-full transition-all ${
-                        i === activeScreen ? 'bg-emerald-500 w-6' : 'bg-slate-300'
+                      className={`h-1 rounded-full transition-all ${
+                        i === activeScreen ? 'bg-white w-5' : 'bg-white/[0.15] w-1'
                       }`}
                     />
                   ))}
@@ -133,16 +110,16 @@ export default function MobileApp() {
         </div>
       </section>
 
-      {/* User stats */}
-      <section className="py-16 bg-white">
-        <div className="max-w-5xl mx-auto px-4">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            {userStats.map((stat, i) => (
-              <ScrollReveal key={stat.label} delay={i * 0.1}>
-                <div className="text-center p-6 rounded-2xl bg-slate-50 border border-slate-100">
-                  <div className="text-3xl mb-2">{stat.icon}</div>
-                  <div className="text-2xl font-extrabold text-slate-900">{stat.value}</div>
-                  <div className="text-xs text-slate-500 mt-1">{stat.label}</div>
+      {/* Stats */}
+      <section className="py-20 border-t border-white/[0.04]">
+        <div className="max-w-[1400px] mx-auto px-6 lg:px-10">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-white/[0.04] rounded-2xl overflow-hidden">
+            {userStats.map((s, i) => (
+              <ScrollReveal key={s.label} delay={i * 0.06}>
+                <div className="bg-[#0d0d0d] p-6 text-center">
+                  <div className="text-2xl mb-2">{s.icon}</div>
+                  <p className="text-xl font-bold text-white">{s.value}</p>
+                  <p className="text-[11px] text-[#525252] mt-1 uppercase tracking-wider">{s.label}</p>
                 </div>
               </ScrollReveal>
             ))}
@@ -151,59 +128,52 @@ export default function MobileApp() {
       </section>
 
       {/* Features */}
-      <section className="py-24 bg-slate-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-24">
+        <div className="max-w-[1400px] mx-auto px-6 lg:px-10">
           <ScrollReveal>
-            <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 text-center mb-4">
-              核心功能
-            </h2>
-            <p className="text-slate-500 text-center mb-16 max-w-xl mx-auto">
-              强大的功能，简洁的体验
-            </p>
+            <p className="text-xs font-medium text-[#6b6b6b] uppercase tracking-wider mb-3">核心功能</p>
+            <h2 className="text-3xl sm:text-4xl font-bold text-white mb-12">为效果而设计</h2>
           </ScrollReveal>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-            {/* Feature list */}
-            <div className="space-y-4">
-              {appFeatures.map((feature, i) => (
-                <ScrollReveal key={feature.title} delay={i * 0.1} direction="left">
-                  <motion.button
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div className="space-y-2">
+              {appFeatures.map((f, i) => (
+                <ScrollReveal key={f.title} delay={i * 0.06}>
+                  <button
                     onClick={() => setActiveFeature(i)}
-                    whileHover={{ x: 4 }}
-                    className={`w-full text-left p-5 rounded-2xl transition-all duration-300 ${
+                    className={`w-full text-left p-5 rounded-2xl transition-all ${
                       activeFeature === i
-                        ? 'bg-white shadow-lg border border-emerald-100 ring-1 ring-emerald-500/20'
-                        : 'bg-transparent border border-transparent hover:bg-white/50'
+                        ? 'bg-white/[0.04] border border-white/[0.08]'
+                        : 'border border-transparent hover:bg-white/[0.01]'
                     }`}
                   >
                     <div className="flex items-center gap-4">
-                      <div className={`w-12 h-12 rounded-xl flex items-center justify-center text-2xl ${
-                        activeFeature === i ? 'bg-emerald-500 text-white' : 'bg-white text-slate-700'
+                      <div className={`w-10 h-10 rounded-xl flex items-center justify-center text-xl ${
+                        activeFeature === i ? 'bg-emerald-500/10' : 'bg-white/[0.02]'
                       }`}>
-                        {feature.icon}
+                        {f.icon}
                       </div>
                       <div>
-                        <h3 className="font-bold text-slate-800 mb-1">{feature.title}</h3>
-                        <p className="text-sm text-slate-500">{feature.description}</p>
+                        <h3 className="text-sm font-semibold text-white mb-0.5">{f.title}</h3>
+                        <p className="text-xs text-[#6b6b6b] leading-relaxed">{f.description}</p>
                       </div>
                     </div>
-                  </motion.button>
+                  </button>
                 </ScrollReveal>
               ))}
             </div>
 
-            {/* Feature preview */}
             <div className="flex justify-center">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={activeFeature}
-                  initial={{ opacity: 0, scale: 0.95 }}
+                  initial={{ opacity: 0, scale: 0.97 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.95 }}
-                  transition={{ duration: 0.4 }}
-                  className="w-64 h-[480px] bg-slate-900 rounded-[2.5rem] p-2.5 shadow-2xl shadow-slate-900/15"
+                  exit={{ opacity: 0, scale: 0.97 }}
+                  transition={{ duration: 0.3 }}
+                  className="w-64 h-[480px] bg-[#1a1a1a] rounded-[2.5rem] p-2.5 border border-white/[0.06] shadow-xl"
                 >
-                  <div className="w-full h-full bg-white rounded-[2rem] overflow-hidden">
+                  <div className="w-full h-full bg-[#0d0d0d] rounded-[2rem] overflow-hidden">
                     <img
                       src={appFeatures[activeFeature].image}
                       alt={appFeatures[activeFeature].title}
@@ -218,71 +188,61 @@ export default function MobileApp() {
       </section>
 
       {/* Testimonials */}
-      <section className="py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-24 border-t border-white/[0.04]">
+        <div className="max-w-[1400px] mx-auto px-6 lg:px-10">
           <ScrollReveal>
-            <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 text-center mb-4">
-              用户的真实反馈
-            </h2>
-            <p className="text-slate-500 text-center mb-16 max-w-xl mx-auto">
-              全球数百万用户的信赖之选
-            </p>
+            <p className="text-xs font-medium text-[#6b6b6b] uppercase tracking-wider mb-3">用户反馈</p>
+            <h2 className="text-3xl sm:text-4xl font-bold text-white mb-12">数百万用户的信赖</h2>
           </ScrollReveal>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-white/[0.04] rounded-2xl overflow-hidden">
             {testimonials.map((t, i) => (
-              <ScrollReveal key={t.name} delay={i * 0.1}>
-                <motion.div
-                  whileHover={{ y: -4 }}
-                  className="bg-slate-50 rounded-2xl p-6 hover:shadow-xl transition-all duration-300"
-                >
+              <ScrollReveal key={t.name} delay={i * 0.06}>
+                <div className="bg-[#0d0d0d] p-7 hover:bg-[#141414] transition-colors duration-300">
                   <div className="flex gap-1 mb-4">
                     {Array.from({ length: 5 }).map((_, j) => (
-                      <Star key={j} size={14} className="text-amber-400 fill-amber-400" />
+                      <Star key={j} size={12} className="text-amber-400 fill-amber-400" />
                     ))}
                   </div>
-                  <p className="text-sm text-slate-600 leading-relaxed mb-5 italic">"{t.content}"</p>
+                  <p className="text-sm text-[#a1a1a1] leading-relaxed mb-5 italic">
+                    &ldquo;{t.content}&rdquo;
+                  </p>
                   <div className="flex items-center gap-3">
-                    <img src={t.avatar} alt={t.name} className="w-10 h-10 rounded-full object-cover" />
+                    <img src={t.avatar} alt={t.name} className="w-9 h-9 rounded-full object-cover" />
                     <div>
-                      <div className="text-sm font-semibold text-slate-800">{t.name}</div>
-                      <div className="text-xs text-slate-400">{t.role}</div>
+                      <p className="text-xs font-semibold text-white">{t.name}</p>
+                      <p className="text-[11px] text-[#525252]">{t.role}</p>
                     </div>
                   </div>
-                </motion.div>
+                </div>
               </ScrollReveal>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Download CTA */}
-      <section className="py-24 bg-gradient-to-br from-emerald-600 via-teal-600 to-cyan-600 relative overflow-hidden">
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PGNpcmNsZSBjeD0iMzAiIGN5PSIzMCIgcj0iMiIvPjwvZz48L2c+PC9zdmc+')] opacity-30" />
-        <div className="relative max-w-3xl mx-auto px-4 text-center">
-          <ScrollReveal>
-            <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
-              立即下载，开启健康之旅
-            </h2>
-            <p className="text-emerald-100 mb-8">免费下载，14 天高级功能试用</p>
-            <div className="flex flex-wrap justify-center gap-4">
-              <button className="px-6 py-3.5 bg-white text-emerald-700 font-semibold rounded-xl hover:shadow-xl hover:-translate-y-0.5 transition-all flex items-center gap-2">
-                <Apple size={20} />
-                App Store
-              </button>
-              <button className="px-6 py-3.5 bg-white/10 backdrop-blur-sm text-white font-semibold rounded-xl border border-white/20 hover:bg-white/20 transition-all flex items-center gap-2">
-                <Smartphone size={20} />
-                Google Play
-              </button>
-            </div>
-          </ScrollReveal>
+      {/* CTA */}
+      <section className="pb-32">
+        <div className="max-w-[1400px] mx-auto px-6 lg:px-10">
+          <div className="bg-[#0d0d0d] border border-white/[0.04] rounded-3xl p-12 lg:p-16 text-center">
+            <ScrollReveal>
+              <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">开启健康之旅</h2>
+              <p className="text-[#6b6b6b] mb-8 max-w-md mx-auto">免费下载，含 14 天高级功能试用。</p>
+              <div className="flex justify-center gap-3">
+                <button className="px-5 py-3 bg-white text-black rounded-xl text-sm font-semibold hover:bg-[#e5e5e5] transition-all inline-flex items-center gap-2">
+                  <Apple size={18} /> App Store
+                </button>
+                <button className="px-5 py-3 bg-white/[0.04] text-white rounded-xl text-sm font-medium border border-white/[0.08] hover:bg-white/[0.08] transition-all inline-flex items-center gap-2">
+                  <Smartphone size={18} /> Google Play
+                </button>
+              </div>
+            </ScrollReveal>
+          </div>
         </div>
       </section>
 
-      {/* Disclaimer */}
-      <div className="bg-amber-50 border-b border-amber-200 px-4 py-3 text-center">
-        <p className="text-xs text-amber-700 font-medium">
-          ⚠️ 本页面为 Demo 模板，所有功能、数据和截图均为展示用途，不代表真实 App 产品。
+      <div className="border-t border-white/[0.04] px-6 py-4 text-center">
+        <p className="text-[11px] text-[#525252]">
+          此页面为 Demo 模板。所有截图、功能及数据均为虚构，仅供技术展示用途。
         </p>
       </div>
     </PageTransition>

@@ -11,9 +11,9 @@ interface Props {
 export default function TypewriterText({
   texts,
   className = '',
-  speed = 80,
-  deleteSpeed = 40,
-  pauseTime = 2000,
+  speed = 70,
+  deleteSpeed = 35,
+  pauseTime = 3000,
 }: Props) {
   const [textIndex, setTextIndex] = useState(0)
   const [charIndex, setCharIndex] = useState(0)
@@ -22,7 +22,6 @@ export default function TypewriterText({
 
   useEffect(() => {
     const currentText = texts[textIndex]
-
     const timer = setTimeout(
       () => {
         if (!isDeleting) {
@@ -44,14 +43,13 @@ export default function TypewriterText({
       },
       isDeleting ? deleteSpeed : speed
     )
-
     return () => clearTimeout(timer)
   }, [charIndex, isDeleting, textIndex, texts, speed, deleteSpeed, pauseTime])
 
   return (
     <span className={className}>
       {displayText}
-      <span className="inline-block w-[2px] h-[1em] bg-indigo-500 ml-0.5 animate-pulse align-middle" />
+      <span className="inline-block w-px h-[0.85em] bg-[#8b5cf6] ml-0.5 align-middle animate-pulse" />
     </span>
   )
 }

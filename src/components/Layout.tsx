@@ -1,20 +1,15 @@
 import { Outlet } from 'react-router-dom'
-import { AnimatePresence } from 'framer-motion'
 import Navbar from './Navbar'
 import Footer from './Footer'
-import DemoBadge from './DemoBadge'
 
 export default function Layout() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
+    <div className="min-h-screen bg-[#080808] text-[#f5f5f5]">
       <Navbar />
       <main>
-        <AnimatePresence mode="wait">
-          <Outlet />
-        </AnimatePresence>
+        <Outlet />
       </main>
       <Footer />
-      <DemoBadge />
     </div>
   )
 }

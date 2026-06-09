@@ -1,118 +1,159 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { TrendingUp, Star, ChevronLeft, ChevronRight, ArrowRight, CheckCircle, BarChart3, Globe } from 'lucide-react'
+import { ArrowUpRight, ChevronLeft, ChevronRight } from 'lucide-react'
 import PageTransition from '../components/PageTransition'
 import ScrollReveal from '../components/ScrollReveal'
 import Counter from '../components/Counter'
-import ParticleBg from '../components/ParticleBg'
 import { services, caseStudies, testimonials, stats } from '../data/marketing'
 
-export default function Marketing() {
-  const [activeTestimonial, setActiveTestimonial] = useState(0)
-  const [activeCase, setActiveCase] = useState(0)
+function ParticleField() {
+  const canvasRef = useRef<HTMLCanvasElement>(null)
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setActiveTestimonial((prev) => (prev + 1) % testimonials.length)
-    }, 5000)
-    return () => clearInterval(timer)
-  }, [testimonials.length])
+    const canvas = canvasRef.current
+    if (!canvas) return
+    const ctx = canvas.getContext('2d')
+    if (!ctx) return
 
-  const nextTestimonial = () => setActiveTestimonial((prev) => (prev + 1) % testimonials.length)
-  const prevTestimonial = () =>
-    setActiveTestimonial((prev) => (prev - 1 + testimonials.length) % testimonials.length)
+    let anim: number
+    const particles: { x: number; y: number; vx: number; vy: number; r: number }[] = []
+    const count = 60
+
+    const resize = () => {
+      canvas.width = canvas.offsetWidth
+      canvas.height = canvas.offsetHeight
+    }
+    resize()
+    window.addEventListener('resize', resize)
+
+    for (let i = 0; i < count; i++) {
+      particles.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        vx: (Math.random() - 0.5) * 0.3,
+        vy: (Math.random() - 0.5) * 0.3,
+        r: Math.random() * 1.5 + 0.5,
+      })
+    }
+
+    const animate = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height)
+      particles.forEach((p) => {
+        p.x += p.vx
+        p.y += p.vy
+        if (p.x < 0 || p.x > canvas.width) p.vx *= -1
+        if (p.y < 0 || p.y > canvas.height) p.vy *= -1
+        ctx.beginPath()
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2)
+        ctx.fillStyle = 'rgba(139, 92, 246, 0.15)'
+        ctx.fill()
+      })
+      anim = requestAnimationFrame(animate)
+    }
+    animate()
+
+    return () => {
+      cancelAnimationFrame(anim)
+      window.removeEventListener('resize', resize)
+    }
+  }, [])
+
+  return <canvas ref={canvasRef} className="absolute inset-0 pointer-events-none" />
+}
+
+export default function Marketing() {
+  const [activeCase, setActiveCase] = useState(0)
+  const [activeTestimonial, setActiveTestimonial] = useState(0)
+
+  useEffect(() => {
+    const t = setInterval(() => setActiveTestimonial((p) => (p + 1) % testimonials.length), 5000)
+    return () => clearInterval(t)
+  }, [testimonials.length])
 
   return (
     <PageTransition>
       {/* Hero */}
-      <section className="relative min-h-screen flex items-center overflow-hidden bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900">
-        <ParticleBg />
-        <div className="absolute top-1/3 right-0 w-[600px] h-[600px] bg-indigo-500/10 rounded-full blur-[150px]" />
-        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-purple-500/10 rounded-full blur-[120px]" />
+      <section className="relative min-h-screen flex items-center overflow-hidden bg-[#080808]">
+        <ParticleField />
+        <div className="absolute top-1/4 right-0 w-[500px] h-[500px] bg-[#8b5cf6]/5 rounded-full blur-[150px]" />
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
+        <div className="relative z-10 max-w-[1400px] mx-auto px-6 lg:px-10 py-32 w-full">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div>
               <motion.div
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: 24 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8 }}
               >
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-300 text-xs font-medium mb-6">
-                  <TrendingUp size={14} />
+                <span className="text-[11px] font-medium text-[#8b5cf6] uppercase tracking-widest mb-6 block">
                   数字营销解决方案
-                </div>
-                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white leading-tight mb-6">
-                  让您的品牌
+                </span>
+                <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-extrabold text-white tracking-tight leading-[0.95] mb-6">
+                  让品牌实现
                   <br />
-                  <span className="gradient-text">指数级增长</span>
+                  <span className="text-[#8b5cf6]">指数级</span>
+                  <br />
+                  增长
                 </h1>
-                <p className="text-lg text-slate-300 leading-relaxed mb-8 max-w-lg">
-                  数据驱动的全链路营销方案，从品牌策略到效果转化，帮助 150+ 企业实现可量化的业务增长。
+                <p className="text-base text-[#6b6b6b] leading-relaxed max-w-lg mb-8">
+                  数据驱动的全链路营销方案，从品牌策略到效果转化，已帮助 150+ 企业实现可量化的业务突破。
                 </p>
-                <div className="flex flex-wrap gap-4">
-                  <button className="px-6 py-3 bg-gradient-to-r from-indigo-500 to-purple-500 text-white font-medium rounded-xl hover:shadow-lg hover:shadow-indigo-500/25 hover:-translate-y-0.5 transition-all flex items-center gap-2">
-                    获取免费咨询
-                    <ArrowRight size={18} />
+                <div className="flex gap-3">
+                  <button className="px-5 py-2.5 bg-white text-black text-sm font-semibold rounded-xl hover:bg-[#e5e5e5] transition-all inline-flex items-center gap-2">
+                    免费诊断
+                    <ArrowUpRight size={16} />
                   </button>
-                  <button className="px-6 py-3 bg-white/10 text-white font-medium rounded-xl border border-white/20 hover:bg-white/20 transition-all backdrop-blur-sm">
+                  <button className="px-5 py-2.5 bg-white/[0.04] text-white text-sm font-medium rounded-xl border border-white/[0.08] hover:bg-white/[0.08] transition-all">
                     查看案例
                   </button>
                 </div>
               </motion.div>
 
-              {/* Stats row */}
               <motion.div
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.3 }}
-                className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-12"
+                className="grid grid-cols-4 gap-3 mt-14"
               >
-                {stats.map((stat) => (
-                  <div key={stat.label} className="text-center p-4 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10">
-                    <div className="text-2xl sm:text-3xl font-bold text-white">
-                      <Counter from={0} to={stat.value} suffix={stat.suffix} duration={2.5} />
+                {stats.map((s) => (
+                  <div key={s.label} className="text-center p-4 rounded-xl bg-white/[0.02] border border-white/[0.04]">
+                    <div className="text-xl sm:text-2xl font-bold text-white">
+                      <Counter to={s.value} suffix={s.suffix} />
                     </div>
-                    <div className="text-xs text-slate-400 mt-1">{stat.label}</div>
+                    <div className="text-[10px] text-[#525252] mt-1 uppercase tracking-wider">{s.label}</div>
                   </div>
                 ))}
               </motion.div>
             </div>
 
-            {/* Hero visual */}
+            {/* ROI Chart */}
             <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 1, delay: 0.2 }}
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
               className="hidden lg:block"
             >
-              <div className="relative">
-                <div className="absolute inset-0 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-3xl blur-[60px] opacity-30" />
-                <div className="relative bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-8">
-                  {/* Mock chart */}
-                  <div className="flex items-center justify-between mb-6">
-                    <div>
-                      <div className="text-white font-semibold text-lg">营销 ROI 趋势</div>
-                      <div className="text-slate-400 text-sm">过去 12 个月</div>
-                    </div>
-                    <BarChart3 className="text-indigo-400" size={24} />
+              <div className="bg-[#0d0d0d] border border-white/[0.04] rounded-3xl p-8">
+                <div className="flex items-center justify-between mb-8">
+                  <div>
+                    <p className="text-sm font-semibold text-white">营销 ROI 趋势</p>
+                    <p className="text-xs text-[#525252]">过去 12 个月</p>
                   </div>
-                  <div className="flex items-end gap-3 h-48">
-                    {[35, 52, 48, 78, 65, 92, 85, 120, 105, 145, 130, 168].map((h, i) => (
-                      <motion.div
-                        key={i}
-                        initial={{ height: 0 }}
-                        animate={{ height: `${(h / 168) * 100}%` }}
-                        transition={{ delay: 0.5 + i * 0.05, duration: 0.6, ease: 'easeOut' }}
-                        className="flex-1 bg-gradient-to-t from-indigo-500 to-purple-400 rounded-t-lg"
-                      />
-                    ))}
-                  </div>
-                  <div className="flex justify-between mt-3 text-xs text-slate-500">
-                    {['1月', '3月', '5月', '7月', '9月', '11月'].map((m) => (
-                      <span key={m}>{m}</span>
-                    ))}
-                  </div>
+                  <span className="text-[10px] font-medium text-emerald-400 bg-emerald-400/10 px-2.5 py-1 rounded-full">↑ 168%</span>
+                </div>
+                <div className="flex items-end gap-2 h-48">
+                  {[35, 52, 48, 78, 65, 92, 85, 120, 105, 145, 130, 168].map((h, i) => (
+                    <motion.div
+                      key={i}
+                      initial={{ height: 0 }}
+                      animate={{ height: `${(h / 168) * 100}%` }}
+                      transition={{ delay: 0.5 + i * 0.04, duration: 0.6, ease: 'easeOut' }}
+                      className="flex-1 bg-gradient-to-t from-[#8b5cf6]/40 to-[#8b5cf6] rounded-t-md"
+                    />
+                  ))}
+                </div>
+                <div className="flex justify-between mt-3 text-[10px] text-[#525252]">
+                  {['1月', '3月', '5月', '7月', '9月', '11月'].map((m) => (<span key={m}>{m}</span>))}
                 </div>
               </div>
             </motion.div>
@@ -121,32 +162,25 @@ export default function Marketing() {
       </section>
 
       {/* Services */}
-      <section className="py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-32">
+        <div className="max-w-[1400px] mx-auto px-6 lg:px-10">
           <ScrollReveal>
-            <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 text-center mb-4">
-              全方位营销服务
-            </h2>
-            <p className="text-slate-500 text-center mb-16 max-w-xl mx-auto">
-              覆盖数字营销全链路的专业服务，驱动可衡量的业务成果
-            </p>
+            <p className="text-xs font-medium text-[#6b6b6b] uppercase tracking-wider mb-3">服务项目</p>
+            <h2 className="text-3xl sm:text-4xl font-bold text-white mb-12">全链路营销服务</h2>
           </ScrollReveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-white/[0.04] rounded-2xl overflow-hidden">
             {services.map((service, i) => (
-              <ScrollReveal key={service.title} delay={i * 0.08}>
-                <motion.div
-                  whileHover={{ y: -5 }}
-                  className="group bg-slate-50 rounded-2xl p-7 hover:bg-gradient-to-br hover:from-indigo-50 hover:to-purple-50 transition-all duration-300 border border-transparent hover:border-indigo-100"
-                >
-                  <div className="text-4xl mb-4">{service.icon}</div>
-                  <h3 className="text-lg font-bold text-slate-900 mb-3">{service.title}</h3>
-                  <p className="text-sm text-slate-500 leading-relaxed mb-4">{service.description}</p>
-                  <div className="flex items-center gap-2 pt-4 border-t border-slate-200">
-                    <span className="text-2xl font-bold gradient-text">{service.stats.value}</span>
-                    <span className="text-xs text-slate-400">{service.stats.label}</span>
+              <ScrollReveal key={service.title} delay={i * 0.05}>
+                <div className="group bg-[#0d0d0d] p-7 lg:p-8 hover:bg-[#141414] transition-colors duration-300 h-full flex flex-col">
+                  <div className="text-2xl mb-5 opacity-80">{service.icon}</div>
+                  <h3 className="text-base font-semibold text-white mb-3">{service.title}</h3>
+                  <p className="text-sm text-[#6b6b6b] leading-relaxed flex-1">{service.description}</p>
+                  <div className="mt-6 pt-5 border-t border-white/[0.04] flex items-baseline gap-2">
+                    <span className="text-2xl font-bold text-white">{service.stats.value}</span>
+                    <span className="text-xs text-[#6b6b6b]">{service.stats.label}</span>
                   </div>
-                </motion.div>
+                </div>
               </ScrollReveal>
             ))}
           </div>
@@ -154,30 +188,26 @@ export default function Marketing() {
       </section>
 
       {/* Case Studies */}
-      <section className="py-24 bg-slate-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="pb-32">
+        <div className="max-w-[1400px] mx-auto px-6 lg:px-10">
           <ScrollReveal>
-            <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 text-center mb-4">
-              成功案例
-            </h2>
-            <p className="text-slate-500 text-center mb-16 max-w-xl mx-auto">
-              真实数据驱动的营销策略，为客户创造可量化的商业价值
-            </p>
+            <p className="text-xs font-medium text-[#6b6b6b] uppercase tracking-wider mb-3">成功案例</p>
+            <h2 className="text-3xl sm:text-4xl font-bold text-white mb-3">可量化的成果</h2>
+            <p className="text-sm text-[#525252] mb-12">数据驱动的营销策略，为客户创造真实商业价值。</p>
           </ScrollReveal>
 
-          {/* Case navigation */}
-          <div className="flex justify-center gap-3 mb-10 flex-wrap">
+          <div className="flex gap-2 mb-8 flex-wrap">
             {caseStudies.map((cs, i) => (
               <button
                 key={cs.client}
                 onClick={() => setActiveCase(i)}
                 className={`px-4 py-2 rounded-xl text-sm font-medium transition-all ${
                   activeCase === i
-                    ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-500/25'
-                    : 'bg-white text-slate-600 hover:bg-slate-100 shadow-sm'
+                    ? 'bg-white text-black'
+                    : 'bg-white/[0.02] text-[#a1a1a1] border border-white/[0.04] hover:text-white hover:border-white/[0.08]'
                 }`}
               >
-                {cs.logo} {cs.client}
+                {cs.client}
               </button>
             ))}
           </div>
@@ -185,58 +215,51 @@ export default function Marketing() {
           <AnimatePresence mode="wait">
             <motion.div
               key={activeCase}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.4 }}
+              exit={{ opacity: 0, y: -12 }}
+              transition={{ duration: 0.35 }}
+              className="bg-[#0d0d0d] border border-white/[0.04] rounded-3xl overflow-hidden"
             >
-              <div className="bg-white rounded-3xl shadow-xl overflow-hidden">
-                <div className="grid lg:grid-cols-2 gap-0">
-                  <div className="p-8 lg:p-12">
-                    <div className="text-3xl mb-3">{caseStudies[activeCase].logo}</div>
-                    <div className="text-xs text-indigo-600 font-semibold uppercase tracking-wider mb-2">
-                      {caseStudies[activeCase].industry}
-                    </div>
-                    <h3 className="text-2xl font-bold text-slate-900 mb-6">
-                      {caseStudies[activeCase].client}
-                    </h3>
+              <div className="grid lg:grid-cols-2">
+                <div className="p-8 lg:p-12">
+                  <span className="text-[10px] font-medium text-[#8b5cf6] uppercase tracking-wider">
+                    {caseStudies[activeCase].industry}
+                  </span>
+                  <h3 className="text-2xl font-bold text-white mt-2 mb-6">{caseStudies[activeCase].client}</h3>
 
-                    <div className="space-y-5">
-                      <div>
-                        <div className="text-sm font-semibold text-slate-800 mb-1">📋 挑战</div>
-                        <p className="text-sm text-slate-500">{caseStudies[activeCase].challenge}</p>
-                      </div>
-                      <div>
-                        <div className="text-sm font-semibold text-slate-800 mb-1">💡 方案</div>
-                        <p className="text-sm text-slate-500">{caseStudies[activeCase].solution}</p>
-                      </div>
+                  <div className="space-y-5">
+                    <div>
+                      <p className="text-xs font-semibold text-[#a1a1a1] uppercase tracking-wider mb-1">挑战</p>
+                      <p className="text-sm text-[#6b6b6b] leading-relaxed">{caseStudies[activeCase].challenge}</p>
                     </div>
+                    <div>
+                      <p className="text-xs font-semibold text-[#a1a1a1] uppercase tracking-wider mb-1">方案</p>
+                      <p className="text-sm text-[#6b6b6b] leading-relaxed">{caseStudies[activeCase].solution}</p>
+                    </div>
+                  </div>
 
-                    <div className="mt-8 grid grid-cols-1 gap-3">
-                      {caseStudies[activeCase].results.map((r) => (
-                        <div
-                          key={r.metric}
-                          className="flex items-center justify-between p-3 rounded-xl bg-emerald-50 border border-emerald-100"
-                        >
-                          <span className="text-sm font-medium text-slate-700">{r.metric}</span>
-                          <div className="flex items-center gap-2">
-                            <span className="text-sm text-slate-400 line-through">{r.before}</span>
-                            <span className="text-sm font-bold text-emerald-600">→ {r.after}</span>
-                            <span className="text-xs font-bold text-emerald-500 bg-emerald-100 px-2 py-0.5 rounded-full">
-                              ↑ {r.improvement}
-                            </span>
-                          </div>
+                  <div className="mt-8 space-y-2">
+                    {caseStudies[activeCase].results.map((r) => (
+                      <div key={r.metric} className="flex items-center justify-between p-3 rounded-xl bg-white/[0.02]">
+                        <span className="text-xs font-medium text-[#a1a1a1]">{r.metric}</span>
+                        <div className="flex items-center gap-2">
+                          <span className="text-xs text-[#525252] line-through">{r.before}</span>
+                          <span className="text-sm font-semibold text-white">→ {r.after}</span>
+                          <span className="text-[10px] font-bold text-emerald-400 bg-emerald-400/10 px-1.5 py-0.5 rounded-md">
+                            ↑ {r.improvement}
+                          </span>
                         </div>
-                      ))}
-                    </div>
+                      </div>
+                    ))}
                   </div>
-                  <div className="relative min-h-[300px] lg:min-h-full">
-                    <img
-                      src={caseStudies[activeCase].image}
-                      alt={caseStudies[activeCase].client}
-                      className="absolute inset-0 w-full h-full object-cover"
-                    />
-                  </div>
+                </div>
+                <div className="min-h-[300px] lg:min-h-full">
+                  <img
+                    src={caseStudies[activeCase].image}
+                    alt={caseStudies[activeCase].client}
+                    className="w-full h-full object-cover"
+                  />
                 </div>
               </div>
             </motion.div>
@@ -245,115 +268,93 @@ export default function Marketing() {
       </section>
 
       {/* Testimonials */}
-      <section className="py-24 bg-gradient-to-br from-indigo-600 via-purple-600 to-indigo-700 relative overflow-hidden">
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PGNpcmNsZSBjeD0iMzAiIGN5PSIzMCIgcj0iMiIvPjwvZz48L2c+PC9zdmc+')] opacity-30" />
-
-        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <section className="py-32 border-t border-white/[0.04]">
+        <div className="max-w-[1400px] mx-auto px-6 lg:px-10">
           <ScrollReveal>
-            <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">客户评价</h2>
-            <p className="text-indigo-200 mb-12">听听客户怎么说</p>
+            <p className="text-xs font-medium text-[#6b6b6b] uppercase tracking-wider mb-3">客户评价</p>
+            <h2 className="text-3xl sm:text-4xl font-bold text-white mb-12">他们怎么说</h2>
           </ScrollReveal>
 
-          <div className="relative">
+          <div className="relative max-w-3xl">
             <AnimatePresence mode="wait">
-              <motion.div
+              <motion.blockquote
                 key={activeTestimonial}
-                initial={{ opacity: 0, x: 30 }}
+                initial={{ opacity: 0, x: 16 }}
                 animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -30 }}
-                transition={{ duration: 0.4 }}
+                exit={{ opacity: 0, x: -16 }}
+                transition={{ duration: 0.35 }}
+                className="bg-[#0d0d0d] border border-white/[0.04] rounded-3xl p-8 lg:p-12"
               >
-                <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-8 sm:p-12">
-                  <div className="flex justify-center gap-1 mb-6">
-                    {Array.from({ length: testimonials[activeTestimonial].rating }).map((_, i) => (
-                      <Star key={i} size={20} className="text-yellow-400 fill-yellow-400" />
-                    ))}
-                  </div>
-                  <p className="text-lg sm:text-xl text-white leading-relaxed mb-8 italic">
-                    "{testimonials[activeTestimonial].content}"
-                  </p>
-                  <div className="flex items-center justify-center gap-4">
-                    <img
-                      src={testimonials[activeTestimonial].avatar}
-                      alt={testimonials[activeTestimonial].name}
-                      className="w-14 h-14 rounded-full object-cover border-2 border-white/30"
-                    />
-                    <div className="text-left">
-                      <div className="text-white font-semibold">
-                        {testimonials[activeTestimonial].name}
-                      </div>
-                      <div className="text-indigo-200 text-sm">
-                        {testimonials[activeTestimonial].role}，{testimonials[activeTestimonial].company}
-                      </div>
-                    </div>
+                <p className="text-lg lg:text-xl text-white leading-relaxed mb-8">
+                  &ldquo;{testimonials[activeTestimonial].content}&rdquo;
+                </p>
+                <div className="flex items-center gap-4">
+                  <img
+                    src={testimonials[activeTestimonial].avatar}
+                    alt={testimonials[activeTestimonial].name}
+                    className="w-12 h-12 rounded-full object-cover"
+                  />
+                  <div>
+                    <p className="text-sm font-semibold text-white">{testimonials[activeTestimonial].name}</p>
+                    <p className="text-xs text-[#6b6b6b]">
+                      {testimonials[activeTestimonial].role}，{testimonials[activeTestimonial].company}
+                    </p>
                   </div>
                 </div>
-              </motion.div>
+              </motion.blockquote>
             </AnimatePresence>
 
-            {/* Nav buttons */}
-            <button
-              onClick={prevTestimonial}
-              className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm border border-white/30 text-white flex items-center justify-center hover:bg-white/30 transition-all"
-            >
-              <ChevronLeft size={20} />
-            </button>
-            <button
-              onClick={nextTestimonial}
-              className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm border border-white/30 text-white flex items-center justify-center hover:bg-white/30 transition-all"
-            >
-              <ChevronRight size={20} />
-            </button>
-          </div>
-
-          {/* Dots */}
-          <div className="flex justify-center gap-2 mt-8">
-            {testimonials.map((_, i) => (
+            <div className="flex gap-2 mt-6">
               <button
-                key={i}
-                onClick={() => setActiveTestimonial(i)}
-                className={`w-2.5 h-2.5 rounded-full transition-all ${
-                  i === activeTestimonial ? 'bg-white scale-125' : 'bg-white/40'
-                }`}
-              />
-            ))}
+                onClick={() => setActiveTestimonial((p) => (p - 1 + testimonials.length) % testimonials.length)}
+                className="w-9 h-9 rounded-full bg-white/[0.02] border border-white/[0.06] flex items-center justify-center text-[#a1a1a1] hover:text-white hover:border-white/[0.12] transition-all"
+              >
+                <ChevronLeft size={16} />
+              </button>
+              <button
+                onClick={() => setActiveTestimonial((p) => (p + 1) % testimonials.length)}
+                className="w-9 h-9 rounded-full bg-white/[0.02] border border-white/[0.06] flex items-center justify-center text-[#a1a1a1] hover:text-white hover:border-white/[0.12] transition-all"
+              >
+                <ChevronRight size={16} />
+              </button>
+              <div className="flex items-center gap-1.5 ml-3">
+                {testimonials.map((_, i) => (
+                  <button
+                    key={i}
+                    onClick={() => setActiveTestimonial(i)}
+                    className={`w-1.5 h-1.5 rounded-full transition-all ${
+                      i === activeTestimonial ? 'bg-white w-4' : 'bg-white/[0.12]'
+                    }`}
+                  />
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
       {/* CTA */}
-      <section className="py-24 bg-slate-900">
-        <div className="max-w-4xl mx-auto px-4 text-center">
-          <ScrollReveal>
-            <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
-              准备好加速增长了？
-            </h2>
-            <p className="text-slate-400 text-lg mb-8 max-w-xl mx-auto">
-              预约免费营销诊断，获取定制化的增长策略建议
-            </p>
-            <div className="flex flex-wrap justify-center gap-4">
-              <button className="px-8 py-4 bg-gradient-to-r from-indigo-500 to-purple-500 text-white font-semibold rounded-xl hover:shadow-lg hover:shadow-indigo-500/25 hover:-translate-y-0.5 transition-all flex items-center gap-2">
-                <Globe size={20} />
-                免费预约咨询
-                <ArrowRight size={18} />
+      <section className="pb-32">
+        <div className="max-w-[1400px] mx-auto px-6 lg:px-10">
+          <div className="bg-[#0d0d0d] border border-white/[0.04] rounded-3xl p-12 lg:p-16 text-center">
+            <ScrollReveal>
+              <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">准备好加速增长？</h2>
+              <p className="text-[#6b6b6b] mb-8 max-w-md mx-auto">
+                预约免费营销诊断，48 小时内获取定制化增长策略。
+              </p>
+              <button className="px-6 py-3 bg-white text-black text-sm font-semibold rounded-xl hover:bg-[#e5e5e5] transition-all inline-flex items-center gap-2">
+                预约免费咨询
+                <ArrowUpRight size={16} />
               </button>
-            </div>
-            <div className="mt-8 flex flex-wrap justify-center gap-6 text-sm text-slate-500">
-              {['免费诊断', '无绑定要求', '48小时内出报告'].map((f) => (
-                <span key={f} className="flex items-center gap-1.5">
-                  <CheckCircle size={14} className="text-emerald-400" />
-                  {f}
-                </span>
-              ))}
-            </div>
-          </ScrollReveal>
+            </ScrollReveal>
+          </div>
         </div>
       </section>
 
       {/* Disclaimer */}
-      <div className="bg-amber-50 border-b border-amber-200 px-4 py-3 text-center">
-        <p className="text-xs text-amber-700 font-medium">
-          ⚠️ 本页面为 Demo 模板，所有数据和服务均为展示用途，不代表真实业务。
+      <div className="border-t border-white/[0.04] px-6 py-4 text-center">
+        <p className="text-[11px] text-[#525252]">
+          此页面为 Demo 模板。所有数据、服务和评价均为虚构，仅供技术展示用途。
         </p>
       </div>
     </PageTransition>

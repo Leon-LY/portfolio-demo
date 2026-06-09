@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Check, ChevronDown, ArrowRight, Play, Zap, Shield, BarChart3, Cloud } from 'lucide-react'
+import { ArrowUpRight, Check, ChevronDown, Zap } from 'lucide-react'
 import PageTransition from '../components/PageTransition'
 import ScrollReveal from '../components/ScrollReveal'
 import Counter from '../components/Counter'
@@ -8,117 +8,84 @@ import { saasFeatures, pricingPlans, faqs, dashboardStats } from '../data/saas'
 
 export default function SaaS() {
   const [openFaq, setOpenFaq] = useState<number | null>(null)
-  const [billingCycle, setBillingCycle] = useState<'monthly' | 'yearly'>('monthly')
+  const [annual, setAnnual] = useState(false)
 
   return (
     <PageTransition>
       {/* Hero */}
-      <section className="relative pt-32 pb-20 bg-gradient-to-br from-slate-50 via-blue-50/50 to-indigo-50/30 overflow-hidden">
-        <div className="absolute top-20 right-0 w-[500px] h-[500px] bg-blue-400/8 rounded-full blur-[120px]" />
-        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-indigo-400/8 rounded-full blur-[100px]" />
-
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-            >
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-100 text-blue-700 text-xs font-semibold mb-6">
-                <Cloud size={14} />
-                CloudFlow Platform
-              </div>
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 tracking-tight mb-6">
-                智能数据分析
+      <section className="relative pt-32 pb-24 overflow-hidden">
+        <div className="absolute top-20 right-0 w-[600px] h-[600px] bg-[#8b5cf6]/3 rounded-full blur-[180px]" />
+        <div className="max-w-[1400px] mx-auto px-6 lg:px-10">
+          <div className="max-w-3xl mx-auto text-center">
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
+              <span className="text-[11px] font-medium text-[#8b5cf6] uppercase tracking-widest mb-6 block">
+                CloudFlow 数据分析平台
+              </span>
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-[0.95] mb-6">
+                用数据
                 <br />
-                <span className="gradient-text">一站式的决策引擎</span>
+                <span className="text-[#8b5cf6]">驱动决策</span>
               </h1>
-              <p className="text-lg text-slate-500 leading-relaxed mb-10 max-w-xl mx-auto">
-                CloudFlow 将 AI 分析、自动化工作流和团队协作融为一体，帮助企业从数据中获得真正的竞争优势。
+              <p className="text-base text-[#6b6b6b] leading-relaxed mb-8 max-w-lg mx-auto">
+                AI 驱动的智能分析引擎，集成自动化工作流与团队协作，帮助企业从海量数据中获得真正的竞争优势。日活用户 10 万+，查询响应低于 100ms。
               </p>
-              <div className="flex flex-wrap justify-center gap-4">
-                <button className="px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-medium rounded-xl shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 hover:-translate-y-0.5 transition-all flex items-center gap-2">
-                  <Play size={18} /> 观看演示
+              <div className="flex justify-center gap-3">
+                <button className="px-5 py-2.5 bg-white text-black text-sm font-semibold rounded-xl hover:bg-[#e5e5e5] transition-all inline-flex items-center gap-2">
+                  免费试用 <ArrowUpRight size={16} />
                 </button>
-                <button className="px-6 py-3 bg-white text-slate-700 font-medium rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition-all">
-                  免费试用 14 天
+                <button className="px-5 py-2.5 bg-white/[0.04] text-white text-sm font-medium rounded-xl border border-white/[0.08] hover:bg-white/[0.08] transition-all">
+                  观看演示
                 </button>
               </div>
             </motion.div>
 
-            {/* Stats dashboard preview */}
+            {/* Stats bar */}
             <motion.div
-              initial={{ opacity: 0, y: 40 }}
+              initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
-              className="mt-16 bg-white rounded-3xl shadow-2xl shadow-slate-900/10 border border-slate-100 p-6 sm:p-8"
+              transition={{ duration: 0.7, delay: 0.25 }}
+              className="mt-16 grid grid-cols-2 sm:grid-cols-4 gap-px bg-white/[0.04] rounded-2xl overflow-hidden"
             >
-              <div className="flex items-center justify-between mb-6">
-                <div>
-                  <div className="text-sm font-semibold text-slate-800 text-left">实时数据看板</div>
-                  <div className="text-xs text-slate-400 text-left">更新时间：2 分钟前</div>
+              {dashboardStats.map((s) => (
+                <div key={s.label} className="bg-[#0d0d0d] p-5 text-left">
+                  <p className="text-[10px] text-[#525252] uppercase tracking-wider mb-1">{s.label}</p>
+                  <p className="text-xl font-bold text-white">
+                    <Counter to={s.value} suffix={s.suffix} decimals={s.value % 1 !== 0 ? 2 : 0} />
+                  </p>
+                  <p className="text-[10px] text-emerald-400 mt-0.5">{s.change}</p>
                 </div>
-                <div className="flex gap-2">
-                  <div className="w-2 h-2 rounded-full bg-emerald-400" />
-                  <div className="w-2 h-2 rounded-full bg-amber-400" />
-                  <div className="w-2 h-2 rounded-full bg-red-400" />
-                </div>
-              </div>
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-                {dashboardStats.map((stat) => (
-                  <motion.div
-                    key={stat.label}
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 0.5 }}
-                    className="bg-slate-50 rounded-2xl p-4 text-left"
-                  >
-                    <div className="text-xs text-slate-400 mb-1">{stat.label}</div>
-                    <div className="text-xl sm:text-2xl font-bold text-slate-900">
-                      <Counter from={0} to={stat.value} suffix={stat.suffix} decimals={stat.value % 1 !== 0 ? 2 : 0} duration={2} />
-                    </div>
-                    <div className="text-xs text-emerald-500 mt-1">{stat.change}</div>
-                  </motion.div>
-                ))}
-              </div>
+              ))}
             </motion.div>
           </div>
         </div>
       </section>
 
       {/* Features */}
-      <section className="py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-32 border-t border-white/[0.04]">
+        <div className="max-w-[1400px] mx-auto px-6 lg:px-10">
           <ScrollReveal>
-            <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 text-center mb-4">
-              强大功能，简单易用
-            </h2>
-            <p className="text-slate-500 text-center mb-16 max-w-xl mx-auto">
-              从数据接入到智能洞察，CloudFlow 提供一站式解决方案
-            </p>
+            <p className="text-xs font-medium text-[#6b6b6b] uppercase tracking-wider mb-3">产品功能</p>
+            <h2 className="text-3xl sm:text-4xl font-bold text-white mb-12">一站式数据解决方案</h2>
           </ScrollReveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {saasFeatures.map((feature, i) => (
-              <ScrollReveal key={feature.title} delay={i * 0.08} direction={i % 2 === 0 ? 'left' : 'right'}>
-                <motion.div
-                  whileHover={{ y: -4 }}
-                  className="group bg-slate-50 rounded-2xl p-7 hover:bg-white hover:shadow-xl hover:shadow-slate-900/5 transition-all duration-300 border border-transparent hover:border-slate-200"
-                >
-                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-500 flex items-center justify-center text-2xl mb-5 shadow-lg shadow-blue-500/20">
-                    <span className="text-white text-xl">{feature.icon}</span>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-white/[0.04] rounded-2xl overflow-hidden">
+            {saasFeatures.map((f, i) => (
+              <ScrollReveal key={f.title} delay={i * 0.05}>
+                <div className="bg-[#0d0d0d] p-7 hover:bg-[#141414] transition-colors duration-300 h-full">
+                  <div className="w-10 h-10 rounded-xl bg-[#8b5cf6]/10 flex items-center justify-center mb-5">
+                    <Zap size={18} className="text-[#8b5cf6]" />
                   </div>
-                  <h3 className="text-lg font-bold text-slate-900 mb-3">{feature.title}</h3>
-                  <p className="text-sm text-slate-500 leading-relaxed mb-4">{feature.description}</p>
-                  <ul className="space-y-2">
-                    {feature.details.map((d) => (
-                      <li key={d} className="flex items-center gap-2 text-xs text-slate-600">
-                        <Check size={14} className="text-blue-500 flex-shrink-0" />
+                  <h3 className="text-base font-semibold text-white mb-3">{f.title}</h3>
+                  <p className="text-sm text-[#6b6b6b] leading-relaxed mb-4">{f.description}</p>
+                  <ul className="space-y-1.5">
+                    {f.details.map((d) => (
+                      <li key={d} className="flex items-center gap-2 text-xs text-[#525252]">
+                        <Check size={12} className="text-[#8b5cf6] flex-shrink-0" />
                         {d}
                       </li>
                     ))}
                   </ul>
-                </motion.div>
+                </div>
               </ScrollReveal>
             ))}
           </div>
@@ -126,98 +93,69 @@ export default function SaaS() {
       </section>
 
       {/* Pricing */}
-      <section className="py-24 bg-slate-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="pb-32">
+        <div className="max-w-[1400px] mx-auto px-6 lg:px-10">
           <ScrollReveal>
-            <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 text-center mb-4">
-              简单透明的定价
-            </h2>
-            <p className="text-slate-500 text-center mb-10 max-w-xl mx-auto">
-              选择适合您团队的方案，随时升级或降级
-            </p>
+            <p className="text-xs font-medium text-[#6b6b6b] uppercase tracking-wider mb-3">定价方案</p>
+            <h2 className="text-3xl sm:text-4xl font-bold text-white mb-3">简单透明</h2>
+            <p className="text-sm text-[#525252] mb-10">无隐藏费用，随时升级或降级。</p>
           </ScrollReveal>
 
-          {/* Billing toggle */}
           <div className="flex justify-center mb-12">
-            <div className="bg-white rounded-xl p-1 border border-slate-200 shadow-sm inline-flex">
-              <button
-                onClick={() => setBillingCycle('monthly')}
-                className={`px-5 py-2 rounded-lg text-sm font-medium transition-all ${
-                  billingCycle === 'monthly'
-                    ? 'bg-indigo-600 text-white shadow-md'
-                    : 'text-slate-600 hover:text-slate-900'
-                }`}
-              >
-                月付
-              </button>
-              <button
-                onClick={() => setBillingCycle('yearly')}
-                className={`px-5 py-2 rounded-lg text-sm font-medium transition-all ${
-                  billingCycle === 'yearly'
-                    ? 'bg-indigo-600 text-white shadow-md'
-                    : 'text-slate-600 hover:text-slate-900'
-                }`}
-              >
-                年付
-                <span className="ml-1 text-xs text-emerald-500">省 20%</span>
-              </button>
+            <div className="bg-white/[0.02] rounded-xl p-1 border border-white/[0.04] inline-flex">
+              {['月付', '年付'].map((label) => {
+                const active = (label === '年付') === annual
+                return (
+                  <button
+                    key={label}
+                    onClick={() => setAnnual(label === '年付')}
+                    className={`px-5 py-2 rounded-lg text-sm font-medium transition-all ${
+                      active ? 'bg-white text-black' : 'text-[#6b6b6b] hover:text-white'
+                    }`}
+                  >
+                    {label}
+                    {label === '年付' && <span className="ml-1 text-[10px] text-emerald-400">省20%</span>}
+                  </button>
+                )
+              })}
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-white/[0.04] rounded-2xl overflow-hidden max-w-4xl mx-auto">
             {pricingPlans.map((plan, i) => (
-              <ScrollReveal key={plan.name} delay={i * 0.1}>
-                <motion.div
-                  whileHover={{ y: -8, scale: plan.highlighted ? 1.03 : 1.01 }}
-                  className={`relative rounded-3xl p-8 ${
-                    plan.highlighted
-                      ? 'bg-gradient-to-b from-indigo-600 to-purple-700 text-white shadow-2xl shadow-indigo-500/25 ring-4 ring-indigo-500/20'
-                      : 'bg-white text-slate-900 shadow-lg border border-slate-100'
-                  }`}
-                >
+              <ScrollReveal key={plan.name} delay={i * 0.08}>
+                <div className={`bg-[#0d0d0d] p-8 h-full flex flex-col ${
+                  plan.highlighted ? 'ring-1 ring-[#8b5cf6]/30 relative z-10 rounded-2xl' : ''
+                }`}>
                   {plan.highlighted && (
-                    <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 bg-gradient-to-r from-amber-400 to-orange-400 text-slate-900 text-xs font-bold rounded-full shadow-lg">
-                      最受欢迎
-                    </div>
+                    <span className="text-[10px] font-semibold text-[#8b5cf6] mb-3 block">最受欢迎</span>
                   )}
-                  <h3 className={`text-xl font-bold mb-2 ${plan.highlighted ? 'text-white' : 'text-slate-900'}`}>
-                    {plan.name}
-                  </h3>
-                  <p className={`text-sm mb-6 ${plan.highlighted ? 'text-indigo-100' : 'text-slate-500'}`}>
-                    {plan.description}
-                  </p>
+                  <h3 className="text-lg font-bold text-white mb-1">{plan.name}</h3>
+                  <p className="text-xs text-[#525252] mb-6">{plan.description}</p>
                   <div className="mb-6">
-                    <span className={`text-4xl font-extrabold ${plan.highlighted ? 'text-white' : 'text-slate-900'}`}>
-                      ¥{billingCycle === 'yearly' ? Math.round(plan.price * 0.8) : plan.price}
+                    <span className="text-4xl font-extrabold text-white">
+                      ¥{annual ? Math.round(plan.price * 0.8) : plan.price}
                     </span>
-                    <span className={`text-sm ${plan.highlighted ? 'text-indigo-200' : 'text-slate-400'}`}>
-                      {billingCycle === 'yearly' ? '/月（年付）' : plan.period}
-                    </span>
+                    <span className="text-xs text-[#525252]">{annual ? '/月（年付）' : plan.period}</span>
                   </div>
-                  <ul className="space-y-3 mb-8">
+                  <ul className="space-y-2.5 mb-8 flex-1">
                     {plan.features.map((f) => (
-                      <li key={f} className="flex items-center gap-2 text-sm">
-                        <Check
-                          size={16}
-                          className={`flex-shrink-0 ${
-                            plan.highlighted ? 'text-indigo-200' : 'text-emerald-500'
-                          }`}
-                        />
-                        <span className={plan.highlighted ? 'text-indigo-100' : 'text-slate-600'}>{f}</span>
+                      <li key={f} className="flex items-center gap-2 text-xs text-[#a1a1a1]">
+                        <Check size={13} className="text-emerald-500 flex-shrink-0" />
+                        {f}
                       </li>
                     ))}
                   </ul>
                   <button
-                    className={`w-full py-3 rounded-xl font-semibold text-sm transition-all ${
+                    className={`w-full py-2.5 rounded-xl text-sm font-semibold transition-all ${
                       plan.highlighted
-                        ? 'bg-white text-indigo-600 hover:bg-indigo-50 shadow-lg'
-                        : 'bg-slate-900 text-white hover:bg-slate-800'
+                        ? 'bg-white text-black hover:bg-[#e5e5e5]'
+                        : 'bg-white/[0.04] text-white border border-white/[0.08] hover:bg-white/[0.08]'
                     }`}
                   >
                     {plan.cta}
-                    <ArrowRight size={16} className="inline ml-1" />
                   </button>
-                </motion.div>
+                </div>
               </ScrollReveal>
             ))}
           </div>
@@ -225,29 +163,23 @@ export default function SaaS() {
       </section>
 
       {/* FAQ */}
-      <section className="py-24 bg-white">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-32 border-t border-white/[0.04]">
+        <div className="max-w-2xl mx-auto px-6 lg:px-10">
           <ScrollReveal>
-            <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 text-center mb-4">
-              常见问题
-            </h2>
-            <p className="text-slate-500 text-center mb-12">快速了解 CloudFlow</p>
+            <p className="text-xs font-medium text-[#6b6b6b] uppercase tracking-wider mb-3">常见问题</p>
+            <h2 className="text-3xl font-bold text-white mb-12">快速了解</h2>
           </ScrollReveal>
-
-          <div className="space-y-3">
+          <div className="space-y-2">
             {faqs.map((faq, i) => (
-              <ScrollReveal key={i} delay={i * 0.05}>
-                <div className="border border-slate-200 rounded-2xl overflow-hidden">
+              <ScrollReveal key={i} delay={i * 0.04}>
+                <div className="bg-[#0d0d0d] border border-white/[0.04] rounded-2xl overflow-hidden">
                   <button
                     onClick={() => setOpenFaq(openFaq === i ? null : i)}
-                    className="w-full flex items-center justify-between p-5 text-left hover:bg-slate-50 transition-colors"
+                    className="w-full flex items-center justify-between p-5 text-left"
                   >
-                    <span className="font-semibold text-slate-800 pr-4">{faq.question}</span>
-                    <motion.div
-                      animate={{ rotate: openFaq === i ? 180 : 0 }}
-                      transition={{ duration: 0.3 }}
-                    >
-                      <ChevronDown size={20} className="text-slate-400 flex-shrink-0" />
+                    <span className="text-sm font-medium text-white pr-4">{faq.question}</span>
+                    <motion.div animate={{ rotate: openFaq === i ? 180 : 0 }} transition={{ duration: 0.25 }}>
+                      <ChevronDown size={16} className="text-[#525252]" />
                     </motion.div>
                   </button>
                   <AnimatePresence>
@@ -256,10 +188,10 @@ export default function SaaS() {
                         initial={{ height: 0, opacity: 0 }}
                         animate={{ height: 'auto', opacity: 1 }}
                         exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.3 }}
+                        transition={{ duration: 0.25 }}
                         className="overflow-hidden"
                       >
-                        <p className="px-5 pb-5 text-sm text-slate-500 leading-relaxed border-t border-slate-100 pt-4">
+                        <p className="px-5 pb-5 text-sm text-[#6b6b6b] leading-relaxed">
                           {faq.answer}
                         </p>
                       </motion.div>
@@ -272,29 +204,10 @@ export default function SaaS() {
         </div>
       </section>
 
-      {/* Trust badges */}
-      <section className="py-16 bg-slate-50 border-t border-slate-200">
-        <div className="max-w-5xl mx-auto px-4 text-center">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {[
-              { icon: Shield, label: 'SOC 2 认证' },
-              { icon: Zap, label: '99.99% 可用性' },
-              { icon: BarChart3, label: '10万+ 日活用户' },
-              { icon: Cloud, label: '全球 12 个节点' },
-            ].map((item) => (
-              <div key={item.label} className="flex flex-col items-center gap-2">
-                <item.icon size={28} className="text-slate-400" />
-                <span className="text-sm text-slate-500">{item.label}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Disclaimer */}
-      <div className="bg-amber-50 border-b border-amber-200 px-4 py-3 text-center">
-        <p className="text-xs text-amber-700 font-medium">
-          ⚠️ 本页面为 Demo 模板，所有功能、定价和数据均为展示用途，不代表真实产品或服务。
+      <div className="border-t border-white/[0.04] px-6 py-4 text-center">
+        <p className="text-[11px] text-[#525252]">
+          此页面为 Demo 模板。所有功能、定价和数据均为虚构，仅供技术展示用途。
         </p>
       </div>
     </PageTransition>
