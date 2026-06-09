@@ -16,7 +16,7 @@ export default function Corporate() {
         <motion.div style={{ y: py }} className="absolute inset-0">
           <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1920&h=1080&fit=crop&q=80" alt="" className="w-full h-full object-cover" />
         </motion.div>
-        <div className="absolute inset-0 bg-gradient-to-r from-[#070b18] via-[#070b18]/85 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#0a0e1a] via-[#0a0e1a]/85 to-transparent" />
 
         <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 w-full">
           <div className="max-w-2xl">
@@ -39,7 +39,7 @@ export default function Corporate() {
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <ScrollReveal><p className="text-xs font-medium text-blue-400 uppercase tracking-widest mb-3">核心价值观</p><h2 className="text-4xl sm:text-5xl font-extrabold text-white mb-14">驱动我们前行</h2></ScrollReveal>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
-            {values.map((v,i)=>(<ScrollReveal key={v.title} delay={i*0.06}><div className="bg-[#0b1120] border border-white/[0.04] rounded-2xl p-7 text-center hover:border-white/[0.08] hover:bg-[#0f1830] transition-all"><div className="text-4xl mb-4">{v.icon}</div><h3 className="text-base font-bold text-white mb-2">{v.title}</h3><p className="text-xs text-slate-500 leading-relaxed">{v.description}</p></div></ScrollReveal>))}
+            {values.map((v,i)=>(<ScrollReveal key={v.title} delay={i*0.06}><div className="bg-[#111827] border border-white/[0.04] rounded-2xl p-7 text-center hover:border-white/[0.08] hover:bg-[#0f1830] transition-all"><div className="text-4xl mb-4">{v.icon}</div><h3 className="text-base font-bold text-white mb-2">{v.title}</h3><p className="text-xs text-slate-500 leading-relaxed">{v.description}</p></div></ScrollReveal>))}
           </div>
         </div>
       </section>
@@ -53,7 +53,7 @@ export default function Corporate() {
               {timeline.map((e,i)=>(
                 <ScrollReveal key={e.year} delay={i*0.05}>
                   <div className={`relative flex gap-8 ${i%2===0?'md:flex-row':'md:flex-row-reverse'}`}>
-                    <div className="absolute left-3 md:left-1/2 w-2 h-2 bg-blue-500 rounded-full -translate-x-1/2 mt-2 ring-4 ring-[#070b18]" />
+                    <div className="absolute left-3 md:left-1/2 w-2 h-2 bg-blue-500 rounded-full -translate-x-1/2 mt-2 ring-4 ring-[#0a0e1a]" />
                     <div className={`ml-10 md:ml-0 md:w-1/2 ${i%2===0?'md:pr-12 md:text-right':'md:pl-12'}`}>
                       <span className="text-2xl font-extrabold text-white">{e.year}</span>
                       <h3 className="text-sm font-semibold text-white mt-1 mb-1">{e.title}</h3>
@@ -72,7 +72,7 @@ export default function Corporate() {
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <ScrollReveal><p className="text-xs font-medium text-blue-400 uppercase tracking-widest mb-3">管理团队</p><h2 className="text-4xl sm:text-5xl font-extrabold text-white mb-14">核心成员</h2></ScrollReveal>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {teamMembers.map((m,i)=>(<ScrollReveal key={m.name} delay={i*0.06}><div className="bg-[#0b1120] border border-white/[0.04] rounded-2xl p-7 text-center hover:border-white/[0.08] transition-all"><img src={m.avatar} alt="" className="w-24 h-24 rounded-full object-cover mx-auto mb-4 border-2 border-white/[0.04]" /><h3 className="text-sm font-bold text-white mb-0.5">{m.name}</h3><p className="text-[11px] font-medium text-blue-400 mb-2">{m.role}</p><p className="text-[11px] text-slate-500 leading-relaxed">{m.bio}</p></div></ScrollReveal>))}
+            {teamMembers.map((m,i)=>(<ScrollReveal key={m.name} delay={i*0.06}><div className="bg-[#111827] border border-white/[0.04] rounded-2xl p-7 text-center hover:border-white/[0.08] transition-all"><img src={m.avatar} alt="" className="w-24 h-24 rounded-full object-cover mx-auto mb-4 border-2 border-white/[0.04]" /><h3 className="text-sm font-bold text-white mb-0.5">{m.name}</h3><p className="text-[11px] font-medium text-blue-400 mb-2">{m.role}</p><p className="text-[11px] text-slate-500 leading-relaxed">{m.bio}</p></div></ScrollReveal>))}
           </div>
         </div>
       </section>
@@ -95,7 +95,7 @@ export default function Corporate() {
           <div className="grid md:grid-cols-3 gap-4">
             {newsArticles.map((a,i)=>(
               <ScrollReveal key={a.id} delay={i*0.08}>
-                <article className="group bg-[#0b1120] border border-white/[0.04] rounded-2xl overflow-hidden hover:border-white/[0.08] transition-all cursor-pointer">
+                <article className="group bg-[#111827] border border-white/[0.04] rounded-2xl overflow-hidden hover:border-white/[0.08] transition-all cursor-pointer">
                   <div className="aspect-[16/10] overflow-hidden"><img src={a.image} alt="" className="w-full h-full object-cover group-hover:scale-[1.04] transition-transform duration-600" /></div>
                   <div className="p-6">
                     <div className="flex items-center gap-3 mb-3"><span className="text-[10px] font-medium text-blue-400 uppercase">{a.category}</span><span className="text-[10px] text-slate-600 flex items-center gap-1"><Calendar size={10} />{a.date}</span></div>

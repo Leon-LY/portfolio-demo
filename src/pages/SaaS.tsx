@@ -34,7 +34,7 @@ export default function SaaS() {
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.25 }}
             className="mt-16 grid grid-cols-2 sm:grid-cols-4 gap-0.5 bg-white/[0.03] rounded-2xl overflow-hidden max-w-4xl mx-auto">
             {dashboardStats.map(s => (
-              <div key={s.label} className="bg-[#0b1120] p-5 text-left">
+              <div key={s.label} className="bg-[#111827] p-5 text-left">
                 <p className="text-[10px] text-slate-600 uppercase tracking-wider mb-1">{s.label}</p>
                 <p className="text-xl font-bold text-white"><Counter to={s.value} suffix={s.suffix} decimals={s.value%1!==0?2:0} /></p>
                 <p className="text-[10px] text-emerald-400 mt-0.5">{s.change}</p>
@@ -52,7 +52,7 @@ export default function SaaS() {
           <div className="grid md:grid-cols-3 gap-4">
             {saasFeatures.map((f, i) => (
               <ScrollReveal key={f.title} delay={i*0.05}>
-                <div className="bg-[#0b1120] border border-white/[0.04] rounded-2xl p-7 hover:border-white/[0.08] hover:bg-[#0f1830] transition-all duration-300 h-full">
+                <div className="bg-[#111827] border border-white/[0.04] rounded-2xl p-7 hover:border-white/[0.08] hover:bg-[#0f1830] transition-all duration-300 h-full">
                   <div className="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center mb-5">
                     <Zap size={18} className="text-blue-400" />
                   </div>
@@ -86,7 +86,7 @@ export default function SaaS() {
           <div className="grid md:grid-cols-3 gap-4 max-w-4xl mx-auto">
             {pricingPlans.map((p, i) => (
               <ScrollReveal key={p.name} delay={i*0.08}>
-                <div className={`bg-[#0b1120] border rounded-2xl p-8 h-full flex flex-col transition-all ${p.highlighted ? 'border-blue-500/30 ring-1 ring-blue-500/20' : 'border-white/[0.04]'}`}>
+                <div className={`bg-[#111827] border rounded-2xl p-8 h-full flex flex-col transition-all ${p.highlighted ? 'border-blue-500/30 ring-1 ring-blue-500/20' : 'border-white/[0.04]'}`}>
                   {p.highlighted && <span className="text-[10px] font-semibold text-blue-400 mb-3 block">最受欢迎</span>}
                   <h3 className="text-lg font-bold text-white mb-1">{p.name}</h3>
                   <p className="text-xs text-slate-600 mb-6">{p.description}</p>
@@ -108,7 +108,7 @@ export default function SaaS() {
           <div className="space-y-2">
             {faqs.map((f, i) => (
               <ScrollReveal key={i} delay={i*0.04}>
-                <div className="bg-[#0b1120] border border-white/[0.04] rounded-2xl overflow-hidden">
+                <div className="bg-[#111827] border border-white/[0.04] rounded-2xl overflow-hidden">
                   <button onClick={() => setOpenFaq(openFaq===i?null:i)} className="w-full flex items-center justify-between p-5 text-left">
                     <span className="text-sm font-medium text-white pr-4">{f.question}</span>
                     <motion.div animate={{ rotate: openFaq===i?180:0 }} transition={{ duration: 0.25 }}><ChevronDown size={16} className="text-slate-500" /></motion.div>

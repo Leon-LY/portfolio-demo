@@ -121,7 +121,7 @@ export default function Home() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-0.5 bg-white/[0.03] rounded-2xl overflow-hidden">
             {skills.map((s, i) => (
               <ScrollReveal key={s.name} delay={i * 0.04}>
-                <div className="bg-[#0b1120] p-6 lg:p-7 hover:bg-[#0f1830] transition-colors duration-300 group">
+                <div className="bg-[#111827] p-6 lg:p-7 hover:bg-[#0f1830] transition-colors duration-300 group">
                   <div className="flex items-end justify-between mb-4">
                     <span className="text-sm font-semibold text-white">{s.name}</span>
                     <span className="text-xs text-slate-600">{s.level}%</span>
@@ -147,18 +147,22 @@ export default function Home() {
             <p className="text-sm text-slate-500 mb-14">智慧城市 · 政务数字化 · 数据可视化</p>
           </ScrollReveal>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
             {realProjects.map((p, i) => (
               <ScrollReveal key={p.id} delay={i * 0.07}>
                 <Link to={p.link}>
-                  <TiltCard className="group bg-[#0b1120] rounded-2xl border border-emerald-500/10 hover:border-emerald-500/20 transition-all duration-300 overflow-hidden h-full flex flex-col">
-                    {/* Gradient placeholder instead of Unsplash */}
-                    <div className="aspect-[16/9] bg-gradient-to-br from-emerald-500/20 via-teal-500/10 to-cyan-500/20 flex items-center justify-center relative overflow-hidden">
-                      <div className="absolute inset-0 flex items-center justify-center">
+                  <TiltCard className="group bg-[#111827] rounded-2xl border border-white/[0.05] hover:border-emerald-500/20 transition-all duration-300 overflow-hidden h-full flex flex-col">
+                    {p.images && p.images[0] ? (
+                      <div className="aspect-[16/9] overflow-hidden relative">
+                        <img src={p.images[0]} alt={p.title} className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-700" loading="lazy" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#111827] to-transparent opacity-40" />
+                        <span className="absolute top-3 left-3 text-[10px] font-bold text-emerald-400 bg-emerald-400/10 backdrop-blur-sm px-2.5 py-1 rounded-lg">真实项目</span>
+                      </div>
+                    ) : (
+                      <div className="aspect-[16/9] bg-gradient-to-br from-emerald-500/20 via-teal-500/10 to-cyan-500/20 flex items-center justify-center">
                         <span className="text-6xl opacity-30">{['🏘️','📊','📱','🏢','🧩','🔐'][i]}</span>
                       </div>
-                      <span className="absolute top-3 left-3 text-[10px] font-bold text-emerald-400 bg-emerald-400/10 backdrop-blur-sm px-2.5 py-1 rounded-lg">真实项目</span>
-                    </div>
+                    )}
                     <div className="p-5 flex-1 flex flex-col">
                       <div className="flex items-center justify-between mb-2">
                         <span className="text-[10px] font-medium text-emerald-400 uppercase tracking-wider">{p.category}</span>
@@ -191,11 +195,9 @@ export default function Home() {
             {demoProjects.map((p, i) => (
               <ScrollReveal key={p.id} delay={i * 0.07}>
                 <Link to={p.link}>
-                  <TiltCard className="group bg-[#0b1120] rounded-2xl border border-blue-500/10 hover:border-blue-500/20 transition-all duration-300 overflow-hidden h-full flex flex-col">
-                    <div className="aspect-[4/3] bg-gradient-to-br from-blue-500/20 via-violet-500/10 to-purple-500/20 flex items-center justify-center relative overflow-hidden">
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <span className="text-4xl opacity-30">{['📈','📊','🛍️','🏢'][i]}</span>
-                      </div>
+                  <TiltCard className="group bg-[#111827] rounded-2xl border border-white/[0.04] hover:border-blue-500/20 transition-all duration-300 overflow-hidden h-full flex flex-col">
+                    <div className="aspect-[4/3] bg-gradient-to-br from-blue-500/15 via-violet-500/8 to-slate-700/20 flex items-center justify-center relative">
+                      <span className="text-3xl opacity-25">{['📈','📊','🛍️','🏢'][i]}</span>
                       <span className="absolute top-3 left-3 text-[10px] font-bold text-blue-400 bg-blue-400/10 backdrop-blur-sm px-2.5 py-1 rounded-lg">Demo</span>
                     </div>
                     <div className="p-4 flex-1 flex flex-col">
@@ -221,7 +223,7 @@ export default function Home() {
       <section className="pb-32">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="relative bg-gradient-to-br from-blue-600/20 to-violet-600/20 rounded-3xl border border-blue-500/10 overflow-hidden p-10 sm:p-16 text-center">
-            <div className="absolute inset-0 bg-[#0b1120]/60 backdrop-blur-sm" />
+            <div className="absolute inset-0 bg-[#111827]/60 backdrop-blur-sm" />
             <div className="relative z-10">
               <ScrollReveal>
                 <h2 className="text-3xl sm:text-4xl font-extrabold text-white mb-4">有项目要聊？</h2>

@@ -26,7 +26,7 @@ export default function Navbar() {
 
   return (
     <nav className={`fixed top-0 inset-x-0 z-50 transition-all duration-500 ${
-      scrolled ? 'bg-[#070b18]/85 backdrop-blur-2xl border-b border-white/[0.05]' : ''
+      scrolled ? 'bg-[#0a0e1a]/85 backdrop-blur-2xl border-b border-white/[0.05]' : ''
     }`}>
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
         <Link to="/" className="text-lg font-extrabold tracking-tight text-white">
@@ -58,7 +58,7 @@ export default function Navbar() {
       <AnimatePresence>
         {open && (
           <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }} className="lg:hidden bg-[#0b1120]/95 backdrop-blur-xl border-b border-white/[0.05]">
+            exit={{ opacity: 0, height: 0 }} className="lg:hidden bg-[#111827]/95 backdrop-blur-xl border-b border-white/[0.05]">
             <div className="px-4 py-3 space-y-1">
               {links.map((l, i) => (
                 <motion.div key={l.to} initial={{ opacity: 0, x: -12 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.03 }}>

@@ -6,6 +6,7 @@ import SaaS from './pages/SaaS'
 import Ecommerce from './pages/Ecommerce'
 import MobileApp from './pages/MobileApp'
 import Corporate from './pages/Corporate'
+import ProjectDetail from './pages/ProjectDetail'
 
 export default function App() {
   return (
@@ -17,6 +18,7 @@ export default function App() {
         <Route path="/ecommerce" element={<Ecommerce />} />
         <Route path="/mobile-app" element={<MobileApp />} />
         <Route path="/corporate" element={<Corporate />} />
+        <Route path="/project/:id" element={<ProjectDetail />} />
       </Route>
     </Routes>
   )

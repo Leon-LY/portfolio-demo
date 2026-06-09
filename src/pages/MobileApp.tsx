@@ -41,7 +41,7 @@ export default function MobileApp() {
               <div className="relative">
                 <div className="w-72 h-[560px] bg-[#0f172a] rounded-[2.5rem] p-3 border border-white/[0.06] shadow-2xl shadow-blue-500/5">
                   <div className="absolute top-0 left-1/2 -translate-x-1/2 w-24 h-5 bg-[#0f172a] rounded-b-2xl z-10" />
-                  <div className="w-full h-full bg-[#070b18] rounded-[2.2rem] overflow-hidden">
+                  <div className="w-full h-full bg-[#0a0e1a] rounded-[2.2rem] overflow-hidden">
                     <AnimatePresence mode="wait">
                       <motion.img key={scr} src={screenshots[scr].url} alt={screenshots[scr].alt}
                         initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }}
@@ -59,7 +59,7 @@ export default function MobileApp() {
       <section className="py-20 border-t border-white/[0.04]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-0.5 bg-white/[0.03] rounded-2xl overflow-hidden">
-            {userStats.map((s,i)=>(<ScrollReveal key={s.label} delay={i*0.06}><div className="bg-[#0b1120] p-6 text-center"><div className="text-2xl mb-2">{s.icon}</div><p className="text-xl font-bold text-white">{s.value}</p><p className="text-[11px] text-slate-600 mt-1 uppercase tracking-wider">{s.label}</p></div></ScrollReveal>))}
+            {userStats.map((s,i)=>(<ScrollReveal key={s.label} delay={i*0.06}><div className="bg-[#111827] p-6 text-center"><div className="text-2xl mb-2">{s.icon}</div><p className="text-xl font-bold text-white">{s.value}</p><p className="text-[11px] text-slate-600 mt-1 uppercase tracking-wider">{s.label}</p></div></ScrollReveal>))}
           </div>
         </div>
       </section>
@@ -84,7 +84,7 @@ export default function MobileApp() {
               <AnimatePresence mode="wait">
                 <motion.div key={feat} initial={{ opacity: 0, scale: 0.97 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.97 }} transition={{ duration: 0.3 }}
                   className="w-64 h-[480px] bg-[#0f172a] rounded-[2.5rem] p-2.5 border border-white/[0.06] shadow-xl">
-                  <div className="w-full h-full bg-[#070b18] rounded-[2rem] overflow-hidden"><img src={appFeatures[feat].image} alt="" className="w-full h-full object-cover" /></div>
+                  <div className="w-full h-full bg-[#0a0e1a] rounded-[2rem] overflow-hidden"><img src={appFeatures[feat].image} alt="" className="w-full h-full object-cover" /></div>
                 </motion.div>
               </AnimatePresence>
             </div>
@@ -98,7 +98,7 @@ export default function MobileApp() {
           <div className="grid md:grid-cols-3 gap-4">
             {testimonials.map((t,i)=>(
               <ScrollReveal key={t.name} delay={i*0.06}>
-                <div className="bg-[#0b1120] border border-white/[0.04] rounded-2xl p-7 hover:border-white/[0.08] transition-all">
+                <div className="bg-[#111827] border border-white/[0.04] rounded-2xl p-7 hover:border-white/[0.08] transition-all">
                   <div className="flex gap-1 mb-4">{Array.from({length:5}).map((_,j)=><Star key={j} size={12} className="text-amber-400 fill-amber-400" />)}</div>
                   <p className="text-sm text-slate-500 leading-relaxed mb-5 italic">&ldquo;{t.content}&rdquo;</p>
                   <div className="flex items-center gap-3"><img src={t.avatar} alt="" className="w-9 h-9 rounded-full object-cover" /><div><p className="text-xs font-semibold text-white">{t.name}</p><p className="text-[11px] text-slate-600">{t.role}</p></div></div>
@@ -112,7 +112,7 @@ export default function MobileApp() {
       <section className="pb-28">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="bg-gradient-to-br from-emerald-600/10 to-teal-600/10 border border-emerald-500/10 rounded-3xl p-12 lg:p-16 text-center relative overflow-hidden">
-            <div className="absolute inset-0 bg-[#0b1120]/70 backdrop-blur-sm" />
+            <div className="absolute inset-0 bg-[#111827]/70 backdrop-blur-sm" />
             <div className="relative z-10">
               <ScrollReveal><h2 className="text-3xl sm:text-4xl font-extrabold text-white mb-4">开启健康之旅</h2><p className="text-slate-400 mb-8 max-w-md mx-auto">免费下载，含 14 天高级功能试用。</p>
                 <div className="flex justify-center gap-3">

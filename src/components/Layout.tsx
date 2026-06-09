@@ -5,7 +5,7 @@ import Footer from './Footer'
 
 export default function Layout() {
   return (
-    <div className="min-h-screen bg-[#070b18] text-[#e2e8f0]">
+    <div className="min-h-screen bg-[#0a0e1a] text-[#e2e8f0]">
       <Navbar />
       <main>
         <AnimatePresence mode="wait">

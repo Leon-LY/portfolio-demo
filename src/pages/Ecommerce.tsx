@@ -24,7 +24,7 @@ export default function Ecommerce() {
           {/* Gallery */}
           <div>
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6 }}
-              className="relative bg-[#0b1120] rounded-3xl overflow-hidden aspect-square border border-white/[0.04]">
+              className="relative bg-[#111827] rounded-3xl overflow-hidden aspect-square border border-white/[0.04]">
               <AnimatePresence mode="wait">
                 <motion.img key={img} src={imgs[img]?.url || productImages[0].url} alt={product.name}
                   initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }}
@@ -66,7 +66,7 @@ export default function Ecommerce() {
               <p className="text-xs font-medium text-slate-400 mb-3">颜色 — <span className="text-white">{color}</span></p>
               <div className="flex gap-2.5">{variants.map(v => (
                 <button key={v.color} onClick={()=>{setColor(v.color);setImg(0)}} style={{backgroundColor:v.colorCode}}
-                  className={`w-9 h-9 rounded-full transition-all ${color===v.color?'ring-2 ring-offset-2 ring-white ring-offset-[#070b18]':'hover:scale-110'}`} />
+                  className={`w-9 h-9 rounded-full transition-all ${color===v.color?'ring-2 ring-offset-2 ring-white ring-offset-[#0a0e1a]':'hover:scale-110'}`} />
               ))}</div>
             </div>
 
@@ -105,7 +105,7 @@ export default function Ecommerce() {
           <p className="text-xs font-medium text-blue-400 uppercase tracking-widest mb-6">用户评价</p>
           <div className="grid md:grid-cols-2 gap-3">
             {reviews.map(r => (
-              <div key={r.id} className="bg-[#0b1120] border border-white/[0.04] rounded-2xl p-6">
+              <div key={r.id} className="bg-[#111827] border border-white/[0.04] rounded-2xl p-6">
                 <div className="flex items-center gap-3 mb-3"><img src={r.avatar} alt="" className="w-9 h-9 rounded-full object-cover" />
                   <div><p className="text-sm font-semibold text-white">{r.user}</p>
                     <div className="flex items-center gap-1.5">
@@ -127,7 +127,7 @@ export default function Ecommerce() {
           <p className="text-xs font-medium text-blue-400 uppercase tracking-widest mb-6">相关推荐</p>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
             {relatedProducts.map(rp => (
-              <div key={rp.id} className="group bg-[#0b1120] border border-white/[0.04] rounded-2xl overflow-hidden hover:border-white/[0.08] transition-all cursor-pointer">
+              <div key={rp.id} className="group bg-[#111827] border border-white/[0.04] rounded-2xl overflow-hidden hover:border-white/[0.08] transition-all cursor-pointer">
                 <div className="aspect-square overflow-hidden"><img src={rp.image} alt={rp.name} className="w-full h-full object-cover group-hover:scale-[1.04] transition-transform duration-500" /></div>
                 <div className="p-4"><h4 className="text-sm font-medium text-white mb-1">{rp.name}</h4>
                   <div className="flex items-center gap-1 mb-2"><Star size={11} className="text-amber-400 fill-amber-400" /><span className="text-[11px] text-slate-600">{rp.rating}</span></div>

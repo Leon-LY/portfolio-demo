@@ -60,7 +60,7 @@ export default function Marketing() {
             {/* Chart mock */}
             <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.9, delay: 0.2 }}
               className="hidden lg:block">
-              <div className="bg-[#0b1120] border border-white/[0.05] rounded-3xl p-8">
+              <div className="bg-[#111827] border border-white/[0.05] rounded-3xl p-8">
                 <div className="flex items-center justify-between mb-8">
                   <div><p className="text-sm font-semibold text-white">营销 ROI 趋势</p><p className="text-xs text-slate-600">过去 12 个月</p></div>
                   <span className="text-[10px] font-medium text-emerald-400 bg-emerald-400/10 px-2.5 py-1 rounded-full">↑ 168%</span>
@@ -89,7 +89,7 @@ export default function Marketing() {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
             {services.map((s, i) => (
               <ScrollReveal key={s.title} delay={i * 0.06}>
-                <div className="bg-[#0b1120] border border-white/[0.04] rounded-2xl p-7 hover:border-white/[0.08] hover:bg-[#0f1830] transition-all duration-300 group h-full flex flex-col">
+                <div className="bg-[#111827] border border-white/[0.04] rounded-2xl p-7 hover:border-white/[0.08] hover:bg-[#0f1830] transition-all duration-300 group h-full flex flex-col">
                   <div className="text-3xl mb-4">{s.icon}</div>
                   <h3 className="text-base font-bold text-white mb-2">{s.title}</h3>
                   <p className="text-sm text-slate-500 leading-relaxed flex-1">{s.description}</p>
@@ -122,7 +122,7 @@ export default function Marketing() {
 
           <AnimatePresence mode="wait">
             <motion.div key={activeCase} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.3 }} className="bg-[#0b1120] border border-white/[0.05] rounded-3xl overflow-hidden">
+              transition={{ duration: 0.3 }} className="bg-[#111827] border border-white/[0.05] rounded-3xl overflow-hidden">
               <div className="grid lg:grid-cols-2">
                 <div className="p-8 lg:p-12">
                   <span className="text-[10px] font-medium text-blue-400 uppercase tracking-wider">{caseStudies[activeCase].industry}</span>
@@ -161,7 +161,7 @@ export default function Marketing() {
           <div className="max-w-3xl">
             <AnimatePresence mode="wait">
               <motion.blockquote key={activeTestimonial} initial={{ opacity: 0, x: 15 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -15 }}
-                transition={{ duration: 0.3 }} className="bg-[#0b1120] border border-white/[0.05] rounded-3xl p-8 lg:p-12">
+                transition={{ duration: 0.3 }} className="bg-[#111827] border border-white/[0.05] rounded-3xl p-8 lg:p-12">
                 <p className="text-lg lg:text-xl text-white leading-relaxed mb-8">&ldquo;{testimonials[activeTestimonial].content}&rdquo;</p>
                 <div className="flex items-center gap-4">
                   <img src={testimonials[activeTestimonial].avatar} alt="" className="w-12 h-12 rounded-full object-cover" />
@@ -190,7 +190,7 @@ export default function Marketing() {
       <section className="pb-28">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="bg-gradient-to-br from-blue-600/10 to-violet-600/10 border border-blue-500/10 rounded-3xl p-12 lg:p-16 text-center relative overflow-hidden">
-            <div className="absolute inset-0 bg-[#0b1120]/70 backdrop-blur-sm" />
+            <div className="absolute inset-0 bg-[#111827]/70 backdrop-blur-sm" />
             <div className="relative z-10">
               <ScrollReveal>
                 <h2 className="text-3xl sm:text-4xl font-extrabold text-white mb-4">准备好加速增长？</h2>
