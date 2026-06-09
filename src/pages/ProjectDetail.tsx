@@ -1,6 +1,7 @@
+import { useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
-import { motion } from 'framer-motion'
-import { ArrowLeft, Check } from 'lucide-react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { ArrowLeft, Check, ChevronLeft, ChevronRight } from 'lucide-react'
 import PageTransition from '../components/PageTransition'
 import ScrollReveal from '../components/ScrollReveal'
 import { realProjects } from '../data/projects'
@@ -54,24 +55,11 @@ export default function ProjectDetail() {
         </div>
       </section>
 
-      {/* Image Gallery */}
+      {/* Image Carousel */}
       {project.images && project.images.length > 0 && (
         <section className="pb-16">
-          <div className="max-w-7xl mx-auto px-6 lg:px-8">
-            <div className="grid gap-4">
-              {project.images.map((img, i) => (
-                <ScrollReveal key={img} delay={i * 0.1}>
-                  <div className="bg-[#111827] rounded-2xl border border-white/[0.05] overflow-hidden">
-                    <img
-                      src={img}
-                      alt={`${project.title} 截图 ${i + 1}`}
-                      className="w-full h-auto object-cover"
-                      loading="lazy"
-                    />
-                  </div>
-                </ScrollReveal>
-              ))}
-            </div>
+          <div className="max-w-5xl mx-auto px-6 lg:px-8">
+            <ImageCarousel images={project.images} title={project.title} />
           </div>
         </section>
       )}
@@ -129,5 +117,65 @@ export default function ProjectDetail() {
         </div>
       </section>
     </PageTransition>
+  )
+}
+
+/* ── Image Carousel ── */
+function ImageCarousel({ images, title }: { images: string[]; title: string }) {
+  const [active, setActive] = useState(0)
+
+  const prev = () => setActive(a => (a - 1 + images.length) % images.length)
+  const next = () => setActive(a => (a + 1) % images.length)
+
+  return (
+    <div>
+      {/* Main image */}
+      <div className="relative bg-[#111827] rounded-2xl border border-white/[0.05] overflow-hidden mb-4">
+        <AnimatePresence mode="wait">
+          <motion.img
+            key={active}
+            src={images[active]}
+            alt={`${title} ${active + 1}`}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="w-full max-h-[500px] object-contain bg-[#0a0e1a]"
+          />
+        </AnimatePresence>
+
+        {images.length > 1 && (
+          <>
+            <button onClick={prev} className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/50 backdrop-blur-md border border-white/10 flex items-center justify-center text-white hover:bg-black/70 transition-all">
+              <ChevronLeft size={20} />
+            </button>
+            <button onClick={next} className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/50 backdrop-blur-md border border-white/10 flex items-center justify-center text-white hover:bg-black/70 transition-all">
+              <ChevronRight size={20} />
+            </button>
+            {/* Counter */}
+            <div className="absolute bottom-3 right-3 px-3 py-1.5 bg-black/50 backdrop-blur-md rounded-lg text-xs text-white font-medium">
+              {active + 1} / {images.length}
+            </div>
+          </>
+        )}
+      </div>
+
+      {/* Thumbnails */}
+      {images.length > 1 && (
+        <div className="flex gap-2 overflow-x-auto pb-1">
+          {images.map((img, i) => (
+            <button
+              key={img}
+              onClick={() => setActive(i)}
+              className={`flex-shrink-0 w-20 h-14 rounded-lg overflow-hidden border-2 transition-all ${
+                i === active ? 'border-blue-500 opacity-100' : 'border-transparent opacity-50 hover:opacity-80'
+              }`}
+            >
+              <img src={img} alt="" className="w-full h-full object-cover" />
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
   )
 }
