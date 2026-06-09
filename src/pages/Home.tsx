@@ -76,15 +76,29 @@ function ParticleNetwork() {
 
 /* ── Cursor glow ── */
 function CursorGlow() {
-  const [pos, setPos] = useState({ x: 0.5, y: 0.5 })
+  const glowRef = useRef<HTMLDivElement>(null)
+  const targetRef = useRef({ x: 0.5, y: 0.5 })
+  const currentRef = useRef({ x: 0.5, y: 0.5 })
+
   useEffect(() => {
-    const h = (e: MouseEvent) => setPos({ x: e.clientX / window.innerWidth, y: e.clientY / window.innerHeight })
+    const h = (e: MouseEvent) => { targetRef.current = { x: e.clientX / window.innerWidth, y: e.clientY / window.innerHeight } }
     window.addEventListener('mousemove', h, { passive: true })
-    return () => window.removeEventListener('mousemove', h)
+    let anim: number
+    const tick = () => {
+      const t = targetRef.current; const c = currentRef.current
+      c.x += (t.x - c.x) * 0.08; c.y += (t.y - c.y) * 0.08
+      if (glowRef.current) {
+        glowRef.current.style.left = `${c.x * 100}%`
+        glowRef.current.style.top = `${c.y * 100}%`
+      }
+      anim = requestAnimationFrame(tick)
+    }
+    anim = requestAnimationFrame(tick)
+    return () => { cancelAnimationFrame(anim); window.removeEventListener('mousemove', h) }
   }, [])
   return (
     <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 0 }}>
-      <div className="absolute w-[700px] h-[700px] rounded-full" style={{ background: 'radial-gradient(circle, rgba(99,102,241,0.2) 0%, rgba(139,92,246,0.08) 35%, transparent 65%)', left: `${pos.x*100}%`, top: `${pos.y*100}%`, transform: 'translate(-50%,-50%)', transition: 'left 0.3s ease-out, top 0.3s ease-out' }} />
+      <div ref={glowRef} className="absolute w-[700px] h-[700px] rounded-full will-change-transform" style={{ background: 'radial-gradient(circle, rgba(99,102,241,0.2) 0%, rgba(139,92,246,0.08) 35%, transparent 65%)', left: '50%', top: '50%', transform: 'translate(-50%,-50%)' }} />
       <div className="absolute top-0 left-1/4 w-[500px] h-[500px] rounded-full bg-blue-500/4 blur-[140px]" />
       <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] rounded-full bg-violet-500/4 blur-[120px]" />
     </div>
@@ -205,7 +219,10 @@ export default function Home() {
       <div className="relative z-[5] h-32 -mt-32 bg-gradient-to-b from-transparent to-[#0a0e1a] pointer-events-none" />
 
       {/* ═══════ SERVICES ═══════ */}
-      <section id="services" className="relative z-10 py-24 border-t border-white/[0.04] bg-[#0a0e1a]">
+      <section id="services" className="relative z-10 py-24 border-t border-white/[0.04] bg-[#0a0e1a] overflow-hidden">
+        {/* Decorative orbs */}
+        <div className="absolute top-20 right-10 w-64 h-64 rounded-full bg-blue-500/3 blur-[100px] animate-pulse-glow pointer-events-none" />
+        <div className="absolute bottom-10 left-10 w-48 h-48 rounded-full bg-violet-500/3 blur-[80px] animate-pulse-glow pointer-events-none" style={{ animationDelay: '1.2s' }} />
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <ScrollReveal>
             <p className="text-xs font-medium text-blue-400 uppercase tracking-widest mb-3">服务方向</p>
@@ -225,7 +242,9 @@ export default function Home() {
       </section>
 
       {/* ═══════ 真实项目 ═══════ */}
-      <section id="portfolio" className="pb-16">
+      <section id="portfolio" className="relative pb-16 overflow-hidden">
+        <div className="absolute top-40 -left-20 w-72 h-72 rounded-full bg-blue-500/2 blur-[120px] pointer-events-none" />
+        <div className="absolute bottom-40 -right-20 w-80 h-80 rounded-full bg-violet-500/2 blur-[130px] pointer-events-none" />
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <ScrollReveal>
             <div className="flex items-center gap-3 mb-3">
