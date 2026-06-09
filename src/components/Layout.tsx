@@ -12,7 +12,7 @@ function ScrollToTop() {
 
 export default function Layout() {
   return (
-    <div className="min-h-screen bg-[#0a0e1a] text-[#e2e8f0]">
+    <div className="min-h-screen text-[#e2e8f0]">
       <ScrollToTop />
       <Navbar />
       <main>
