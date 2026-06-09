@@ -1,73 +1,58 @@
-# React + TypeScript + Vite
+# Leon · 独立全栈开发者 — 个人作品集
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> 从数据大屏到企业级应用，交付可靠的技术方案。
 
-Currently, two official plugins are available:
+**[在线预览](http://49.232.49.175)** · **[后台管理](http://49.232.49.175/admin)**
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## 技术栈
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+React 19 · TypeScript · Tailwind CSS 3 · Framer Motion · Lucide Icons · Vite 8
 
-## Expanding the ESLint configuration
+## 项目内容
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### 真实项目（6个）
+智慧社区平台 · 荣成市城市大脑 · 远见 FarSight · 方外设计 · 经济综合运行平台 · 河湖湾长制
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### Demo 模板（8个）
+营销网站 · SaaS 产品 · 电商平台 · 移动 App · 企业官网 · 监控大屏 · API 文档 · 后台管理
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## 本地运行
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
+npm run dev        # http://localhost:5173
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 构建部署
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm run build      # 输出到 dist/
 ```
+
+部署到 Nginx 静态服务器，配置 SPA fallback：
+
+```nginx
+location / {
+    try_files $uri $uri/ /index.html;
+}
+```
+
+## 后台管理
+
+访问 `/admin` 可编辑网站全部内容：个人信息、服务方向、项目详情、合作流程、FAQ 等。数据保存在浏览器 localStorage。
+
+## 项目结构
+
+```
+src/
+├── components/    # 通用组件（导航、页脚、动画、计数器等）
+├── pages/         # 页面组件（首页、项目详情、8个Demo、后台管理、404）
+├── data/          # 数据层（config.ts 配置 + projects.ts 项目 + adminStore.ts 管理）
+└── index.css      # 全局样式 + 动画网格背景
+```
+
+## License
+
+MIT · 仅供技术展示
