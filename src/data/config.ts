@@ -20,7 +20,7 @@ export const personalInfo = {
 export const services = [
   {
     title: '全栈应用开发',
-    desc: '从企业官网到复杂后台系统，前端到后端到部署的完整技术方案。覆盖 Vue / React / SpringBoot / Node.js 全栈能力。',
+    desc: '企业官网、后台管理系统、API 服务。Vue / React / SpringBoot / Node.js，前后端到部署均可独立完成。',
   },
   {
     title: '数据可视化',

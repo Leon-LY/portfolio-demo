@@ -8,6 +8,9 @@ import MobileApp from './pages/MobileApp'
 import Corporate from './pages/Corporate'
 import ProjectDetail from './pages/ProjectDetail'
 import Admin from './pages/Admin'
+import Dashboard from './pages/Dashboard'
+import ApiDocs from './pages/ApiDocs'
+import AdminDemo from './pages/AdminDemo'
 
 export default function App() {
   return (
@@ -20,6 +23,9 @@ export default function App() {
         <Route path="/ecommerce" element={<Ecommerce />} />
         <Route path="/mobile-app" element={<MobileApp />} />
         <Route path="/corporate" element={<Corporate />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/api-docs" element={<ApiDocs />} />
+        <Route path="/admin-demo" element={<AdminDemo />} />
         <Route path="/project/:id" element={<ProjectDetail />} />
       </Route>
     </Routes>

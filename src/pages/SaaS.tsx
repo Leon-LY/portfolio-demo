@@ -64,7 +64,7 @@ export default function SaaS() {
               用数据<br /><span className="bg-gradient-to-r from-blue-500 to-violet-500 bg-clip-text text-transparent">驱动决策</span>
             </h1>
             <p className="text-base text-slate-400 leading-relaxed max-w-lg mx-auto mb-8">
-              AI 驱动的智能分析引擎。实时处理海量数据，日活 10 万+，查询响应低于 100ms。
+              实时分析平台，日活用户 10 万+，查询响应低于 100ms。
             </p>
             <div className="flex justify-center gap-3">
               <button className="px-6 py-3 bg-gradient-to-r from-blue-600 to-violet-600 text-white text-sm font-semibold rounded-xl hover:shadow-xl hover:shadow-blue-500/20 transition-all inline-flex items-center gap-2">开始试用 <ArrowUpRight size={16} /></button>
@@ -89,7 +89,7 @@ export default function SaaS() {
       {/* ═══ Features ═══ */}
       <section className="py-24 border-t border-white/[0.04]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <ScrollReveal><p className="text-xs font-medium text-blue-400 uppercase tracking-widest mb-3">产品功能</p><h2 className="text-3xl sm:text-4xl font-extrabold text-white mb-12">一站式数据平台</h2></ScrollReveal>
+          <ScrollReveal><p className="text-xs font-medium text-blue-400 uppercase tracking-widest mb-3">产品功能</p><h2 className="text-3xl sm:text-4xl font-extrabold text-white mb-12">平台能力</h2></ScrollReveal>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
             {features.map((f, i) => (
               <ScrollReveal key={f.title} delay={i*0.05}>

@@ -1,9 +1,61 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { ArrowLeft, Save, RotateCcw, Download, Plus, Trash2, Edit3, Eye } from 'lucide-react'
+import { useRef } from 'react'
+import { ArrowLeft, Save, RotateCcw, Download, Plus, Trash2, Edit3, Eye, Upload, X } from 'lucide-react'
 import { loadAdminData, saveAdminData, resetAdminData, downloadJSON } from '../data/adminStore'
 import type { AdminData } from '../data/adminStore'
 import type { Project } from '../data/projects'
+
+/** Image uploader — reads files as data URLs */
+function ImageUploader({ images, onChange }: { images: string[]; onChange: (imgs: string[]) => void }) {
+  const fileRef = useRef<HTMLInputElement>(null)
+
+  const handleFiles = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files
+    if (!files) return
+    const readers: Promise<string>[] = []
+    for (let i = 0; i < files.length; i++) {
+      readers.push(new Promise(resolve => {
+        const reader = new FileReader()
+        reader.onload = () => resolve(reader.result as string)
+        reader.readAsDataURL(files[i])
+      }))
+    }
+    Promise.all(readers).then(urls => onChange([...images, ...urls]))
+    if (fileRef.current) fileRef.current.value = ''
+  }
+
+  const removeImage = (idx: number) => {
+    onChange(images.filter((_, i) => i !== idx))
+  }
+
+  return (
+    <div>
+      <span className="text-[10px] text-slate-500 mb-2 block">项目图片（点击上传或拖入文件）</span>
+      <div className="flex flex-wrap gap-2 mb-3">
+        {images.map((img, i) => (
+          <div key={i} className="relative w-20 h-14 rounded-lg overflow-hidden border border-white/[0.06] group">
+            <img src={img} alt="" className="w-full h-full object-cover" />
+            <button onClick={() => removeImage(i)} className="absolute top-0.5 right-0.5 w-5 h-5 rounded-full bg-black/60 flex items-center justify-center text-white/60 hover:text-white hover:bg-red-500/80 transition-all opacity-0 group-hover:opacity-100"><X size={10} /></button>
+          </div>
+        ))}
+        <button onClick={() => fileRef.current?.click()} className="w-20 h-14 rounded-lg border border-dashed border-white/[0.1] flex items-center justify-center text-slate-600 hover:text-white hover:border-white/[0.2] transition-all">
+          <Upload size={14} />
+        </button>
+      </div>
+      <input ref={fileRef} type="file" accept="image/*" multiple onChange={handleFiles} className="hidden" />
+      <p className="text-[10px] text-slate-600">图片以 Data URL 存储。大图请用路径：</p>
+      <textarea rows={2} value={images.filter(i => !i.startsWith('data:')).join('\n')}
+        onChange={e => {
+          const paths = e.target.value.split('\n').filter(Boolean)
+          const dataUrls = images.filter(i => i.startsWith('data:'))
+          onChange([...dataUrls, ...paths])
+        }}
+        className="w-full px-3 py-2 bg-white/[0.04] border border-white/[0.06] rounded-lg text-xs text-white focus:outline-none focus:border-blue-500/50 resize-none font-mono mt-1"
+        placeholder="或输入图片路径：/projects/my-image.png" />
+    </div>
+  )
+}
 
 type Tab = 'personal' | 'hero' | 'services' | 'projects' | 'contact'
 
@@ -229,9 +281,7 @@ export default function Admin() {
                       <label className="block"><span className="text-[10px] text-slate-500 mb-1 block">技术栈（逗号分隔）</span>
                         <input value={p.tech.join(', ')} onChange={e => update({ allProjects: { ...data.allProjects, [p.id]: { ...p, tech: e.target.value.split(',').map(t => t.trim()).filter(Boolean) } } })}
                           className="w-full px-3 py-2 bg-white/[0.04] border border-white/[0.06] rounded-lg text-sm text-white focus:outline-none focus:border-blue-500/50 font-mono" /></label>
-                      <label className="block"><span className="text-[10px] text-slate-500 mb-1 block">图片路径（每行一个）</span>
-                        <textarea rows={3} value={(p.images || []).join('\n')} onChange={e => update({ allProjects: { ...data.allProjects, [p.id]: { ...p, images: e.target.value.split('\n').filter(Boolean) } } })}
-                          className="w-full px-3 py-2 bg-white/[0.04] border border-white/[0.06] rounded-lg text-sm text-white focus:outline-none focus:border-blue-500/50 resize-none font-mono" /></label>
+                      <ImageUploader images={p.images || []} onChange={imgs => update({ allProjects: { ...data.allProjects, [p.id]: { ...p, images: imgs } } })} />
                       <label className="block"><span className="text-[10px] text-slate-500 mb-1 block">核心能力（每行一个）</span>
                         <textarea rows={3} value={(p.capabilities || []).join('\n')} onChange={e => update({ allProjects: { ...data.allProjects, [p.id]: { ...p, capabilities: e.target.value.split('\n').filter(Boolean) } } })}
                           className="w-full px-3 py-2 bg-white/[0.04] border border-white/[0.06] rounded-lg text-sm text-white focus:outline-none focus:border-blue-500/50 resize-none" /></label>

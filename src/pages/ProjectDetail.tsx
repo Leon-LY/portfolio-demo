@@ -136,7 +136,7 @@ export default function ProjectDetail() {
           <div className="bg-gradient-to-br from-blue-600/10 to-violet-600/10 border border-blue-500/10 rounded-3xl p-10 sm:p-14 text-center">
             <ScrollReveal>
               <h3 className="text-2xl font-bold text-white mb-3">需要类似的技术方案？</h3>
-              <p className="text-slate-400 mb-6">从需求评估到开发交付，提供全流程技术支持。</p>
+              <p className="text-slate-400 mb-6">有类似需求？可以直接联系我，沟通具体方案。</p>
               <div className="flex flex-wrap justify-center gap-3">
                 <a href="tel:18389118642" className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-violet-600 text-white font-semibold rounded-xl hover:shadow-xl hover:shadow-blue-500/20 transition-all">预约技术咨询</a>
                 <a href="/#portfolio" className="inline-flex items-center gap-2 px-6 py-3 bg-white/[0.04] text-white font-medium rounded-xl border border-white/[0.08] hover:bg-white/[0.08] transition-all">查看作品</a>

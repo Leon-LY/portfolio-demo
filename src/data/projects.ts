@@ -50,10 +50,10 @@ export const allProjects: Record<string, Project> = {
     id: 'economy-platform',
     title: '经济综合运行平台',
     category: '数据可视化 · SpringBoot / MyBatis / Redis',
-    description: '全链路经济数据管理平台，TCP 异步数据接收，自定义报表引擎。',
+    description: '经济数据管理后台，TCP 异步接收数据，自定义报表，代码自动生成。',
     tech: ['SpringBoot', 'MyBatis', 'Redis', 'MySQL', 'Hutool'],
     images: ['/projects/economy-platform.svg', '/projects/economy-platform1.png', '/projects/economy-platform2.png'],
-    overview: '面向荣成市经济发展部门的经济数据综合管理平台，覆盖从数据采集、处理到分析展示的全链路。',
+    overview: '为荣成市经济发展部门开发的数据管理后台，支撑经济指标采集、处理和分析。',
     capabilities: [
       'TCP 异步数据报文实时接收，各经济指标数据自动入库',
       '内置代码自动生成器，可根据数据库表结构一键生成 CRUD 页面',
@@ -88,7 +88,7 @@ export const allProjects: Record<string, Project> = {
     description: '爱山东 App 内嵌 H5 应用，覆盖荣成市 30+ 社区，日均活跃用户 2 万+。',
     tech: ['Vue 3', 'Vite', 'Pinia', 'Vant UI', 'Axios'],
     images: ['/projects/smart-community.svg', '/projects/smart-community1.jpg', '/projects/smart-community2.jpg', '/projects/smart-community3.jpg', '/projects/smart-community4.jpg', '/projects/smart-community5.jpg'],
-    overview: '面向荣成市全体社区居民的一站式数字化服务平台，内嵌于爱山东 App。',
+    overview: '荣成市智慧社区平台，内嵌于爱山东 App，面向全市居民提供社区服务。',
     capabilities: [
       '覆盖荣成市全部 30+ 社区，月均处理报修工单 5000+ 条',
       '集成社区公告、报修投诉、便民服务、活动报名等核心功能模块',
@@ -123,7 +123,7 @@ export const allProjects: Record<string, Project> = {
     description: '基金投资智能分析平台，双 AI 引擎驱动，Docker 一键部署。',
     tech: ['Vue 3', 'TypeScript', 'FastAPI', 'PostgreSQL', 'DeepSeek'],
     images: ['/projects/invest-learn.svg', '/projects/invest-learn1.jpg', '/projects/invest-learn2.jpg', '/projects/invest-learn3.jpg', '/projects/invest-learn4.jpg'],
-    overview: '一站式基金投资智能分析平台，通过 AI 技术帮助投资者更科学地分析基金市场。',
+    overview: '基金投资分析工具，集成实时行情、K 线图表、AI 市场解读和知识库。',
     capabilities: [
       'DeepSeek + 通义千问双 AI 引擎，覆盖文字分析和多模态识别',
       '实时 K 线图与趋势分析，金融消息实时抓取与推送',
