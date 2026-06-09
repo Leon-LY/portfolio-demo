@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500">
+  <defs><linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#0f172a"/><stop offset="100%" style="stop-color:#1e3a5f"/></linearGradient></defs>
+  <rect width="800" height="500" fill="url(#g)"/>
+  <text x="400" y="160" text-anchor="middle" fill="rgba(255,255,255,0.12)" font-size="28" font-family="monospace">📊 AAPL   +2.35%   ¥182.50</text>
+  <text x="400" y="200" text-anchor="middle" fill="rgba(255,255,255,0.08)" font-size="28" font-family="monospace">📈 沪深300  +1.82%   4,850</text>
+  <text x="400" y="240" text-anchor="middle" fill="rgba(255,255,255,0.06)" font-size="28" font-family="monospace">🤖 AI 分析：市场情绪偏乐观</text>
+  <text x="400" y="340" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="30" font-weight="bold" font-family="sans-serif">远见 FarSight</text>
+  <text x="400" y="385" text-anchor="middle" fill="rgba(255,255,255,0.4)" font-size="14" font-family="sans-serif">基金投资智能分析平台 · Vue 3 + FastAPI + AI</text>
+</svg>

@@ -12,8 +12,7 @@
  * - longDescription: 项目详情页的完整介绍
  * - highlights:  项目亮点列表
  *
- * 改完后放截图到 public/projects/ 目录
- * 然后执行 npm run build 重新构建
+ * 放截图到 public/projects/ 目录后执行 npm run build
  */
 
 import { personalInfo, skills } from './config'
@@ -28,6 +27,26 @@ export interface Project {
 
 export const realProjects: Project[] = [
   {
+    id: 'invest-learn',
+    title: '远见 FarSight',
+    category: '全栈 · AI 金融',
+    description: '基金投资智能分析平台，集成实时行情、AI 智能分析、K 线图表、基金知识库。采用 Vue 3 + FastAPI 全栈架构，DeepSeek + 通义千问双 AI 引擎驱动。',
+    tech: ['Vue 3', 'TypeScript', 'FastAPI', 'PostgreSQL', 'DeepSeek'],
+    images: ['/projects/invest-learn.svg'],
+    longDescription: '远见（FarSight）是一站式基金投资智能分析平台，由 Leon 独立完成全栈开发。项目定位为"洞察趋势，智选未来"，旨在通过 AI 技术帮助投资者更科学地分析基金市场。\n\n前端采用 Vue 3 + TypeScript + Tailwind CSS v4 构建，使用 ECharts 实现 K 线图和趋势分析图表，Naive UI 组件库保证界面一致性。后端基于 Python FastAPI 异步框架，配合 SQLAlchemy 2.0 操作 PostgreSQL 数据库，Redis 用作缓存层加速数据查询。\n\n平台集成双 AI 引擎：DeepSeek 用于文字分析和市场解读，通义千问 VL 用于截图识别和多模态分析。数据源涵盖 AKShare、天天基金、新浪财经等主流金融数据平台。Docker Compose 一键部署，已上线运行。',
+    highlights: [
+      'Vue 3 + FastAPI 全栈架构',
+      'DeepSeek + 通义千问双 AI 引擎',
+      '实时 K 线图与趋势分析',
+      '金融消息实时抓取与推送',
+      'Docker Compose 一键部署',
+      'PostgreSQL + Redis 数据层',
+    ],
+    link: '/project/invest-learn',
+    featured: true,
+    real: true,
+  },
+  {
     id: 'smart-community',
     title: '智慧社区平台',
     category: '爱山东 · 移动端',
@@ -41,16 +60,37 @@ export const realProjects: Project[] = [
     real: true,
   },
   {
+    id: 'building',
+    title: '方外设计',
+    category: '企业官网 · Nuxt',
+    description: '建筑设计工作室作品集官网，含前台展示 + 后台管理系统。Nuxt 4 + Express 全栈，支持项目发布、图片管理、在线留言等 15 个管理模块。',
+    tech: ['Nuxt 4', 'Vue 3', 'TypeScript', 'Express', 'PostgreSQL'],
+    images: ['/projects/building.svg'],
+    longDescription: '方外设计是山东威海一家建筑设计工作室的品牌官网，由 Leon 独立完成全栈开发。项目采用 Nuxt 4 + Vue 3 构建前端，Express + PostgreSQL 构建后端 API，Docker + Nginx 部署。\n\n前台采用 SSG（静态站点生成）+ 客户端动态数据混合渲染策略，支持项目作品展示、图片画廊（PhotoSwipe）、关于我们、在线联系等功能，访问速度快、SEO 友好。\n\n后台管理系统包含 15 个管理模块：项目管理、分类管理、联系人管理、支付管理、文件管理、样式配置、用户管理等。内置 Tiptyap 富文本编辑器，支持图文混排的项目案例发布。JWT + 角色权限控制，多管理员协作。',
+    highlights: [
+      'Nuxt 4 SSG 高性能渲染',
+      '15 个管理模块完整后台',
+      'PhotoSwipe 作品图片画廊',
+      'Tiptyap 富文本项目编辑器',
+      'JWT + 角色权限管理',
+      'Docker + Nginx 部署',
+      '响应式设计，适配移动端',
+    ],
+    link: '/project/building',
+    featured: true,
+    real: true,
+  },
+  {
     id: 'bigscreen',
-    title: '城市运行数据大屏',
-    category: '数据可视化',
+    title: '荣成市城市大脑',
+    category: '数据可视化 · 大屏',
     description: '城市运行数据实时监控大屏，涵盖经济、民生、交通、环境等 20+ 数据维度，支持实时刷新和多屏联动，部署于城市指挥中心。',
     tech: ['Vue.js', 'ECharts', 'WebSocket', 'DataV', 'Node.js'],
     images: ['/projects/bigscreen.svg'],
     longDescription: '荣成市城市运行数据大屏是市政府指挥中心的核心展示系统，通过 ECharts 和 DataV 技术实现 20+ 数据维度的实时可视化监控。\n\n系统涵盖经济运行、民生服务、交通态势、环境监测等核心板块，支持 WebSocket 实时数据推送和多屏幕联动展示。大屏直接服务于市领导的日常决策和应急指挥调度。',
     highlights: ['20+ 数据维度实时监控', 'WebSocket 秒级数据刷新', '多屏幕联动展示', '部署于城市指挥中心', '支持应急指挥模式'],
     link: '/project/bigscreen',
-    featured: true,
+    featured: false,
     real: true,
   },
   {
@@ -63,43 +103,25 @@ export const realProjects: Project[] = [
     longDescription: '荣成市政务服务移动平台是基于 Uni-app 框架开发的跨平台应用，同时支持 iOS、Android 和 H5 三端运行。平台深度对接了山东省统一身份认证系统，实现了市民"一次认证、全网通办"的便捷体验。\n\n功能涵盖行政审批在线办理、办事指南查询、办理进度实时追踪、电子证照查看等核心政务服务场景。采用国密 SM2/SM4 算法保障数据传输安全。',
     highlights: ['Uni-app 三端统一发布', '对接省统一身份认证', '行政审批在线办理', '国密算法安全保障', '已上架应用商店'],
     link: '/project/government-app',
-    featured: true,
     real: true,
   },
   {
-    id: 'economy-platform',
-    title: '智慧经济管理平台',
-    category: '管理后台',
-    description: '面向政府和企业的经济数据管理平台，涵盖企业画像、经济指标、产业链分析、招商管理等模块，支持多维度筛选和自定义报表。',
-    tech: ['Vue.js', 'Element UI', 'ECharts', 'Axios', 'Python'],
-    images: ['/projects/economy-platform.svg'],
-    longDescription: '智慧经济管理平台是为荣成市经济发展部门打造的综合管理后台，集成了企业信息管理、经济指标监测、产业链分析和招商项目管理等核心功能。\n\n平台采用 Vue.js + Element UI 构建前端，ECharts 实现数据可视化，后端基于 Python 提供数据分析和报表生成服务。支持自定义报表导出和多维度的数据筛选分析。',
-    highlights: ['企业画像与档案管理', '经济指标体系', '产业链上下游分析', '招商项目全生命周期', '自定义报表生成'],
-    link: '/project/economy-platform',
-    real: true,
-  },
-  {
-    id: 'cloud-ui-lib',
-    title: 'Cloud UI 组件库',
-    category: '基础设施',
-    description: '基于 Vue.js 2.x 的企业级 UI 组件库，封装表格、表单、图表、地图等 50+ 业务组件，服务荣成市 10+ 内部系统。',
-    tech: ['Vue 2', 'TypeScript', 'Webpack', 'SCSS', 'Karma'],
-    images: ['/projects/cloud-ui.svg'],
-    longDescription: 'Cloud UI 是基于 Vue.js 2.x 和 TypeScript 构建的企业级 UI 组件库，专为荣成市政务系统定制。库中包含 50+ 个精心设计的业务组件，涵盖数据表格、动态表单、统计图表、地图定位等常见政务场景。\n\n组件库统一了 10+ 个内部系统的技术标准和交互规范，显著提升了团队开发效率。支持按需加载和主题定制，配套完整的开发文档和单元测试。',
-    highlights: ['50+ 业务组件', 'TypeScript 严格模式', '配套开发文档', '服务 10+ 内部系统', '统一技术标准'],
-    link: '/project/cloud-ui-lib',
-    real: true,
-  },
-  {
-    id: 'identity-auth',
-    title: '省统一身份认证对接',
-    category: '安全 · 基础设施',
-    description: '对接山东省统一身份认证平台，实现 OAuth 2.0 / OIDC 协议集成，为多个应用提供统一认证授权服务，日认证请求 5 万+。',
-    tech: ['Node.js', 'OAuth 2.0', 'OIDC', 'SM2/SM4', 'Redis'],
-    images: ['/projects/identity-auth.svg'],
-    longDescription: '省统一身份认证对接项目完成了荣成市多个政务应用与山东省统一身份认证平台的深度集成。基于 OAuth 2.0 和 OIDC 标准协议，结合国密 SM2/SM4 加密算法，构建了安全可靠的统一认证网关。\n\n项目服务于智慧社区、政务服务、行政审批等多个业务系统，日均处理认证请求 5 万+。通过 Redis 缓存优化，认证响应时间控制在 200ms 以内。',
-    highlights: ['OAuth 2.0 / OIDC 标准', '国密 SM2/SM4 加密', '日均认证 5 万+', '响应时间 < 200ms', '多系统统一接入'],
-    link: '/project/identity-auth',
+    id: 'river-chief',
+    title: '河湖湾长制管理平台',
+    category: '移动端 · 政务',
+    description: '针对荣成市河长、湖长、湾长日常巡查管理需求开发的移动办公系统，支持巡查打卡、问题上报、整改追踪、数据统计等功能。',
+    tech: ['Uni-app', 'Vue.js', 'Node.js', 'GIS', 'PostgreSQL'],
+    images: ['/projects/river-chief.svg'],
+    longDescription: '河湖湾长制管理平台是为荣成市水务和环保部门定制开发的移动巡查管理系统。平台服务于全市各级河长、湖长、湾长的日常巡查工作，实现了从"发现问题"到"整改闭环"的全流程数字化管理。\n\n巡查人员通过移动端进行 GPS 定位打卡、现场拍照取证、问题描述上报。后台管理系统自动生成巡查轨迹、问题分布热力图和统计分析报表，支持一键导出和向上级汇报。平台覆盖荣成市全境河流、湖泊和海湾水体，显著提升了水环境巡查效率和问题处置速度。',
+    highlights: [
+      'GPS 巡查轨迹记录',
+      '现场拍照 + 问题描述上报',
+      '整改流程闭环追踪',
+      '问题分布热力图',
+      '统计分析报表一键导出',
+      '覆盖全市河流、湖泊、海湾',
+    ],
+    link: '/project/river-chief',
     real: true,
   },
 ]

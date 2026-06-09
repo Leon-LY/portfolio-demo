@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500">
+  <defs><linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#1a1a2e"/><stop offset="100%" style="stop-color:#16213e"/></linearGradient></defs>
+  <rect width="800" height="500" fill="url(#g)"/>
+  <text x="400" y="180" text-anchor="middle" fill="rgba(255,255,255,0.08)" font-size="80" font-family="sans-serif" font-weight="900">方外</text>
+  <text x="400" y="240" text-anchor="middle" fill="rgba(255,255,255,0.04)" font-size="24" font-family="sans-serif">FANGWAI DESIGN</text>
+  <text x="400" y="350" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="28" font-weight="bold" font-family="sans-serif">方外设计</text>
+  <text x="400" y="390" text-anchor="middle" fill="rgba(255,255,255,0.4)" font-size="14" font-family="sans-serif">建筑设计工作室 · Nuxt 4 + Express · 方寸之外，别有天地</text>
+</svg>
