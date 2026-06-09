@@ -7,10 +7,12 @@ import Ecommerce from './pages/Ecommerce'
 import MobileApp from './pages/MobileApp'
 import Corporate from './pages/Corporate'
 import ProjectDetail from './pages/ProjectDetail'
+import Admin from './pages/Admin'
 
 export default function App() {
   return (
     <Routes>
+      <Route path="/admin" element={<Admin />} />
       <Route element={<Layout />}>
         <Route path="/" element={<Home />} />
         <Route path="/marketing" element={<Marketing />} />
