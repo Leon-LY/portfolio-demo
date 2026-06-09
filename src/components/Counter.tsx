@@ -1,35 +1,13 @@
 import { useEffect, useRef } from 'react'
 import { motion, useSpring, useTransform, useInView } from 'framer-motion'
 
-interface Props {
-  to: number
-  suffix?: string
-  prefix?: string
-  decimals?: number
-  className?: string
-}
-
-export default function Counter({
-  to,
-  suffix = '',
-  prefix = '',
-  decimals = 0,
-  className = '',
-}: Props) {
+export default function Counter({ to, suffix = '', decimals = 0, className = '' }: {
+  to: number; suffix?: string; decimals?: number; className?: string
+}) {
   const ref = useRef<HTMLSpanElement>(null)
-  const isInView = useInView(ref, { once: true, margin: '-60px' })
-  const spring = useSpring(0, { stiffness: 60, damping: 20 })
-  const display = useTransform(spring, (v) =>
-    `${prefix}${v.toFixed(decimals)}${suffix}`
-  )
-
-  useEffect(() => {
-    if (isInView) spring.set(to)
-  }, [isInView, spring, to])
-
-  return (
-    <motion.span ref={ref} className={className}>
-      {display}
-    </motion.span>
-  )
+  const inv = useInView(ref, { once: true, margin: '-80px' })
+  const spring = useSpring(0, { stiffness: 50, damping: 20 })
+  const disp = useTransform(spring, v => `${v.toFixed(decimals)}${suffix}`)
+  useEffect(() => { if (inv) spring.set(to) }, [inv, spring, to])
+  return <motion.span ref={ref} className={className}>{disp}</motion.span>
 }

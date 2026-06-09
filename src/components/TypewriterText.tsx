@@ -1,55 +1,24 @@
 import { useState, useEffect } from 'react'
 
-interface Props {
-  texts: string[]
-  className?: string
-  speed?: number
-  deleteSpeed?: number
-  pauseTime?: number
-}
-
-export default function TypewriterText({
-  texts,
-  className = '',
-  speed = 70,
-  deleteSpeed = 35,
-  pauseTime = 3000,
-}: Props) {
-  const [textIndex, setTextIndex] = useState(0)
-  const [charIndex, setCharIndex] = useState(0)
-  const [isDeleting, setIsDeleting] = useState(false)
-  const [displayText, setDisplayText] = useState('')
+export default function TypewriterText({ texts, className = '' }: {
+  texts: string[]; className?: string
+}) {
+  const [ti, setTi] = useState(0); const [ci, setCi] = useState(0)
+  const [del, setDel] = useState(false); const [txt, setTxt] = useState('')
 
   useEffect(() => {
-    const currentText = texts[textIndex]
-    const timer = setTimeout(
-      () => {
-        if (!isDeleting) {
-          if (charIndex < currentText.length) {
-            setDisplayText(currentText.substring(0, charIndex + 1))
-            setCharIndex(charIndex + 1)
-          } else {
-            setTimeout(() => setIsDeleting(true), pauseTime)
-          }
-        } else {
-          if (charIndex > 0) {
-            setDisplayText(currentText.substring(0, charIndex - 1))
-            setCharIndex(charIndex - 1)
-          } else {
-            setIsDeleting(false)
-            setTextIndex((textIndex + 1) % texts.length)
-          }
-        }
-      },
-      isDeleting ? deleteSpeed : speed
-    )
-    return () => clearTimeout(timer)
-  }, [charIndex, isDeleting, textIndex, texts, speed, deleteSpeed, pauseTime])
+    const cur = texts[ti]
+    const t = setTimeout(() => {
+      if (!del) {
+        if (ci < cur.length) { setTxt(cur.slice(0, ci+1)); setCi(ci+1) }
+        else setTimeout(() => setDel(true), 2500)
+      } else {
+        if (ci > 0) { setTxt(cur.slice(0, ci-1)); setCi(ci-1) }
+        else { setDel(false); setTi((ti+1)%texts.length) }
+      }
+    }, del ? 35 : 70)
+    return () => clearTimeout(t)
+  }, [ci, del, ti, texts])
 
-  return (
-    <span className={className}>
-      {displayText}
-      <span className="inline-block w-px h-[0.85em] bg-[#8b5cf6] ml-0.5 align-middle animate-pulse" />
-    </span>
-  )
+  return <span className={className}>{txt}<span className="inline-block w-px h-[0.85em] bg-blue-400 ml-1 animate-pulse align-middle" /></span>
 }
