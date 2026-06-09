@@ -52,7 +52,7 @@ export default function Home() {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
                 <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-400" />
               </span>
-              <span className="text-xs font-medium text-slate-400 tracking-widest uppercase">{personalInfo.tagline}</span>
+              <span className="text-xs font-medium text-slate-400 tracking-widest uppercase">当前可接受新项目委托</span>
             </div>
 
             <h1 className="text-5xl sm:text-7xl lg:text-8xl font-black text-white tracking-tight leading-[0.92] mb-2">
@@ -115,15 +115,17 @@ export default function Home() {
             {projectGroups.map((group) => {
               const items = group.items.map(id => allProjects[id]).filter(Boolean)
               if (!items.length) return null
+              const isDemo = group.demo
               return (
                 <div key={group.label}>
                   <ScrollReveal>
-                    <h3 className="text-lg font-bold text-white mb-5 flex items-center gap-2">
-                      <span className="w-1 h-5 bg-gradient-to-b from-blue-500 to-violet-500 rounded-full" />
+                    <h3 className={`text-lg font-bold mb-1 flex items-center gap-2 ${isDemo ? 'text-slate-400' : 'text-white'}`}>
+                      <span className={`w-1 h-5 rounded-full ${isDemo ? 'bg-gradient-to-b from-slate-500 to-slate-600' : 'bg-gradient-to-b from-blue-500 to-violet-500'}`} />
                       {group.label}
                     </h3>
+                    {isDemo && <p className="text-xs text-slate-600 mb-5 ml-3">Demo 项目 · 仅供技术展示</p>}
                   </ScrollReveal>
-                  <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  <div className={`grid md:grid-cols-2 lg:grid-cols-3 gap-4 ${isDemo ? '' : 'mt-5'}`}>
                     {items.map((p, i) => (
                       <ScrollReveal key={p.id} delay={i * 0.06}>
                         <Link to={p.link}>

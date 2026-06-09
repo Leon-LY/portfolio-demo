@@ -26,6 +26,11 @@ export const projectGroups = [
     label: 'AI 与数据应用',
     items: ['invest-learn'] as string[],
   },
+  {
+    label: 'Demo 模板',
+    items: ['demo-marketing', 'demo-saas', 'demo-ecommerce', 'demo-mobile'] as string[],
+    demo: true,
+  },
 ]
 
 export const allProjects: Record<string, Project> = {
@@ -133,5 +138,34 @@ export const allProjects: Record<string, Project> = {
     link: '/project/invest-learn',
     real: true,
     featured: true,
+  },
+  // Demo 模板
+  'demo-marketing': {
+    id: 'demo-marketing', title: 'GrowthPulse 营销平台',
+    category: 'Demo 项目 · 仅供技术展示',
+    description: '数字营销机构高转化品牌官网，集成案例展示、实时数据看板与在线预约系统。',
+    tech: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Prisma'],
+    link: '/marketing',
+  },
+  'demo-saas': {
+    id: 'demo-saas', title: 'CloudFlow 数据分析',
+    category: 'Demo 项目 · 仅供技术展示',
+    description: 'AI 驱动的企业级数据分析平台 Demo，展示实时可视化与团队协作。',
+    tech: ['React', 'D3.js', 'WebSocket', 'Redis'],
+    link: '/saas',
+  },
+  'demo-ecommerce': {
+    id: 'demo-ecommerce', title: 'LuxeCart 精品电商',
+    category: 'Demo 项目 · 仅供技术展示',
+    description: '高端时尚电商 Demo，展示 3D 预览、AI 推荐、购物车等核心功能。',
+    tech: ['React', 'Node.js', 'Stripe', 'Algolia'],
+    link: '/ecommerce',
+  },
+  'demo-mobile': {
+    id: 'demo-mobile', title: 'FitTrack 健康 App',
+    category: 'Demo 项目 · 仅供技术展示',
+    description: '移动健康追踪应用落地页 Demo，展示 App 下载页面的技术与设计。',
+    tech: ['React Native', 'TypeScript', 'Firebase'],
+    link: '/mobile-app',
   },
 }
