@@ -1,14 +1,14 @@
 import { useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ArrowLeft, Check, ChevronLeft, ChevronRight } from 'lucide-react'
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react'
 import PageTransition from '../components/PageTransition'
 import ScrollReveal from '../components/ScrollReveal'
-import { realProjects } from '../data/projects'
+import { allProjects } from '../data/projects'
 
 export default function ProjectDetail() {
   const { id } = useParams<{ id: string }>()
-  const project = realProjects.find(p => p.id === id)
+  const project = allProjects[id || '']
 
   if (!project) {
     return (
@@ -64,38 +64,52 @@ export default function ProjectDetail() {
         </section>
       )}
 
-      {/* Detailed Description */}
-      {project.longDescription && (
+      {/* Project Detail */}
+      {(project.overview || project.capabilities || project.techNote) && (
         <section className="pb-16">
           <div className="max-w-7xl mx-auto px-6 lg:px-8">
             <div className="grid lg:grid-cols-3 gap-12">
-              <div className="lg:col-span-2">
-                <ScrollReveal>
-                  <h2 className="text-2xl font-bold text-white mb-6">项目详情</h2>
-                  <div className="prose prose-invert max-w-none">
-                    {project.longDescription.split('\n\n').map((p, i) => (
-                      <p key={i} className="text-slate-400 leading-relaxed mb-4">{p}</p>
-                    ))}
-                  </div>
-                </ScrollReveal>
-              </div>
-
-              {/* Highlights sidebar */}
-              {project.highlights && (
-                <div>
-                  <ScrollReveal delay={0.1}>
-                    <h3 className="text-lg font-bold text-white mb-5">项目亮点</h3>
-                    <div className="bg-[#111827] border border-white/[0.05] rounded-2xl p-6 space-y-3">
-                      {project.highlights.map((h, i) => (
+              <div className="lg:col-span-2 space-y-8">
+                {project.overview && (
+                  <ScrollReveal>
+                    <h2 className="text-lg font-bold text-white mb-3">项目概述</h2>
+                    <p className="text-slate-400 leading-relaxed">{project.overview}</p>
+                  </ScrollReveal>
+                )}
+                {project.capabilities && (
+                  <ScrollReveal>
+                    <h3 className="text-lg font-bold text-white mb-3">核心能力体现</h3>
+                    <div className="space-y-2">
+                      {project.capabilities.map((c, i) => (
                         <div key={i} className="flex items-start gap-3">
-                          <Check size={16} className="text-emerald-400 mt-0.5 flex-shrink-0" />
-                          <span className="text-sm text-slate-400">{h}</span>
+                          <span className="text-blue-400 mt-1.5">—</span>
+                          <span className="text-slate-400 leading-relaxed">{c}</span>
                         </div>
                       ))}
                     </div>
                   </ScrollReveal>
-                </div>
-              )}
+                )}
+                {project.techNote && (
+                  <ScrollReveal>
+                    <h3 className="text-lg font-bold text-white mb-3">技术方案</h3>
+                    <p className="text-slate-500 text-sm leading-relaxed">{project.techNote}</p>
+                  </ScrollReveal>
+                )}
+              </div>
+
+              {/* Tech stack sidebar */}
+              <div>
+                <ScrollReveal delay={0.1}>
+                  <h3 className="text-lg font-bold text-white mb-5">技术栈</h3>
+                  <div className="bg-[#111827] border border-white/[0.05] rounded-2xl p-6">
+                    <div className="flex flex-wrap gap-2">
+                      {project.tech.map(t => (
+                        <span key={t} className="px-3 py-1.5 bg-white/[0.04] text-sm text-slate-300 rounded-lg border border-white/[0.06]">{t}</span>
+                      ))}
+                    </div>
+                  </div>
+                </ScrollReveal>
+              </div>
             </div>
           </div>
         </section>

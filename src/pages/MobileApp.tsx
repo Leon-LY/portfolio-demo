@@ -114,7 +114,7 @@ export default function MobileApp() {
           <div className="bg-gradient-to-br from-emerald-600/10 to-teal-600/10 border border-emerald-500/10 rounded-3xl p-12 lg:p-16 text-center relative overflow-hidden">
             <div className="absolute inset-0 bg-[#111827]/70 backdrop-blur-sm" />
             <div className="relative z-10">
-              <ScrollReveal><h2 className="text-3xl sm:text-4xl font-extrabold text-white mb-4">开启健康之旅</h2><p className="text-slate-400 mb-8 max-w-md mx-auto">免费下载，含 14 天高级功能试用。</p>
+              <ScrollReveal><h2 className="text-3xl sm:text-4xl font-extrabold text-white mb-4">开启健康之旅</h2><p className="text-slate-400 mb-8 max-w-md mx-auto">下载体验，含完整功能试用。</p>
                 <div className="flex justify-center gap-3">
                   <button className="px-5 py-3 bg-white text-black rounded-xl text-sm font-semibold hover:bg-slate-200 transition-all inline-flex items-center gap-2"><Apple size={18} /> App Store</button>
                   <button className="px-5 py-3 bg-white/[0.04] text-white rounded-xl text-sm font-medium border border-white/[0.08] hover:bg-white/[0.08] transition-all inline-flex items-center gap-2"><Smartphone size={18} /> Google Play</button>

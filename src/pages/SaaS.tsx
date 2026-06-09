@@ -26,7 +26,7 @@ export default function SaaS() {
               AI 驱动的智能分析引擎。日活 10 万+，查询响应低于 100ms。
             </p>
             <div className="flex justify-center gap-3">
-              <button className="px-6 py-3 bg-gradient-to-r from-blue-600 to-violet-600 text-white text-sm font-semibold rounded-xl hover:shadow-xl hover:shadow-blue-500/20 transition-all inline-flex items-center gap-2">免费试用 14 天 <ArrowUpRight size={16} /></button>
+              <button className="px-6 py-3 bg-gradient-to-r from-blue-600 to-violet-600 text-white text-sm font-semibold rounded-xl hover:shadow-xl hover:shadow-blue-500/20 transition-all inline-flex items-center gap-2">开始试用 <ArrowUpRight size={16} /></button>
               <button className="px-6 py-3 bg-white/[0.04] text-white text-sm font-medium rounded-xl border border-white/[0.08] hover:bg-white/[0.08] transition-all">观看演示</button>
             </div>
           </motion.div>

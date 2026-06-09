@@ -43,7 +43,7 @@ export default function Marketing() {
                 数据驱动的全链路营销方案，已帮助 150+ 企业实现可量化的业务突破。
               </p>
               <div className="flex gap-3">
-                <button className="px-6 py-3 bg-gradient-to-r from-blue-600 to-violet-600 text-white text-sm font-semibold rounded-xl hover:shadow-xl hover:shadow-blue-500/20 transition-all inline-flex items-center gap-2">免费诊断 <ArrowUpRight size={16} /></button>
+                <button className="px-6 py-3 bg-gradient-to-r from-blue-600 to-violet-600 text-white text-sm font-semibold rounded-xl hover:shadow-xl hover:shadow-blue-500/20 transition-all inline-flex items-center gap-2">项目诊断 <ArrowUpRight size={16} /></button>
                 <button className="px-6 py-3 bg-white/[0.04] text-white text-sm font-medium rounded-xl border border-white/[0.08] hover:bg-white/[0.08] transition-all">查看案例</button>
               </div>
 
@@ -195,7 +195,7 @@ export default function Marketing() {
               <ScrollReveal>
                 <h2 className="text-3xl sm:text-4xl font-extrabold text-white mb-4">准备好加速增长？</h2>
                 <p className="text-slate-400 mb-8 max-w-md mx-auto">48 小时内获取定制化增长策略。</p>
-                <button className="px-7 py-3.5 bg-gradient-to-r from-blue-600 to-violet-600 text-white font-semibold rounded-xl hover:shadow-2xl hover:shadow-blue-500/25 transition-all inline-flex items-center gap-2">预约免费咨询 <ArrowUpRight size={16} /></button>
+                <button className="px-7 py-3.5 bg-gradient-to-r from-blue-600 to-violet-600 text-white font-semibold rounded-xl hover:shadow-2xl hover:shadow-blue-500/25 transition-all inline-flex items-center gap-2">预约技术咨询 <ArrowUpRight size={16} /></button>
               </ScrollReveal>
             </div>
           </div>
