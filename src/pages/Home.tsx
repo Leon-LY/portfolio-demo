@@ -108,8 +108,7 @@ function CursorGlow() {
 
 /* ── Terminal showcase ── */
 function TerminalShowcase() {
-  const [line, setLine] = useState(0)
-  const lines = [
+  const allLines = [
     '$ leon --stack',
     '> React · Vue · Node.js · SpringBoot · PostgreSQL',
     '$ leon --specialty',
@@ -120,12 +119,19 @@ function TerminalShowcase() {
     '> ✅ 当前可接受新项目委托',
   ]
 
+  const fullText = allLines.join('\n')
+  const [charCount, setCharCount] = useState(0)
+
   useEffect(() => {
-    if (line < lines.length - 1) {
-      const t = setTimeout(() => setLine(l => l + 1), line === 0 ? 600 : 800)
+    if (charCount < fullText.length) {
+      const delay = fullText[charCount] === '\n' ? 200 : 25 + Math.random() * 20
+      const t = setTimeout(() => setCharCount(c => c + 1), delay)
       return () => clearTimeout(t)
     }
-  }, [line, lines.length])
+  }, [charCount, fullText])
+
+  const displayed = fullText.slice(0, charCount)
+  const displayedLines = displayed.split('\n')
 
   return (
     <div className="bg-[#0d1117] border border-white/[0.06] rounded-2xl overflow-hidden font-mono text-xs sm:text-sm shadow-2xl shadow-black/30">
@@ -136,14 +142,16 @@ function TerminalShowcase() {
         <span className="ml-2 text-[11px] text-slate-500">terminal — leon@dev</span>
       </div>
       <div className="p-5 space-y-1.5 min-h-[220px]">
-        {lines.slice(0, line + 1).map((l, i) => (
-          <motion.div key={i} initial={{ opacity: 0, x: -4 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.15 }}
-            className={`${l.startsWith('$') ? 'text-emerald-400' : l.startsWith('>') ? 'text-slate-300 pl-3' : 'text-slate-500'}`}
-          >
-            {l}
-            {i === line && <span className="inline-block w-2 h-4 bg-blue-400 ml-0.5 animate-pulse align-middle" />}
-          </motion.div>
-        ))}
+        {displayedLines.map((l, i) => {
+          const isLastLine = i === displayedLines.length - 1
+          const isTyping = isLastLine && charCount < fullText.length
+          return (
+            <div key={i} className={`${l.startsWith('$') ? 'text-emerald-400' : l.startsWith('>') ? 'text-slate-300 pl-3' : 'text-slate-500'}`}>
+              {l}
+              {isTyping && <span className="inline-block w-2 h-4 bg-blue-400 ml-0.5 animate-pulse align-middle" />}
+            </div>
+          )
+        })}
       </div>
     </div>
   )
