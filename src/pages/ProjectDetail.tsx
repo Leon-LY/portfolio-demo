@@ -115,16 +115,31 @@ export default function ProjectDetail() {
         </section>
       )}
 
+      {/* Related projects */}
+      <section className="pb-16">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <h3 className="text-lg font-bold text-white mb-5">探索其他项目</h3>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+            {Object.values(allProjects).filter(p => p.id !== id && p.real).slice(0,4).map(p => (
+              <Link key={p.id} to={p.link} className="block bg-[#111827] border border-white/[0.04] rounded-xl p-4 hover:border-white/[0.08] transition-all group">
+                <h4 className="text-sm font-semibold text-white group-hover:text-blue-400 transition-colors">{p.title}</h4>
+                <p className="text-xs text-slate-500 mt-1 line-clamp-2">{p.description}</p>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* CTA */}
       <section className="pb-24">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="bg-gradient-to-br from-blue-600/10 to-violet-600/10 border border-blue-500/10 rounded-3xl p-10 sm:p-14 text-center">
             <ScrollReveal>
               <h3 className="text-2xl font-bold text-white mb-3">需要类似的技术方案？</h3>
-              <p className="text-slate-400 mb-6">我在智慧城市和政务数字化领域有丰富经验，欢迎交流。</p>
+              <p className="text-slate-400 mb-6">从需求评估到开发交付，提供全流程技术支持。</p>
               <div className="flex flex-wrap justify-center gap-3">
-                <a href="tel:18389118642" className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-violet-600 text-white font-semibold rounded-xl hover:shadow-xl hover:shadow-blue-500/20 transition-all">📞 18389118642</a>
-                <a href="mailto:554295000@qq.com" className="inline-flex items-center gap-2 px-6 py-3 bg-white/[0.04] text-white font-medium rounded-xl border border-white/[0.08] hover:bg-white/[0.08] transition-all">📧 554295000@qq.com</a>
+                <a href="tel:18389118642" className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-violet-600 text-white font-semibold rounded-xl hover:shadow-xl hover:shadow-blue-500/20 transition-all">预约技术咨询</a>
+                <a href="/#portfolio" className="inline-flex items-center gap-2 px-6 py-3 bg-white/[0.04] text-white font-medium rounded-xl border border-white/[0.08] hover:bg-white/[0.08] transition-all">查看作品</a>
               </div>
             </ScrollReveal>
           </div>

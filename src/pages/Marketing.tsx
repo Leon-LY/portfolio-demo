@@ -51,15 +51,9 @@ export default function Marketing() {
   return (
     <PageTransition>
       {/* Tech banner */}
-      <div className="pt-20 bg-[#0a0e1a] border-b border-white/[0.04]">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 py-4">
-          <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-xs text-slate-500">
-            <span className="text-slate-400 font-medium">Demo 项目 · 仅供技术展示</span>
-            <span>展示能力：</span>
-            {['高性能营销官网','案例展示系统','数据可视化图表','客户评价轮播','响应式布局','动效与交互','表单验证','SEO 优化'].map(t => (
-              <span key={t} className="px-2 py-0.5 bg-white/[0.03] rounded-md">{t}</span>
-            ))}
-          </div>
+      <div className="pt-20 bg-slate-900/50 border-b border-white/[0.04]">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 py-3">
+          <p className="text-xs text-slate-500">技术展示 · 此页面为 Demo 模板，展示营销科技（MarTech）产品设计和技术实现能力——复杂业务逻辑的前端呈现、数据可视化图表、高性能响应式布局。</p>
         </div>
       </div>
 
@@ -233,8 +227,19 @@ export default function Marketing() {
         </div>
       </section>
 
-      <div className="border-t border-white/[0.04] px-6 py-4 text-center">
-        <p className="text-[11px] text-slate-600">此 Demo 展示：营销官网架构 · 数据可视化 · 交互动效 · 表单验证 · 响应式布局。所有数据为虚构。</p>
+      <div className="border-t border-white/[0.04]">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 py-6 flex flex-wrap items-center justify-between gap-4">
+          <div className="flex items-center gap-4 text-xs text-slate-500">
+            <a href="/" className="hover:text-white transition-colors">← 返回首页</a>
+            <span className="text-slate-700">|</span>
+            <span>探索其他：</span>
+            <a href="/saas" className="hover:text-white transition-colors">SaaS 平台</a>
+            <a href="/ecommerce" className="hover:text-white transition-colors">电商</a>
+            <a href="/mobile-app" className="hover:text-white transition-colors">移动 App</a>
+            <a href="/corporate" className="hover:text-white transition-colors">企业官网</a>
+          </div>
+          <p className="text-[11px] text-slate-600">技术栈：Next.js · TypeScript · Tailwind CSS · Framer Motion · 响应式设计</p>
+        </div>
       </div>
     </PageTransition>
   )

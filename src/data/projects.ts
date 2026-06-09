@@ -26,11 +26,6 @@ export const projectGroups = [
     label: 'AI 与数据应用',
     items: ['invest-learn'] as string[],
   },
-  {
-    label: 'Demo 模板',
-    items: ['demo-marketing', 'demo-saas', 'demo-ecommerce', 'demo-mobile'] as string[],
-    demo: true,
-  },
 ]
 
 export const allProjects: Record<string, Project> = {

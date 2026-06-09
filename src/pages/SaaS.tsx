@@ -47,15 +47,9 @@ export default function SaaS() {
   return (
     <PageTransition>
       {/* Tech banner */}
-      <div className="pt-20 bg-[#0a0e1a] border-b border-white/[0.04]">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 py-4">
-          <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-xs text-slate-500">
-            <span className="text-slate-400 font-medium">Demo 项目 · 仅供技术展示</span>
-            <span>展示能力：</span>
-            {['SaaS 产品设计','定价系统','实时数据看板','FAQ 交互','功能网格','工作流展示','定价切换','动画交互'].map(t=>(
-              <span key={t} className="px-2 py-0.5 bg-white/[0.03] rounded-md">{t}</span>
-            ))}
-          </div>
+      <div className="pt-20 bg-slate-900/50 border-b border-white/[0.04]">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 py-3">
+          <p className="text-xs text-slate-500">技术展示 · 此页面为 Demo 模板，展示 SaaS 产品官网的技术实现——实时数据看板、定价系统、功能网格、FAQ 交互组件。</p>
         </div>
       </div>
 
@@ -133,6 +127,7 @@ export default function SaaS() {
                   <h3 className="text-lg font-bold text-white mb-1">{p.name}</h3>
                   <p className="text-xs text-slate-600 mb-6">{p.desc}</p>
                   <div className="mb-6"><span className="text-4xl font-extrabold text-white">¥{annual?Math.round(p.price*0.8):p.price}</span><span className="text-xs text-slate-600">/月</span></div>
+                  <p className="text-[10px] text-slate-600 -mt-4 mb-5">模拟数据</p>
                   <ul className="space-y-2.5 mb-8 flex-1">{p.features.map(f=><li key={f} className="flex items-center gap-2 text-xs text-slate-400"><Check size={13} className="text-emerald-500 flex-shrink-0" />{f}</li>)}</ul>
                   <button className={`w-full py-2.5 rounded-xl text-sm font-semibold transition-all ${p.highlight?'bg-gradient-to-r from-blue-600 to-violet-600 text-white':'bg-white/[0.04] text-white border border-white/[0.08] hover:bg-white/[0.08]'}`}>{p.cta}</button>
                 </motion.div>
@@ -162,8 +157,19 @@ export default function SaaS() {
         </div>
       </section>
 
-      <div className="border-t border-white/[0.04] px-6 py-4 text-center">
-        <p className="text-[11px] text-slate-600">此 Demo 展示：SaaS 产品设计 · 实时数据看板 · 定价系统 · FAQ 交互 · 功能网格布局。所有数据为虚构。</p>
+      <div className="border-t border-white/[0.04]">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 py-6 flex flex-wrap items-center justify-between gap-4">
+          <div className="flex items-center gap-4 text-xs text-slate-500">
+            <a href="/" className="hover:text-white transition-colors">← 返回首页</a>
+            <span className="text-slate-700">|</span>
+            <span>探索其他：</span>
+            <a href="/marketing" className="hover:text-white transition-colors">营销网站</a>
+            <a href="/ecommerce" className="hover:text-white transition-colors">电商</a>
+            <a href="/mobile-app" className="hover:text-white transition-colors">移动 App</a>
+            <a href="/corporate" className="hover:text-white transition-colors">企业官网</a>
+          </div>
+          <p className="text-[11px] text-slate-600">技术栈：Vue 3 · TypeScript · Node.js · 响应式设计</p>
+        </div>
       </div>
     </PageTransition>
   )

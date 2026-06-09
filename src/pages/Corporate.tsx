@@ -12,6 +12,12 @@ export default function Corporate() {
 
   return (
     <PageTransition>
+      {/* Tech banner */}
+      <div className="pt-20 bg-slate-900/50 border-b border-white/[0.04]">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 py-3">
+          <p className="text-xs text-slate-500">技术展示 · 此页面为 Demo 模板，展示大型跨国集团官网的技术实现——多语言架构、企业级内容管理、复杂导航系统、响应式设计。</p>
+        </div>
+      </div>
       <section ref={ref} className="relative h-screen min-h-[650px] flex items-center overflow-hidden">
         <motion.div style={{ y: py }} className="absolute inset-0">
           <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1920&h=1080&fit=crop&q=80" alt="" className="w-full h-full object-cover" />
@@ -109,7 +115,20 @@ export default function Corporate() {
         </div>
       </section>
 
-      <div className="border-t border-white/[0.04] px-6 py-4 text-center"><p className="text-[11px] text-slate-600">此页面为 Demo 模板。所有企业信息、人物及新闻为虚构，仅供技术展示。</p></div>
+      <div className="border-t border-white/[0.04]">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 py-6 flex flex-wrap items-center justify-between gap-4">
+          <div className="flex items-center gap-4 text-xs text-slate-500">
+            <a href="/" className="hover:text-white transition-colors">← 返回首页</a>
+            <span className="text-slate-700">|</span>
+            <span>探索其他：</span>
+            <a href="/marketing" className="hover:text-white transition-colors">营销网站</a>
+            <a href="/saas" className="hover:text-white transition-colors">SaaS 平台</a>
+            <a href="/ecommerce" className="hover:text-white transition-colors">电商</a>
+            <a href="/mobile-app" className="hover:text-white transition-colors">移动 App</a>
+          </div>
+          <p className="text-[11px] text-slate-600">技术栈：多语言架构 · 企业级 CMS · 复杂导航 · 响应式设计</p>
+        </div>
+      </div>
     </PageTransition>
   )
 }

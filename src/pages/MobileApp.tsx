@@ -44,13 +44,9 @@ export default function MobileApp() {
   return (
     <PageTransition>
       {/* Tech banner */}
-      <div className="pt-20 bg-[#0a0e1a] border-b border-white/[0.04]">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 py-4">
-          <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-xs text-slate-500">
-            <span className="text-slate-400 font-medium">Demo 项目 · 仅供技术展示</span>
-            <span>展示能力：</span>
-            {['App 落地页','手机框架模拟','功能轮播','定价方案','数据统计','用户评价','下载转化','动画交互'].map(t=>(<span key={t} className="px-2 py-0.5 bg-white/[0.03] rounded-md">{t}</span>))}
-          </div>
+      <div className="pt-20 bg-slate-900/50 border-b border-white/[0.04]">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 py-3">
+          <p className="text-xs text-slate-500">技术展示 · 此页面为 Demo 模板，展示移动端 App 落地页设计——H5 响应式设计、模拟 App 交互体验、适配 iOS / Android 设计规范。</p>
         </div>
       </div>
 
@@ -148,8 +144,19 @@ export default function MobileApp() {
         </div>
       </section>
 
-      <div className="border-t border-white/[0.04] px-6 py-4 text-center">
-        <p className="text-[11px] text-slate-600">此 Demo 展示：App 落地页 · 手机框架模拟 · 功能卡片 · 定价方案 · 数据统计 · 下载转化布局。所有数据为虚构。</p>
+      <div className="border-t border-white/[0.04]">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 py-6 flex flex-wrap items-center justify-between gap-4">
+          <div className="flex items-center gap-4 text-xs text-slate-500">
+            <a href="/" className="hover:text-white transition-colors">← 返回首页</a>
+            <span className="text-slate-700">|</span>
+            <span>探索其他：</span>
+            <a href="/marketing" className="hover:text-white transition-colors">营销网站</a>
+            <a href="/saas" className="hover:text-white transition-colors">SaaS 平台</a>
+            <a href="/ecommerce" className="hover:text-white transition-colors">电商</a>
+            <a href="/corporate" className="hover:text-white transition-colors">企业官网</a>
+          </div>
+          <p className="text-[11px] text-slate-600">技术栈：H5 响应式 · 模拟 App 交互 · iOS / Android 适配 · Framer Motion</p>
+        </div>
       </div>
     </PageTransition>
   )

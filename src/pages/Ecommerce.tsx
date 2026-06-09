@@ -51,15 +51,9 @@ export default function Ecommerce() {
   return (
     <PageTransition>
       {/* Tech banner */}
-      <div className="pt-20 bg-[#0a0e1a] border-b border-white/[0.04]">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 py-4">
-          <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-xs text-slate-500">
-            <span className="text-slate-400 font-medium">Demo 项目 · 仅供技术展示</span>
-            <span>展示能力：</span>
-            {['商品图片画廊','SKU 选择','购物车交互','评价系统','收藏功能','响应式布局','图片缩放','Tab 切换'].map(t=>(
-              <span key={t} className="px-2 py-0.5 bg-white/[0.03] rounded-md">{t}</span>
-            ))}
-          </div>
+      <div className="pt-20 bg-slate-900/50 border-b border-white/[0.04]">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 py-3">
+          <p className="text-xs text-slate-500">技术展示 · 此页面为 Demo 模板，展示品牌电商的产品设计与前端实现——商品画廊、SKU 选择系统、购物车流程、评价系统。</p>
         </div>
       </div>
 
@@ -126,7 +120,20 @@ export default function Ecommerce() {
           </div>
         </div>
       </div>
-      <div className="border-t border-white/[0.04] px-6 py-4 text-center"><p className="text-[11px] text-slate-600">此 Demo 展示：电商产品页 · 图片画廊 · SKU 系统 · 购物车 · 评价 · Tab 切换 · 图片缩放。所有商品为虚构。</p></div>
+      <div className="border-t border-white/[0.04]">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 py-6 flex flex-wrap items-center justify-between gap-4">
+          <div className="flex items-center gap-4 text-xs text-slate-500">
+            <a href="/" className="hover:text-white transition-colors">← 返回首页</a>
+            <span className="text-slate-700">|</span>
+            <span>探索其他：</span>
+            <a href="/marketing" className="hover:text-white transition-colors">营销网站</a>
+            <a href="/saas" className="hover:text-white transition-colors">SaaS 平台</a>
+            <a href="/mobile-app" className="hover:text-white transition-colors">移动 App</a>
+            <a href="/corporate" className="hover:text-white transition-colors">企业官网</a>
+          </div>
+          <p className="text-[11px] text-slate-600">技术栈：Vue 3 · Pinia 状态管理 · 响应式设计 · 购物车与支付流程模拟</p>
+        </div>
+      </div>
     </PageTransition>
   )
 }
