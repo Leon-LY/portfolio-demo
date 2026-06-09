@@ -70,7 +70,8 @@ export default function Home() {
                 <p className="mt-6 text-base sm:text-lg text-slate-400 leading-relaxed max-w-xl">{personalInfo.bio}</p>
                 <div className="flex flex-wrap gap-3 mt-8">
                   <Link to="/marketing" className="group inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-violet-600 text-white text-sm font-semibold rounded-xl hover:from-blue-500 hover:to-violet-500 hover:shadow-2xl hover:shadow-blue-500/25 transition-all hover:-translate-y-0.5">查看作品 <ArrowUpRight size={16} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" /></Link>
-                  <a href={`mailto:${personalInfo.email}`} className="inline-flex items-center gap-2 px-6 py-3 bg-white/[0.04] text-white text-sm font-medium rounded-xl border border-white/[0.08] hover:bg-white/[0.08] hover:border-white/[0.12] transition-all">联系我</a>
+                  <a href={`tel:${personalInfo.phone}`} className="inline-flex items-center gap-2 px-6 py-3 bg-white/[0.04] text-white text-sm font-medium rounded-xl border border-white/[0.08] hover:bg-white/[0.08] hover:border-white/[0.12] transition-all">{personalInfo.phone}</a>
+                  <a href={`mailto:${personalInfo.email}`} className="inline-flex items-center gap-2 px-6 py-3 bg-white/[0.04] text-white text-sm font-medium rounded-xl border border-white/[0.08] hover:bg-white/[0.08] hover:border-white/[0.12] transition-all">{personalInfo.email}</a>
                 </div>
                 <div className="flex flex-wrap gap-8 mt-12">
                   {heroStats.map(s => (<div key={s.label}><div className="text-2xl sm:text-3xl font-extrabold text-white">{s.value}</div><div className="text-xs text-slate-500 mt-0.5">{s.label}</div></div>))}

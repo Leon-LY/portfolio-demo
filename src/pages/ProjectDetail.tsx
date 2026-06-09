@@ -1,6 +1,6 @@
 import { useParams, Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { ArrowLeft, Check, ExternalLink } from 'lucide-react'
+import { ArrowLeft, Check } from 'lucide-react'
 import PageTransition from '../components/PageTransition'
 import ScrollReveal from '../components/ScrollReveal'
 import { realProjects } from '../data/projects'
@@ -120,10 +120,10 @@ export default function ProjectDetail() {
             <ScrollReveal>
               <h3 className="text-2xl font-bold text-white mb-3">需要类似的技术方案？</h3>
               <p className="text-slate-400 mb-6">我在智慧城市和政务数字化领域有丰富经验，欢迎交流。</p>
-              <a href="mailto:554295000@qq.com"
-                className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-violet-600 text-white font-semibold rounded-xl hover:shadow-xl hover:shadow-blue-500/20 transition-all">
-                联系我 <ExternalLink size={16} />
-              </a>
+              <div className="flex flex-wrap justify-center gap-3">
+                <a href="tel:18389118642" className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-violet-600 text-white font-semibold rounded-xl hover:shadow-xl hover:shadow-blue-500/20 transition-all">📞 18389118642</a>
+                <a href="mailto:554295000@qq.com" className="inline-flex items-center gap-2 px-6 py-3 bg-white/[0.04] text-white font-medium rounded-xl border border-white/[0.08] hover:bg-white/[0.08] transition-all">📧 554295000@qq.com</a>
+              </div>
             </ScrollReveal>
           </div>
         </div>
