@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { motion, useMotionValue } from 'framer-motion'
 import { ArrowUpRight } from 'lucide-react'
@@ -6,14 +6,36 @@ import PageTransition from '../components/PageTransition'
 import ScrollReveal from '../components/ScrollReveal'
 import TypewriterText from '../components/TypewriterText'
 import { personalInfo, skills, realProjects, demoProjects } from '../data/projects'
+import { heroStats, typewriterTexts } from '../data/config'
 
-/* ── Animated gradient mesh background ── */
-function BgMesh() {
+/* ── Background with cursor-tracking glow ── */
+function HeroBg() {
+  const [mouse, setMouse] = useState({ x: 0.5, y: 0.5 })
+
+  useEffect(() => {
+    const h = (e: MouseEvent) => setMouse({ x: e.clientX / window.innerWidth, y: e.clientY / window.innerHeight })
+    window.addEventListener('mousemove', h, { passive: true })
+    return () => window.removeEventListener('mousemove', h)
+  }, [])
+
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
-      <div className="absolute -top-1/2 -left-1/4 w-[800px] h-[800px] rounded-full bg-blue-500/10 blur-[150px] animate-pulse-glow" />
-      <div className="absolute -bottom-1/3 -right-1/4 w-[700px] h-[700px] rounded-full bg-violet-500/8 blur-[140px] animate-pulse-glow" style={{ animationDelay: '1.5s' }} />
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[500px] h-[500px] rounded-full bg-cyan-500/5 blur-[120px] animate-pulse-glow" style={{ animationDelay: '0.7s' }} />
+      {/* Cursor-following glow */}
+      <div
+        className="absolute w-[500px] h-[500px] rounded-full opacity-20 transition-[left,top] duration-700 ease-out"
+        style={{
+          background: 'radial-gradient(circle, rgba(99,102,241,0.3) 0%, transparent 70%)',
+          left: `${mouse.x * 100}%`,
+          top: `${mouse.y * 100}%`,
+          transform: 'translate(-50%, -50%)',
+        }}
+      />
+      {/* Static ambient orbs */}
+      <div className="absolute top-1/4 -left-20 w-[400px] h-[400px] rounded-full bg-blue-500/5 blur-[120px]" />
+      <div className="absolute bottom-1/4 -right-20 w-[350px] h-[350px] rounded-full bg-violet-500/5 blur-[100px]" />
+      {/* Dot grid */}
+      <div className="absolute inset-0 opacity-[0.03]"
+        style={{ backgroundImage: 'radial-gradient(rgba(255,255,255,0.3) 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
     </div>
   )
 }
@@ -45,12 +67,9 @@ export default function Home() {
     <PageTransition>
       {/* ═══════ HERO ═══════ */}
       <section className="relative min-h-screen flex items-center overflow-hidden">
-        <BgMesh />
-        {/* Subtle grid */}
-        <div className="absolute inset-0 opacity-[0.025]"
-          style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,0.08) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.08) 1px,transparent 1px)', backgroundSize: '64px 64px' }} />
+        <HeroBg />
 
-        <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 py-32 w-full">
+        <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 py-24 w-full">
           <div className="max-w-4xl">
             <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, ease: 'easeOut' }}>
               {/* Status dot */}
@@ -68,7 +87,7 @@ export default function Home() {
 
               <div className="mt-6 sm:mt-8 h-8 sm:h-12">
                 <TypewriterText
-                  texts={['全栈软件工程师', 'React / Node.js 专家', '性能优化极客', '开源贡献者']}
+                  texts={typewriterTexts}
                   className="text-xl sm:text-3xl text-slate-400 font-medium"
                 />
               </div>
@@ -90,10 +109,10 @@ export default function Home() {
 
               {/* Mini stats */}
               <div className="flex flex-wrap gap-8 mt-16">
-                {[{ v: '8+', l: '年经验' }, { v: '30+', l: '交付项目' }, { v: '20+', l: '服务部门' }, { v: '10万+', l: '覆盖用户' }].map(s => (
-                  <div key={s.l}>
-                    <div className="text-2xl sm:text-3xl font-extrabold text-white">{s.v}</div>
-                    <div className="text-xs text-slate-500 mt-0.5">{s.l}</div>
+                {heroStats.map(s => (
+                  <div key={s.label}>
+                    <div className="text-2xl sm:text-3xl font-extrabold text-white">{s.value}</div>
+                    <div className="text-xs text-slate-500 mt-0.5">{s.label}</div>
                   </div>
                 ))}
               </div>
@@ -101,14 +120,6 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Scroll hint */}
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.5 }}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2">
-          <motion.div animate={{ y: [0, 6, 0] }} transition={{ repeat: Infinity, duration: 2 }}
-            className="w-6 h-10 rounded-full border border-white/10 flex justify-center pt-2">
-            <div className="w-1 h-2 rounded-full bg-white/20" />
-          </motion.div>
-        </motion.div>
       </section>
 
       {/* ═══════ SKILLS ═══════ */}

@@ -1,27 +1,30 @@
+/**
+ * ═══════════════════════════════════════
+ *  项目数据配置 —— 直接修改这里
+ * ═══════════════════════════════════════
+ *
+ * 修改指南：
+ * - title:       项目名称
+ * - category:    项目分类
+ * - description: 简短描述（显示在卡片上）
+ * - tech:        技术栈标签
+ * - images:      截图路径，放在 public/projects/ 下
+ * - longDescription: 项目详情页的完整介绍
+ * - highlights:  项目亮点列表
+ *
+ * 改完后放截图到 public/projects/ 目录
+ * 然后执行 npm run build 重新构建
+ */
+
+import { personalInfo, skills } from './config'
+
+export { personalInfo, skills }
+
 export interface Project {
   id: string; title: string; category: string; description: string
   tech: string[]; link: string; featured?: boolean; real?: boolean
   images?: string[]; longDescription?: string; highlights?: string[]
 }
-export interface Skill { name: string; level: number }
-
-export const personalInfo = {
-  name: 'Leon',
-  title: '全栈软件工程师',
-  bio: '8 年全栈开发经验，深耕智慧城市、政务数字化领域。主导过多个城市核心系统——大数据可视化大屏、智慧社区移动端、省统一身份认证、政务服务平台。熟悉 Vue.js / React 生态，擅长复杂业务需求的技术落地。',
-  email: '554295000@qq.com',
-}
-
-export const skills: Skill[] = [
-  { name: 'Vue.js / Nuxt', level: 96 },
-  { name: 'React / Next.js', level: 90 },
-  { name: 'TypeScript', level: 88 },
-  { name: 'Uni-app 跨平台', level: 92 },
-  { name: 'ECharts / 可视化', level: 95 },
-  { name: 'Node.js / Express', level: 85 },
-  { name: 'PostgreSQL / MySQL', level: 82 },
-  { name: 'Docker / Nginx', level: 80 },
-]
 
 export const realProjects: Project[] = [
   {
