@@ -219,17 +219,16 @@ export default function Home() {
       <div className="relative z-[5] h-32 -mt-32 bg-gradient-to-b from-transparent to-[#0a0e1a] pointer-events-none" />
 
       {/* Animated section divider */}
-      <div className="relative z-10 h-px bg-gradient-to-r from-transparent via-blue-500/20 to-transparent mx-auto max-w-3xl" />
+      <div className="relative z-10 h-px bg-gradient-to-r from-transparent via-blue-500/30 to-transparent mx-auto max-w-3xl" />
 
       {/* ═══════ SERVICES ═══════ */}
       <section id="services" className="relative z-10 py-24 bg-[#0a0e1a] overflow-hidden">
-        {/* Animated orbs — bigger & more visible */}
-        <div className="absolute top-10 right-0 w-80 h-80 rounded-full bg-blue-500/6 blur-[120px] animate-pulse-glow pointer-events-none" />
-        <div className="absolute bottom-0 left-0 w-72 h-72 rounded-full bg-violet-500/6 blur-[100px] animate-pulse-glow pointer-events-none" style={{ animationDelay: '1.5s' }} />
-        {/* Moving scan line */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          <div className="absolute w-full h-px bg-gradient-to-r from-transparent via-blue-400/10 to-transparent top-1/2 animate-pulse-glow" style={{ animationDuration: '4s' }} />
-        </div>
+        {/* Highly visible animated orbs */}
+        <div className="absolute top-10 right-0 w-96 h-96 rounded-full bg-blue-500/12 blur-[100px] animate-pulse-glow pointer-events-none" />
+        <div className="absolute bottom-10 left-0 w-80 h-80 rounded-full bg-violet-500/10 blur-[90px] animate-pulse-glow pointer-events-none" style={{ animationDelay: '1.5s' }} />
+        {/* Floating scan-line that moves down */}
+        <motion.div className="absolute left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-400/30 to-transparent pointer-events-none"
+          animate={{ top: ['10%', '90%', '10%'] }} transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }} />
         <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-[1]">
           <ScrollReveal>
             <p className="text-xs font-medium text-blue-400 uppercase tracking-widest mb-3">服务方向</p>
@@ -252,12 +251,15 @@ export default function Home() {
       </section>
 
       {/* Section divider */}
-      <div className="relative z-10 h-px bg-gradient-to-r from-transparent via-violet-500/15 to-transparent mx-auto max-w-3xl mb-16" />
+      <div className="relative z-10 h-px bg-gradient-to-r from-transparent via-violet-500/30 to-transparent mx-auto max-w-3xl mb-16" />
 
       {/* ═══════ 真实项目 ═══════ */}
       <section id="portfolio" className="relative pb-16 overflow-hidden">
-        <div className="absolute top-20 -right-20 w-96 h-96 rounded-full bg-blue-500/4 blur-[140px] animate-pulse-glow pointer-events-none" />
-        <div className="absolute bottom-10 -left-20 w-80 h-80 rounded-full bg-violet-500/4 blur-[120px] animate-pulse-glow pointer-events-none" style={{ animationDelay: '1s' }} />
+        <div className="absolute top-20 -right-20 w-[500px] h-[500px] rounded-full bg-blue-500/10 blur-[130px] animate-pulse-glow pointer-events-none" />
+        <div className="absolute bottom-20 -left-20 w-[450px] h-[450px] rounded-full bg-violet-500/8 blur-[120px] animate-pulse-glow pointer-events-none" style={{ animationDelay: '1s' }} />
+        {/* Floating gradient line */}
+        <motion.div className="absolute left-1/4 right-1/4 h-px bg-gradient-to-r from-transparent via-violet-400/25 to-transparent pointer-events-none"
+          animate={{ top: ['30%', '80%', '30%'] }} transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }} />
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <ScrollReveal>
             <div className="flex items-center gap-3 mb-3">
@@ -358,8 +360,10 @@ export default function Home() {
       {/* ═══════ CTA ═══════ */}
       <section id="contact" className="relative pb-28 overflow-hidden">
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-          <div className="w-[600px] h-[300px] rounded-full bg-gradient-to-r from-blue-500/10 via-violet-500/10 to-blue-500/10 blur-[100px] animate-pulse-glow" />
+          <div className="w-[700px] h-[400px] rounded-full bg-gradient-to-r from-blue-500/15 via-violet-500/12 to-blue-500/15 blur-[120px] animate-pulse-glow" />
         </div>
+        <motion.div className="absolute left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-400/30 to-transparent pointer-events-none"
+          animate={{ top: ['20%', '70%', '20%'] }} transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }} />
         <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-[1]">
           <div className="bg-[#111827] border border-white/[0.05] rounded-3xl p-12 sm:p-16 relative overflow-hidden group">
             <div className="absolute inset-0 bg-gradient-to-br from-blue-500/3 to-violet-500/3 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
