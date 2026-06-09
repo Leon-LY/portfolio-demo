@@ -86,7 +86,7 @@ export const realProjects: Project[] = [
     category: '数据可视化 · 大屏',
     description: '城市运行数据实时监控大屏，涵盖经济、民生、交通、环境等 20+ 数据维度，支持实时刷新和多屏联动，部署于城市指挥中心。',
     tech: ['Vue.js', 'ECharts', 'WebSocket', 'DataV', 'Node.js'],
-    images: ['/projects/bigscreen.svg'],  // 暂无额外截图，可继续添加
+    images: ['/projects/bigscreen.svg', '/projects/bigscreen1.png', '/projects/bigscreen2.png'],
     longDescription: '荣成市城市运行数据大屏是市政府指挥中心的核心展示系统，通过 ECharts 和 DataV 技术实现 20+ 数据维度的实时可视化监控。\n\n系统涵盖经济运行、民生服务、交通态势、环境监测等核心板块，支持 WebSocket 实时数据推送和多屏幕联动展示。大屏直接服务于市领导的日常决策和应急指挥调度。',
     highlights: ['20+ 数据维度实时监控', 'WebSocket 秒级数据刷新', '多屏幕联动展示', '部署于城市指挥中心', '支持应急指挥模式'],
     link: '/project/bigscreen',
