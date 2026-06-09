@@ -218,12 +218,19 @@ export default function Home() {
       {/* ═══════ FADE OVERLAY ═══════ */}
       <div className="relative z-[5] h-32 -mt-32 bg-gradient-to-b from-transparent to-[#0a0e1a] pointer-events-none" />
 
+      {/* Animated section divider */}
+      <div className="relative z-10 h-px bg-gradient-to-r from-transparent via-blue-500/20 to-transparent mx-auto max-w-3xl" />
+
       {/* ═══════ SERVICES ═══════ */}
-      <section id="services" className="relative z-10 py-24 border-t border-white/[0.04] bg-[#0a0e1a] overflow-hidden">
-        {/* Decorative orbs */}
-        <div className="absolute top-20 right-10 w-64 h-64 rounded-full bg-blue-500/3 blur-[100px] animate-pulse-glow pointer-events-none" />
-        <div className="absolute bottom-10 left-10 w-48 h-48 rounded-full bg-violet-500/3 blur-[80px] animate-pulse-glow pointer-events-none" style={{ animationDelay: '1.2s' }} />
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+      <section id="services" className="relative z-10 py-24 bg-[#0a0e1a] overflow-hidden">
+        {/* Animated orbs — bigger & more visible */}
+        <div className="absolute top-10 right-0 w-80 h-80 rounded-full bg-blue-500/6 blur-[120px] animate-pulse-glow pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-72 h-72 rounded-full bg-violet-500/6 blur-[100px] animate-pulse-glow pointer-events-none" style={{ animationDelay: '1.5s' }} />
+        {/* Moving scan line */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          <div className="absolute w-full h-px bg-gradient-to-r from-transparent via-blue-400/10 to-transparent top-1/2 animate-pulse-glow" style={{ animationDuration: '4s' }} />
+        </div>
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-[1]">
           <ScrollReveal>
             <p className="text-xs font-medium text-blue-400 uppercase tracking-widest mb-3">服务方向</p>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-white mb-12">专注领域</h2>
@@ -231,9 +238,12 @@ export default function Home() {
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
             {services.map((s, i) => (
               <ScrollReveal key={s.title} delay={i * 0.08}>
-                <div className="bg-[#111827] border border-white/[0.04] rounded-2xl p-6 h-full hover:border-white/[0.08] transition-all">
-                  <h3 className="text-base font-bold text-white mb-3">{s.title}</h3>
-                  <p className="text-sm text-slate-400 leading-relaxed">{s.desc}</p>
+                <div className="group bg-[#111827] rounded-2xl p-6 h-full transition-all duration-500 relative overflow-hidden border border-white/[0.04] hover:border-blue-500/20">
+                  <div className="absolute inset-0 bg-gradient-to-br from-blue-500/0 via-blue-500/0 to-violet-500/0 group-hover:from-blue-500/5 group-hover:via-transparent group-hover:to-violet-500/5 transition-all duration-500" />
+                  <div className="relative z-[1]">
+                    <h3 className="text-base font-bold text-white mb-3">{s.title}</h3>
+                    <p className="text-sm text-slate-400 leading-relaxed">{s.desc}</p>
+                  </div>
                 </div>
               </ScrollReveal>
             ))}
@@ -241,10 +251,13 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Section divider */}
+      <div className="relative z-10 h-px bg-gradient-to-r from-transparent via-violet-500/15 to-transparent mx-auto max-w-3xl mb-16" />
+
       {/* ═══════ 真实项目 ═══════ */}
       <section id="portfolio" className="relative pb-16 overflow-hidden">
-        <div className="absolute top-40 -left-20 w-72 h-72 rounded-full bg-blue-500/2 blur-[120px] pointer-events-none" />
-        <div className="absolute bottom-40 -right-20 w-80 h-80 rounded-full bg-violet-500/2 blur-[130px] pointer-events-none" />
+        <div className="absolute top-20 -right-20 w-96 h-96 rounded-full bg-blue-500/4 blur-[140px] animate-pulse-glow pointer-events-none" />
+        <div className="absolute bottom-10 -left-20 w-80 h-80 rounded-full bg-violet-500/4 blur-[120px] animate-pulse-glow pointer-events-none" style={{ animationDelay: '1s' }} />
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <ScrollReveal>
             <div className="flex items-center gap-3 mb-3">
@@ -269,7 +282,8 @@ export default function Home() {
                     {items.map((p, i) => (
                       <ScrollReveal key={p.id} delay={i*0.06}>
                         <Link to={p.link}>
-                          <TiltCard className="group bg-[#111827] rounded-2xl border border-white/[0.04] hover:border-white/[0.08] transition-all overflow-hidden h-full flex flex-col">
+                          <TiltCard className="group bg-[#111827] rounded-2xl border border-white/[0.04] hover:border-blue-500/15 transition-all overflow-hidden h-full flex flex-col relative">
+                            <div className="absolute inset-0 bg-gradient-to-br from-blue-500/0 to-violet-500/0 group-hover:from-blue-500/3 group-hover:to-violet-500/3 transition-all duration-500 pointer-events-none" />
                             {p.images?.[0]&&<div className="aspect-[16/9] overflow-hidden"><img src={p.images[0]} alt={p.title} loading="lazy" className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-700"/></div>}
                             <div className="p-5 flex-1 flex flex-col">
                               <p className="text-[10px] font-medium text-slate-500 uppercase tracking-wider mb-1.5">{p.category}</p>
@@ -342,10 +356,14 @@ export default function Home() {
       </section>
 
       {/* ═══════ CTA ═══════ */}
-      <section id="contact" className="pb-28">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="bg-[#111827] border border-white/[0.05] rounded-3xl p-12 sm:p-16">
-            <div className="max-w-2xl mx-auto text-center">
+      <section id="contact" className="relative pb-28 overflow-hidden">
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+          <div className="w-[600px] h-[300px] rounded-full bg-gradient-to-r from-blue-500/10 via-violet-500/10 to-blue-500/10 blur-[100px] animate-pulse-glow" />
+        </div>
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-[1]">
+          <div className="bg-[#111827] border border-white/[0.05] rounded-3xl p-12 sm:p-16 relative overflow-hidden group">
+            <div className="absolute inset-0 bg-gradient-to-br from-blue-500/3 to-violet-500/3 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
+            <div className="relative z-[1] max-w-2xl mx-auto text-center">
               <ScrollReveal>
                 <h2 className="text-3xl sm:text-4xl font-extrabold text-white mb-4">有项目需要落地？</h2>
                 <p className="text-slate-400 mb-8 leading-relaxed">从方案评估到开发交付，提供全流程技术支持。</p>
