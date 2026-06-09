@@ -1,4 +1,4 @@
-import { personalInfo, services, heroStats, typewriterTexts } from './config'
+import { personalInfo, services, heroStats, typewriterTexts, workflowSteps, clients, faqItems } from './config'
 import type { Project } from './projects'
 import { projectGroups, allProjects } from './projects'
 
@@ -12,6 +12,9 @@ export interface AdminData {
   heroTitle: string
   heroBio: string
   heroCredibility: string
+  workflowSteps: typeof workflowSteps
+  clients: string[]
+  faqItems: typeof faqItems
   projectGroups: typeof projectGroups
   allProjects: Record<string, Project>
 }
@@ -25,6 +28,9 @@ function getDefaults(): AdminData {
     heroTitle: (personalInfo as any).heroTitle || '',
     heroBio: (personalInfo as any).heroBio || '',
     heroCredibility: (personalInfo as any).heroCredibility || '',
+    workflowSteps: workflowSteps.map(s => ({ ...s })),
+    clients: [...clients],
+    faqItems: faqItems.map(f => ({ ...f })),
     projectGroups: projectGroups.map(g => ({ ...g, items: [...g.items] })),
     allProjects: JSON.parse(JSON.stringify(allProjects)),
   }

@@ -4,7 +4,7 @@ import { motion, useMotionValue, useScroll, useTransform } from 'framer-motion'
 import { ArrowUpRight } from 'lucide-react'
 import PageTransition from '../components/PageTransition'
 import ScrollReveal from '../components/ScrollReveal'
-import { personalInfo, services, heroStats } from '../data/config'
+import { personalInfo, services, heroStats, workflowSteps, clients, faqItems } from '../data/config'
 import { projectGroups, allProjects } from '../data/projects'
 import Counter from '../components/Counter'
 
@@ -389,12 +389,7 @@ export default function Home() {
             <h2 className="text-3xl sm:text-4xl font-extrabold text-white mb-12">怎么合作</h2>
           </ScrollReveal>
           <div className="grid md:grid-cols-4 gap-4">
-            {[
-              { step:'01', title:'需求沟通', desc:'了解项目背景、目标和约束条件。免费初步评估，给出技术可行性建议。' },
-              { step:'02', title:'方案设计', desc:'输出技术方案、工时估算和时间计划。明确交付标准和技术选型。' },
-              { step:'03', title:'开发迭代', desc:'按周交付可用的功能模块。使用 Git 管理代码，随时可以看进度。' },
-              { step:'04', title:'交付上线', desc:'部署到生产环境，提供操作文档。交付后保留维护窗口，持续支持。' },
-            ].map((item, i) => (
+            {workflowSteps.map((item, i) => (
               <motion.div key={item.step} initial={{ opacity:0, y:30 }} whileInView={{ opacity:1, y:0 }} viewport={{ once:true }} transition={{ duration:0.5, delay:i*0.12, ease:[0.22,0.1,0.2,1] }}>
                 <div className="bg-[#111827] border border-white/[0.04] rounded-2xl p-6 h-full hover:border-white/[0.08] transition-all">
                   <span className="text-4xl font-black text-white/[0.04]">{item.step}</span>
@@ -414,10 +409,7 @@ export default function Home() {
             <p className="text-xs font-medium text-blue-400 uppercase tracking-widest mb-3 text-center">曾服务单位</p>
           </ScrollReveal>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
-            {[
-              '荣成市大数据中心', '荣成市交通运输局', '中国广电山东', '荣成市水务局',
-              '荣成市行政审批局', '山东省统一认证平台',
-            ].map((name, i) => (
+            {clients.map((name, i) => (
               <motion.div key={name} initial={{ opacity:0, y:20 }} whileInView={{ opacity:1, y:0 }} viewport={{ once:true }} transition={{ duration:0.4, delay:i*0.06 }}
                 className="bg-[#111827] border border-white/[0.03] rounded-xl p-4 text-center hover:border-white/[0.06] transition-all">
                 <p className="text-xs text-slate-400 font-medium">{name}</p>
@@ -435,13 +427,7 @@ export default function Home() {
             <h2 className="text-3xl font-extrabold text-white mb-10">FAQ</h2>
           </ScrollReveal>
           <div className="space-y-2">
-            {[
-              { q:'合作方式是什么样的？', a:'按项目整体报价或按阶段分期。先沟通需求 → 我出方案和报价 → 双方确认后启动。小型项目可以不签合同，复杂项目建议签订技术服务协议。' },
-              { q:'你主要用什么技术栈？', a:'主要使用 Vue.js / React 生态 + Node.js 或 SpringBoot 后端。数据可视化用 ECharts。具体技术栈根据项目需求选择，不强制绑定某个框架。' },
-              { q:'项目周期一般多长？', a:'企业官网 2-4 周，后台管理系统 4-8 周，数据大屏 3-6 周。具体取决于功能复杂度。确定需求后我会给出精确的工时估算。' },
-              { q:'可以只做前端或只做后端吗？', a:'可以。如果你已有团队，我可以只负责某一层的开发。也可以做技术咨询、代码审查或性能优化。' },
-              { q:'交付后还管吗？', a:'交付后通常保留 1-3 个月免费维护窗口，修复 Bug 和小调整。后续可以签长期维护协议。' },
-            ].map((faq, i) => (
+            {faqItems.map((faq, i) => (
               <ScrollReveal key={i} delay={i*0.05}>
                 <details className="group bg-[#111827] border border-white/[0.04] rounded-2xl overflow-hidden">
                   <summary className="flex items-center justify-between p-5 cursor-pointer hover:bg-white/[0.02] transition-colors list-none">

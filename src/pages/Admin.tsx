@@ -57,7 +57,7 @@ function ImageUploader({ images, onChange }: { images: string[]; onChange: (imgs
   )
 }
 
-type Tab = 'personal' | 'hero' | 'services' | 'projects' | 'contact'
+type Tab = 'personal' | 'hero' | 'services' | 'projects' | 'workflow' | 'clients' | 'faq' | 'contact'
 
 export default function Admin() {
   const [data, setData] = useState<AdminData | null>(null)
@@ -110,6 +110,9 @@ export default function Admin() {
     { key: 'hero', label: 'Hero 区域' },
     { key: 'services', label: '服务方向' },
     { key: 'projects', label: '项目管理' },
+    { key: 'workflow', label: '合作流程' },
+    { key: 'clients', label: '服务单位' },
+    { key: 'faq', label: 'FAQ' },
     { key: 'contact', label: '联系方式' },
   ]
 
@@ -290,6 +293,50 @@ export default function Admin() {
                 </div>
               ))}
             </div>
+          </div>
+        )}
+
+        {tab === 'workflow' && (
+          <div className="space-y-6">
+            <h2 className="text-xl font-bold">合作流程</h2>
+            {data.workflowSteps.map((s, i) => (
+              <div key={i} className="bg-[#111827] border border-white/[0.04] rounded-xl p-4 space-y-2">
+                <input value={s.step} onChange={e => { const ns = [...data.workflowSteps]; ns[i] = { ...ns[i], step: e.target.value }; update({ workflowSteps: ns }) }}
+                  className="w-20 px-3 py-2 bg-white/[0.04] border border-white/[0.06] rounded-lg text-sm text-white focus:outline-none focus:border-blue-500/50 text-center" />
+                <input value={s.title} onChange={e => { const ns = [...data.workflowSteps]; ns[i] = { ...ns[i], title: e.target.value }; update({ workflowSteps: ns }) }}
+                  className="w-full px-3 py-2 bg-white/[0.04] border border-white/[0.06] rounded-lg text-sm text-white focus:outline-none focus:border-blue-500/50" />
+                <textarea rows={2} value={s.desc} onChange={e => { const ns = [...data.workflowSteps]; ns[i] = { ...ns[i], desc: e.target.value }; update({ workflowSteps: ns }) }}
+                  className="w-full px-3 py-2 bg-white/[0.04] border border-white/[0.06] rounded-lg text-sm text-white focus:outline-none focus:border-blue-500/50 resize-none" />
+              </div>
+            ))}
+          </div>
+        )}
+
+        {tab === 'clients' && (
+          <div className="space-y-6">
+            <div className="flex items-center justify-between"><h2 className="text-xl font-bold">服务单位</h2><button onClick={() => update({ clients: [...data.clients, '新单位'] })} className="flex items-center gap-1.5 text-xs text-blue-400 hover:text-blue-300"><Plus size={14}/> 添加</button></div>
+            {data.clients.map((c, i) => (
+              <div key={i} className="flex gap-2">
+                <input value={c} onChange={e => { const nc = [...data.clients]; nc[i] = e.target.value; update({ clients: nc }) }}
+                  className="flex-1 px-3 py-2 bg-[#111827] border border-white/[0.08] rounded-lg text-sm text-white focus:outline-none focus:border-blue-500/50" />
+                <button onClick={() => update({ clients: data.clients.filter((_, j) => j !== i) })} className="text-slate-600 hover:text-red-400"><Trash2 size={14}/></button>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {tab === 'faq' && (
+          <div className="space-y-6">
+            <div className="flex items-center justify-between"><h2 className="text-xl font-bold">FAQ</h2><button onClick={() => update({ faqItems: [...data.faqItems, { q: '新问题', a: '新回答' }] })} className="flex items-center gap-1.5 text-xs text-blue-400 hover:text-blue-300"><Plus size={14}/> 添加</button></div>
+            {data.faqItems.map((f, i) => (
+              <div key={i} className="bg-[#111827] border border-white/[0.04] rounded-xl p-4 space-y-2">
+                <input value={f.q} onChange={e => { const ns = [...data.faqItems]; ns[i] = { ...ns[i], q: e.target.value }; update({ faqItems: ns }) }}
+                  className="w-full px-3 py-2 bg-white/[0.04] border border-white/[0.06] rounded-lg text-sm text-white focus:outline-none focus:border-blue-500/50" />
+                <textarea rows={3} value={f.a} onChange={e => { const ns = [...data.faqItems]; ns[i] = { ...ns[i], a: e.target.value }; update({ faqItems: ns }) }}
+                  className="w-full px-3 py-2 bg-white/[0.04] border border-white/[0.06] rounded-lg text-sm text-white focus:outline-none focus:border-blue-500/50 resize-none" />
+                <button onClick={() => update({ faqItems: data.faqItems.filter((_, j) => j !== i) })} className="text-xs text-slate-500 hover:text-red-400">删除</button>
+              </div>
+            ))}
           </div>
         )}
 
