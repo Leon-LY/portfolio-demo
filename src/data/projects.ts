@@ -16,7 +16,7 @@ export const projectGroups = [
   },
   {
     label: '企业官网与品牌站',
-    items: ['building', 'demo-corporate'] as string[],
+    items: ['building'] as string[],
   },
   {
     label: '移动端与 H5 应用',
@@ -133,14 +133,5 @@ export const allProjects: Record<string, Project> = {
     link: '/project/invest-learn',
     real: true,
     featured: true,
-  },
-  // Demo 模板
-  'demo-corporate': {
-    id: 'demo-corporate',
-    title: '跨国集团企业官网',
-    category: 'Demo 模板 · 企业官网',
-    description: '多语言支持、投资者关系、新闻中心等大型企业门户典型模块。',
-    tech: ['Vue.js', 'Nuxt', 'GraphQL', 'i18n'],
-    link: '/corporate',
   },
 }
