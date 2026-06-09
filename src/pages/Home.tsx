@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { motion, useMotionValue } from 'framer-motion'
+import { motion, useMotionValue, useScroll, useTransform } from 'framer-motion'
 import { ArrowUpRight } from 'lucide-react'
 import PageTransition from '../components/PageTransition'
 import ScrollReveal from '../components/ScrollReveal'
@@ -148,6 +148,19 @@ function TerminalShowcase() {
   )
 }
 
+/* ── Parallax image ── */
+function ParallaxImage({ src, alt }: { src: string; alt: string }) {
+  const ref = useRef<HTMLDivElement>(null)
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] })
+  const y = useTransform(scrollYProgress, [0, 1], ['-8%', '8%'])
+  return (
+    <div ref={ref} className="aspect-[16/9] overflow-hidden">
+      <motion.img src={src} alt={alt} loading="lazy" style={{ y }}
+        className="w-full h-[115%] object-cover -mt-[7.5%]" />
+    </div>
+  )
+}
+
 /* ── Tilt card ── */
 function TiltCard({ children, className = '' }: { children: React.ReactNode; className?: string }) {
   const ref = useRef<HTMLDivElement>(null)
@@ -218,48 +231,33 @@ export default function Home() {
       {/* ═══════ FADE OVERLAY ═══════ */}
       <div className="relative z-[5] h-32 -mt-32 bg-gradient-to-b from-transparent to-[#0a0e1a] pointer-events-none" />
 
-      {/* Animated section divider */}
-      <div className="relative z-10 h-px bg-gradient-to-r from-transparent via-blue-500/30 to-transparent mx-auto max-w-3xl" />
-
       {/* ═══════ SERVICES ═══════ */}
-      <section id="services" className="relative z-10 py-24 bg-[#0a0e1a] overflow-hidden">
-        {/* Highly visible animated orbs */}
-        <div className="absolute top-10 right-0 w-96 h-96 rounded-full bg-blue-500/12 blur-[100px] animate-pulse-glow pointer-events-none" />
-        <div className="absolute bottom-10 left-0 w-80 h-80 rounded-full bg-violet-500/10 blur-[90px] animate-pulse-glow pointer-events-none" style={{ animationDelay: '1.5s' }} />
-        {/* Floating scan-line that moves down */}
-        <motion.div className="absolute left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-400/30 to-transparent pointer-events-none"
-          animate={{ top: ['10%', '90%', '10%'] }} transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }} />
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-[1]">
+      <section id="services" className="relative z-10 py-24 bg-[#0a0e1a]">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <ScrollReveal>
             <p className="text-xs font-medium text-blue-400 uppercase tracking-widest mb-3">服务方向</p>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-white mb-12">专注领域</h2>
           </ScrollReveal>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
             {services.map((s, i) => (
-              <ScrollReveal key={s.title} delay={i * 0.08}>
-                <div className="group bg-[#111827] rounded-2xl p-6 h-full transition-all duration-500 relative overflow-hidden border border-white/[0.04] hover:border-blue-500/20">
-                  <div className="absolute inset-0 bg-gradient-to-br from-blue-500/0 via-blue-500/0 to-violet-500/0 group-hover:from-blue-500/5 group-hover:via-transparent group-hover:to-violet-500/5 transition-all duration-500" />
-                  <div className="relative z-[1]">
-                    <h3 className="text-base font-bold text-white mb-3">{s.title}</h3>
-                    <p className="text-sm text-slate-400 leading-relaxed">{s.desc}</p>
-                  </div>
+              <motion.div key={s.title}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-50px' }}
+                transition={{ duration: 0.5, delay: i * 0.1, ease: [0.22, 0.1, 0.2, 1] }}
+              >
+                <div className="bg-[#111827] rounded-2xl p-6 h-full border border-white/[0.04] hover:border-white/[0.08] transition-all">
+                  <h3 className="text-base font-bold text-white mb-3">{s.title}</h3>
+                  <p className="text-sm text-slate-400 leading-relaxed">{s.desc}</p>
                 </div>
-              </ScrollReveal>
+              </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Section divider */}
-      <div className="relative z-10 h-px bg-gradient-to-r from-transparent via-violet-500/30 to-transparent mx-auto max-w-3xl mb-16" />
-
       {/* ═══════ 真实项目 ═══════ */}
-      <section id="portfolio" className="relative pb-16 overflow-hidden">
-        <div className="absolute top-20 -right-20 w-[500px] h-[500px] rounded-full bg-blue-500/10 blur-[130px] animate-pulse-glow pointer-events-none" />
-        <div className="absolute bottom-20 -left-20 w-[450px] h-[450px] rounded-full bg-violet-500/8 blur-[120px] animate-pulse-glow pointer-events-none" style={{ animationDelay: '1s' }} />
-        {/* Floating gradient line */}
-        <motion.div className="absolute left-1/4 right-1/4 h-px bg-gradient-to-r from-transparent via-violet-400/25 to-transparent pointer-events-none"
-          animate={{ top: ['30%', '80%', '30%'] }} transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }} />
+      <section id="portfolio" className="pb-16">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <ScrollReveal>
             <div className="flex items-center gap-3 mb-3">
@@ -282,11 +280,15 @@ export default function Home() {
                   </ScrollReveal>
                   <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
                     {items.map((p, i) => (
-                      <ScrollReveal key={p.id} delay={i*0.06}>
+                      <motion.div key={p.id}
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, margin: '-50px' }}
+                        transition={{ duration: 0.5, delay: i * 0.1, ease: [0.22, 0.1, 0.2, 1] }}
+                      >
                         <Link to={p.link}>
-                          <TiltCard className="group bg-[#111827] rounded-2xl border border-white/[0.04] hover:border-blue-500/15 transition-all overflow-hidden h-full flex flex-col relative">
-                            <div className="absolute inset-0 bg-gradient-to-br from-blue-500/0 to-violet-500/0 group-hover:from-blue-500/3 group-hover:to-violet-500/3 transition-all duration-500 pointer-events-none" />
-                            {p.images?.[0]&&<div className="aspect-[16/9] overflow-hidden"><img src={p.images[0]} alt={p.title} loading="lazy" className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-700"/></div>}
+                          <TiltCard className="group bg-[#111827] rounded-2xl border border-white/[0.04] hover:border-white/[0.08] transition-all overflow-hidden h-full flex flex-col">
+                            {p.images?.[0]&&<ParallaxImage src={p.images[0]} alt={p.title} />}
                             <div className="p-5 flex-1 flex flex-col">
                               <p className="text-[10px] font-medium text-slate-500 uppercase tracking-wider mb-1.5">{p.category}</p>
                               <h4 className="text-base font-bold text-white mb-1.5 group-hover:text-blue-400 transition-colors">{p.title}</h4>
@@ -295,7 +297,7 @@ export default function Home() {
                             </div>
                           </TiltCard>
                         </Link>
-                      </ScrollReveal>
+                      </motion.div>
                     ))}
                   </div>
                 </div>
@@ -358,16 +360,10 @@ export default function Home() {
       </section>
 
       {/* ═══════ CTA ═══════ */}
-      <section id="contact" className="relative pb-28 overflow-hidden">
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-          <div className="w-[700px] h-[400px] rounded-full bg-gradient-to-r from-blue-500/15 via-violet-500/12 to-blue-500/15 blur-[120px] animate-pulse-glow" />
-        </div>
-        <motion.div className="absolute left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-400/30 to-transparent pointer-events-none"
-          animate={{ top: ['20%', '70%', '20%'] }} transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }} />
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-[1]">
-          <div className="bg-[#111827] border border-white/[0.05] rounded-3xl p-12 sm:p-16 relative overflow-hidden group">
-            <div className="absolute inset-0 bg-gradient-to-br from-blue-500/3 to-violet-500/3 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
-            <div className="relative z-[1] max-w-2xl mx-auto text-center">
+      <section id="contact" className="pb-28">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="bg-[#111827] border border-white/[0.05] rounded-3xl p-12 sm:p-16">
+            <div className="max-w-2xl mx-auto text-center">
               <ScrollReveal>
                 <h2 className="text-3xl sm:text-4xl font-extrabold text-white mb-4">有项目需要落地？</h2>
                 <p className="text-slate-400 mb-8 leading-relaxed">从方案评估到开发交付，提供全流程技术支持。</p>
