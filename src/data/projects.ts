@@ -163,4 +163,25 @@ export const allProjects: Record<string, Project> = {
     tech: ['React Native', 'TypeScript', 'Firebase'],
     link: '/mobile-app',
   },
+  'demo-dashboard': {
+    id: 'demo-dashboard', title: '实时监控大屏',
+    category: 'Demo 项目 · 仅供技术展示',
+    description: '系统监控中心 Demo，展示实时数据指标、图表可视化、告警管理和服务状态。',
+    tech: ['React', 'ECharts', 'WebSocket', 'TypeScript'],
+    link: '/dashboard',
+  },
+  'demo-api': {
+    id: 'demo-api', title: 'API 开发者门户',
+    category: 'Demo 项目 · 仅供技术展示',
+    description: 'REST API 参考文档 Demo，展示多语言代码示例（JS/Python/cURL）、交互式导航。',
+    tech: ['React', 'TypeScript', 'OpenAPI'],
+    link: '/api-docs',
+  },
+  'demo-admin': {
+    id: 'demo-admin', title: '后台管理系统',
+    category: 'Demo 项目 · 仅供技术展示',
+    description: '数据管理后台 Demo，展示 CRUD 操作、搜索筛选排序、弹窗表单、文件上传。',
+    tech: ['React', 'TypeScript', 'Framer Motion'],
+    link: '/admin-demo',
+  },
 }

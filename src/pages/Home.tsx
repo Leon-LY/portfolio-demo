@@ -319,12 +319,13 @@ export default function Home() {
           </ScrollReveal>
 
           {/* Grouped demo display */}
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-4 gap-4">
             <div className="space-y-3">
-              <p className="text-xs font-medium text-slate-500 uppercase tracking-wider mb-3">产品级 Web 应用</p>
+              <p className="text-xs font-medium text-slate-500 uppercase tracking-wider mb-3">产品级 Web</p>
               {[
-                { id:'demo-saas', title:'CloudFlow 平台', sub:'SaaS 数据分析平台', link:'/saas' },
+                { id:'demo-saas', title:'CloudFlow', sub:'SaaS 数据分析', link:'/saas' },
                 { id:'demo-marketing', title:'GrowthPulse', sub:'数字营销官网', link:'/marketing' },
+                { id:'demo-dashboard', title:'监控大屏', sub:'实时数据可视化', link:'/dashboard' },
               ].map(p=>(
                 <ScrollReveal key={p.id}><Link to={p.link} className="block bg-[#111827] border border-white/[0.03] rounded-xl p-4 hover:border-blue-500/20 hover:-translate-x-1 hover:shadow-[0_4px_20px_rgba(99,102,241,0.1)] hover:bg-[#161b2a] transition-all duration-200 group">
                   <h4 className="text-sm font-semibold text-white group-hover:text-blue-400 transition-colors">{p.title}</h4>
@@ -336,7 +337,7 @@ export default function Home() {
               <p className="text-xs font-medium text-slate-500 uppercase tracking-wider mb-3">品牌电商</p>
               {[
                 { id:'demo-ecommerce', title:'LuxeCart', sub:'高端时尚电商', link:'/ecommerce' },
-                { id:'demo-corporate', title:'Meridian 集团', sub:'跨国企业官网', link:'/corporate' },
+                { id:'demo-corporate', title:'Meridian', sub:'跨国企业官网', link:'/corporate' },
               ].map(p=>(
                 <ScrollReveal key={p.id}><Link to={p.link} className="block bg-[#111827] border border-white/[0.03] rounded-xl p-4 hover:border-blue-500/20 hover:-translate-x-1 hover:shadow-[0_4px_20px_rgba(99,102,241,0.1)] hover:bg-[#161b2a] transition-all duration-200 group">
                   <h4 className="text-sm font-semibold text-white group-hover:text-blue-400 transition-colors">{p.title}</h4>
@@ -345,9 +346,21 @@ export default function Home() {
               ))}
             </div>
             <div className="space-y-3">
-              <p className="text-xs font-medium text-slate-500 uppercase tracking-wider mb-3">移动端 App</p>
+              <p className="text-xs font-medium text-slate-500 uppercase tracking-wider mb-3">开发者工具</p>
               {[
-                { id:'demo-mobile', title:'FitTrack Pro', sub:'健康追踪 App 落地页', link:'/mobile-app' },
+                { id:'demo-api', title:'API 文档', sub:'开发者门户', link:'/api-docs' },
+                { id:'demo-admin', title:'后台管理', sub:'CRUD + 权限', link:'/admin-demo' },
+              ].map(p=>(
+                <ScrollReveal key={p.id}><Link to={p.link} className="block bg-[#111827] border border-white/[0.03] rounded-xl p-4 hover:border-blue-500/20 hover:-translate-x-1 hover:shadow-[0_4px_20px_rgba(99,102,241,0.1)] hover:bg-[#161b2a] transition-all duration-200 group">
+                  <h4 className="text-sm font-semibold text-white group-hover:text-blue-400 transition-colors">{p.title}</h4>
+                  <p className="text-xs text-slate-500 mt-0.5">{p.sub}</p>
+                </Link></ScrollReveal>
+              ))}
+            </div>
+            <div className="space-y-3">
+              <p className="text-xs font-medium text-slate-500 uppercase tracking-wider mb-3">移动端</p>
+              {[
+                { id:'demo-mobile', title:'FitTrack Pro', sub:'App 落地页', link:'/mobile-app' },
               ].map(p=>(
                 <ScrollReveal key={p.id}><Link to={p.link} className="block bg-[#111827] border border-white/[0.03] rounded-xl p-4 hover:border-blue-500/20 hover:-translate-x-1 hover:shadow-[0_4px_20px_rgba(99,102,241,0.1)] hover:bg-[#161b2a] transition-all duration-200 group">
                   <h4 className="text-sm font-semibold text-white group-hover:text-blue-400 transition-colors">{p.title}</h4>
