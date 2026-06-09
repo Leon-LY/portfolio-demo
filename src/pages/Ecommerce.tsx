@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Star, Heart, ShoppingCart, ChevronLeft, ChevronRight, Minus, Plus, Check, Truck, ShieldCheck, RotateCcw, Eye } from 'lucide-react'
 import PageTransition from '../components/PageTransition'
+import { ImgPlaceholder } from '../components/PlaceholderImage'
 
 const product = {
   name: '极简都市双肩包', brand: 'URBAN EASE', price: 899, originalPrice: 1299,
@@ -9,10 +10,10 @@ const product = {
 }
 
 const allImages = [
-  { id: '1', url: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=600&h=600&fit=crop&q=80', color: '深空灰' },
-  { id: '2', url: 'https://images.unsplash.com/photo-1622560480605-d83c853bc5c3?w=600&h=600&fit=crop&q=80', color: '深空灰' },
-  { id: '3', url: 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=600&h=600&fit=crop&q=80', color: '墨蓝色' },
-  { id: '4', url: 'https://images.unsplash.com/photo-1581605405669-fcdf81165afa?w=600&h=600&fit=crop&q=80', color: '墨蓝色' },
+  { id: '1', color: '深空灰', idx: 0 },
+  { id: '2', color: '深空灰', idx: 1 },
+  { id: '3', color: '墨蓝色', idx: 2 },
+  { id: '4', color: '墨蓝色', idx: 3 },
 ]
 
 const colors = [
@@ -69,7 +70,7 @@ export default function Ecommerce() {
           {/* Gallery */}
           <div>
             <motion.div initial={{opacity:0}} animate={{opacity:1}} className="relative bg-[#111827] rounded-3xl overflow-hidden aspect-square border border-white/[0.04] group cursor-zoom-in" onClick={()=>setZoom(true)}>
-              <AnimatePresence mode="wait"><motion.img key={img} src={imgs[img]?.url||allImages[0].url} alt="" initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} className="w-full h-full object-cover"/></AnimatePresence>
+              <AnimatePresence mode="wait"><motion.div key={img} initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} className="w-full h-full"><ImgPlaceholder aspect="1/1" idx={imgs[img]?.idx||0} className="w-full h-full" /></motion.div></AnimatePresence>
               {imgs.length>1&&<>
                 <button onClick={e=>{e.stopPropagation();setImg(s=>(s-1+imgs.length)%imgs.length)}} className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/50 backdrop-blur-md border border-white/10 flex items-center justify-center text-white hover:bg-black/70 transition-all"><ChevronLeft size={18}/></button>
                 <button onClick={e=>{e.stopPropagation();setImg(s=>(s+1)%imgs.length)}} className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/50 backdrop-blur-md border border-white/10 flex items-center justify-center text-white hover:bg-black/70 transition-all"><ChevronRight size={18}/></button>
@@ -77,7 +78,7 @@ export default function Ecommerce() {
               <span className="absolute top-4 left-4 text-[11px] font-bold text-white bg-red-600 px-2.5 py-1 rounded-lg">-{Math.round((1-product.price/product.originalPrice)*100)}%</span>
               <button onClick={e=>{e.stopPropagation()}} className="absolute top-4 right-4 w-9 h-9 rounded-full bg-black/40 backdrop-blur-md flex items-center justify-center text-white/60 hover:text-white transition-all"><Eye size={16}/></button>
             </motion.div>
-            <div className="flex gap-2 mt-4">{imgs.map((i,idx)=><button key={i.id} onClick={()=>setImg(idx)} className={`w-16 h-16 rounded-xl overflow-hidden border-2 transition-all ${idx===img?'border-white/30':'border-transparent opacity-40 hover:opacity-70'}`}><img src={i.url} alt="" className="w-full h-full object-cover"/></button>)}</div>
+            <div className="flex gap-2 mt-4">{imgs.map((i,idx)=><button key={i.id} onClick={()=>setImg(idx)} className={`w-16 h-16 rounded-xl overflow-hidden border-2 transition-all ${idx===img?'border-white/30':'border-transparent opacity-40 hover:opacity-70'}`}><ImgPlaceholder aspect="1/1" idx={i.idx} className="w-full h-full" /></button>)}</div>
           </div>
 
           {/* Info */}

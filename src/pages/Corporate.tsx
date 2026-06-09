@@ -3,6 +3,7 @@ import { motion, useScroll, useTransform } from 'framer-motion'
 import { ArrowUpRight, ChevronRight, Calendar } from 'lucide-react'
 import PageTransition from '../components/PageTransition'
 import ScrollReveal from '../components/ScrollReveal'
+import { ImgPlaceholder, AvatarPlaceholder } from '../components/PlaceholderImage'
 import { companyInfo, timeline, teamMembers, partners, newsArticles, values } from '../data/corporate'
 
 export default function Corporate() {
@@ -20,7 +21,7 @@ export default function Corporate() {
       </div>
       <section ref={ref} className="relative h-screen min-h-[650px] flex items-center overflow-hidden">
         <motion.div style={{ y: py }} className="absolute inset-0">
-          <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1920&h=1080&fit=crop&q=80" alt="" className="w-full h-full object-cover" />
+          <ImgPlaceholder aspect="auto" className="w-full h-full" idx={0} />
         </motion.div>
         <div className="absolute inset-0 bg-gradient-to-r from-[#0a0e1a] via-[#0a0e1a]/85 to-transparent" />
 
@@ -102,7 +103,7 @@ export default function Corporate() {
             {newsArticles.map((a,i)=>(
               <ScrollReveal key={a.id} delay={i*0.08}>
                 <article className="group bg-[#111827] border border-white/[0.04] rounded-2xl overflow-hidden hover:border-white/[0.08] transition-all cursor-pointer">
-                  <div className="aspect-[16/10] overflow-hidden"><img src={a.image} alt="" className="w-full h-full object-cover group-hover:scale-[1.04] transition-transform duration-600" /></div>
+                  <div className="aspect-[16/10] overflow-hidden"><ImgPlaceholder aspect="16/10" idx={newsArticles.indexOf(a)} className="w-full h-full group-hover:scale-[1.04] transition-transform duration-600" /></div>
                   <div className="p-6">
                     <div className="flex items-center gap-3 mb-3"><span className="text-[10px] font-medium text-blue-400 uppercase">{a.category}</span><span className="text-[10px] text-slate-600 flex items-center gap-1"><Calendar size={10} />{a.date}</span></div>
                     <h3 className="text-sm font-bold text-white mb-2 line-clamp-2 group-hover:text-blue-400 transition-colors">{a.title}</h3>

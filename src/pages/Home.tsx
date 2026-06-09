@@ -6,6 +6,7 @@ import PageTransition from '../components/PageTransition'
 import ScrollReveal from '../components/ScrollReveal'
 import { personalInfo, services, heroStats } from '../data/config'
 import { projectGroups, allProjects } from '../data/projects'
+import Counter from '../components/Counter'
 
 /* ── Particle network canvas ── */
 function ParticleNetwork() {
@@ -212,7 +213,7 @@ export default function Home() {
             </div>
 
             <div className="flex flex-wrap gap-x-8 gap-y-4">
-              {heroStats.map(s => (<div key={s.label}><span className="text-2xl font-extrabold text-white">{s.value}</span><span className="text-xs text-slate-500 ml-1.5">{s.label}</span></div>))}
+              {heroStats.map(s => (<div key={s.label}><span className="text-2xl font-extrabold text-white"><Counter to={parseInt(s.value)||0} suffix={s.value.replace(/[0-9]/g,'')} /></span><span className="text-xs text-slate-500 ml-1.5">{s.label}</span></div>))}
             </div>
 
             <p className="mt-8 text-xs text-slate-600">{personalInfo.heroCredibility}</p>

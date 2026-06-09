@@ -11,6 +11,7 @@ import Admin from './pages/Admin'
 import Dashboard from './pages/Dashboard'
 import ApiDocs from './pages/ApiDocs'
 import AdminDemo from './pages/AdminDemo'
+import NotFound from './pages/NotFound'
 
 export default function App() {
   return (
@@ -27,6 +28,7 @@ export default function App() {
         <Route path="/api-docs" element={<ApiDocs />} />
         <Route path="/admin-demo" element={<AdminDemo />} />
         <Route path="/project/:id" element={<ProjectDetail />} />
+        <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
   )
