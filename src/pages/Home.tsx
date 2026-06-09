@@ -15,7 +15,7 @@ function HeroBg() {
     return () => window.removeEventListener('mousemove', h)
   }, [])
   return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+    <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 0 }}>
       <div className="absolute w-[700px] h-[700px] rounded-full" style={{ background: 'radial-gradient(circle, rgba(99,102,241,0.25) 0%, rgba(139,92,246,0.12) 35%, transparent 65%)', left: `${pos.x*100}%`, top: `${pos.y*100}%`, transform: 'translate(-50%,-50%)', transition: 'left 0.3s ease-out, top 0.3s ease-out' }} />
       <div className="absolute w-[350px] h-[350px] rounded-full" style={{ background: 'radial-gradient(circle, rgba(59,130,246,0.18) 0%, transparent 60%)', left: `${pos.x*80}%`, top: `${pos.y*80}%`, transform: 'translate(-50%,-50%)', transition: 'left 0.5s ease-out, top 0.5s ease-out' }} />
       <div className="absolute top-0 left-1/4 w-[500px] h-[500px] rounded-full bg-blue-500/6 blur-[140px]" />
@@ -43,7 +43,7 @@ export default function Home() {
   return (
     <PageTransition>
       {/* ═══════ HERO ═══════ */}
-      <section className="relative pt-40 pb-24 overflow-hidden">
+      <section className="relative pt-40 pb-24">
         <HeroBg />
         <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
           <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} className="max-w-3xl">
@@ -83,7 +83,7 @@ export default function Home() {
       </section>
 
       {/* ═══════ SERVICES ═══════ */}
-      <section id="services" className="py-24 border-t border-white/[0.04]">
+      <section id="services" className="relative z-10 py-24 border-t border-white/[0.04] bg-[#0a0e1a]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <ScrollReveal>
             <p className="text-xs font-medium text-blue-400 uppercase tracking-widest mb-3">服务方向</p>
