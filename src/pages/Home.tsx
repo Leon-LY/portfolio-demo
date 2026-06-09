@@ -55,9 +55,12 @@ export default function Home() {
               <span className="text-xs font-medium text-slate-400 tracking-widest uppercase">{personalInfo.tagline}</span>
             </div>
 
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-[1.08] mb-4">
-              {personalInfo.heroTitle}
+            <h1 className="text-5xl sm:text-7xl lg:text-8xl font-black text-white tracking-tight leading-[0.92] mb-2">
+              {personalInfo.name}<span className="text-blue-500">.</span>
             </h1>
+            <p className="text-xl sm:text-2xl lg:text-3xl text-white font-bold tracking-tight mb-4">
+              {personalInfo.heroTitle}
+            </p>
 
             <div className="text-base sm:text-lg text-slate-400 leading-relaxed space-y-2 mb-6">
               {personalInfo.heroBio.split('\n').map((line, i) => (

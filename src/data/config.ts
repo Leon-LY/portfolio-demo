@@ -10,7 +10,7 @@ export const personalInfo = {
   tagline: '独立全栈开发者',
   subtitle: 'Web 全栈 / 数据可视化 / 系统架构',
   heroTitle: '从数据大屏到企业级应用，交付可靠的技术方案。',
-  heroBio: '5 年全栈开发经验，主导过城市大脑、智慧社区等规模化项目。\n服务范围覆盖政务信息化、数据可视化、企业级 Web 应用及系统架构设计。',
+  heroBio: '10 年全栈开发经验，主导过城市大脑、智慧社区等规模化项目。\n服务范围覆盖政务信息化、数据可视化、企业级 Web 应用及系统架构设计。',
   heroCredibility: '曾服务：荣成市大数据中心 · 荣成市交通运输局 · 中国广电山东网络有限公司',
   email: '554295000@qq.com',
   phone: '18389118642',
@@ -38,7 +38,7 @@ export const services = [
 
 /** Hero 统计数字 */
 export const heroStats = [
-  { value: '5+', label: '年经验' },
+  { value: '10+', label: '年经验' },
   { value: '30+', label: '交付项目' },
   { value: '20+', label: '服务部门' },
   { value: '10万+', label: '覆盖用户' },
