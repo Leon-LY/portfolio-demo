@@ -7,7 +7,75 @@ import ScrollReveal from '../components/ScrollReveal'
 import { personalInfo, services, heroStats } from '../data/config'
 import { projectGroups, allProjects } from '../data/projects'
 
-function HeroBg() {
+/* ── Particle network canvas ── */
+function ParticleNetwork() {
+  const canvasRef = useRef<HTMLCanvasElement>(null)
+  const mouseRef = useRef({ x: 0.5, y: 0.5 })
+
+  useEffect(() => {
+    const h = (e: MouseEvent) => { mouseRef.current = { x: e.clientX / window.innerWidth, y: e.clientY / window.innerHeight } }
+    window.addEventListener('mousemove', h, { passive: true })
+    return () => window.removeEventListener('mousemove', h)
+  }, [])
+
+  useEffect(() => {
+    const canvas = canvasRef.current
+    if (!canvas) return
+    const ctx = canvas.getContext('2d')
+    if (!ctx) return
+    let anim: number
+
+    const resize = () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight }
+    resize(); window.addEventListener('resize', resize)
+
+    const particles = Array.from({ length: 40 }, () => ({
+      x: Math.random(), y: Math.random(),
+      vx: (Math.random() - 0.5) * 0.0015,
+      vy: (Math.random() - 0.5) * 0.0015,
+    }))
+
+    const animate = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height)
+      const { x: mx, y: my } = mouseRef.current
+
+      particles.forEach((p, i) => {
+        p.x += p.vx; p.y += p.vy
+        if (p.x < 0 || p.x > 1) p.vx *= -1
+        if (p.y < 0 || p.y > 1) p.vy *= -1
+
+        const px = p.x * canvas.width; const py = p.y * canvas.height
+
+        // Draw connections
+        for (let j = i + 1; j < particles.length; j++) {
+          const q = particles[j]
+          const dx = q.x * canvas.width - px; const dy = q.y * canvas.height - py
+          const dist = Math.sqrt(dx * dx + dy * dy)
+          if (dist < 180) {
+            const alpha = (1 - dist / 180) * 0.12
+            ctx.beginPath(); ctx.moveTo(px, py); ctx.lineTo(q.x * canvas.width, q.y * canvas.height)
+            ctx.strokeStyle = `rgba(139,92,246,${alpha})`; ctx.lineWidth = 0.5; ctx.stroke()
+          }
+        }
+
+        // Draw point
+        const dm = Math.sqrt((mx - p.x) ** 2 + (my - p.y) ** 2)
+        const r = dm < 0.15 ? 3 : 1.2
+        const a = dm < 0.15 ? 0.6 : 0.15
+        ctx.beginPath(); ctx.arc(px, py, r, 0, Math.PI * 2)
+        ctx.fillStyle = `rgba(139,92,246,${a})`; ctx.fill()
+      })
+
+      anim = requestAnimationFrame(animate)
+    }
+    animate()
+    return () => { cancelAnimationFrame(anim); window.removeEventListener('resize', resize) }
+  }, [])
+
+  return <canvas ref={canvasRef} className="absolute inset-0 pointer-events-none" style={{ zIndex: 0 }} />
+}
+
+/* ── Cursor glow ── */
+function CursorGlow() {
   const [pos, setPos] = useState({ x: 0.5, y: 0.5 })
   useEffect(() => {
     const h = (e: MouseEvent) => setPos({ x: e.clientX / window.innerWidth, y: e.clientY / window.innerHeight })
@@ -16,11 +84,52 @@ function HeroBg() {
   }, [])
   return (
     <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 0 }}>
-      <div className="absolute w-[700px] h-[700px] rounded-full" style={{ background: 'radial-gradient(circle, rgba(99,102,241,0.25) 0%, rgba(139,92,246,0.12) 35%, transparent 65%)', left: `${pos.x*100}%`, top: `${pos.y*100}%`, transform: 'translate(-50%,-50%)', transition: 'left 0.3s ease-out, top 0.3s ease-out' }} />
-      <div className="absolute w-[350px] h-[350px] rounded-full" style={{ background: 'radial-gradient(circle, rgba(59,130,246,0.18) 0%, transparent 60%)', left: `${pos.x*80}%`, top: `${pos.y*80}%`, transform: 'translate(-50%,-50%)', transition: 'left 0.5s ease-out, top 0.5s ease-out' }} />
-      <div className="absolute top-0 left-1/4 w-[500px] h-[500px] rounded-full bg-blue-500/6 blur-[140px]" />
-      <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] rounded-full bg-violet-500/6 blur-[120px]" />
-      <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,0.1) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.1) 1px,transparent 1px)', backgroundSize: '80px 80px' }} />
+      <div className="absolute w-[700px] h-[700px] rounded-full" style={{ background: 'radial-gradient(circle, rgba(99,102,241,0.2) 0%, rgba(139,92,246,0.08) 35%, transparent 65%)', left: `${pos.x*100}%`, top: `${pos.y*100}%`, transform: 'translate(-50%,-50%)', transition: 'left 0.3s ease-out, top 0.3s ease-out' }} />
+      <div className="absolute top-0 left-1/4 w-[500px] h-[500px] rounded-full bg-blue-500/4 blur-[140px]" />
+      <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] rounded-full bg-violet-500/4 blur-[120px]" />
+    </div>
+  )
+}
+
+/* ── Terminal showcase ── */
+function TerminalShowcase() {
+  const [line, setLine] = useState(0)
+  const lines = [
+    '$ leon --stack',
+    '> React · Vue · Node.js · SpringBoot · PostgreSQL',
+    '$ leon --specialty',
+    '> 数据可视化 · 系统架构 · 全栈开发 · AI 集成',
+    '$ leon --deploy',
+    '> Docker · Nginx · K8s · CI/CD · Cloud',
+    '$ leon --status',
+    '> ✅ 当前可接受新项目委托',
+  ]
+
+  useEffect(() => {
+    if (line < lines.length - 1) {
+      const t = setTimeout(() => setLine(l => l + 1), line === 0 ? 600 : 800)
+      return () => clearTimeout(t)
+    }
+  }, [line, lines.length])
+
+  return (
+    <div className="bg-[#0d1117] border border-white/[0.06] rounded-2xl overflow-hidden font-mono text-xs sm:text-sm shadow-2xl shadow-black/30">
+      <div className="flex items-center gap-2 px-4 py-2.5 bg-[#161b22] border-b border-white/[0.04]">
+        <span className="w-3 h-3 rounded-full bg-red-500/80" />
+        <span className="w-3 h-3 rounded-full bg-amber-500/80" />
+        <span className="w-3 h-3 rounded-full bg-emerald-500/80" />
+        <span className="ml-2 text-[11px] text-slate-500">terminal — leon@dev</span>
+      </div>
+      <div className="p-5 space-y-1.5 min-h-[220px]">
+        {lines.slice(0, line + 1).map((l, i) => (
+          <motion.div key={i} initial={{ opacity: 0, x: -4 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.15 }}
+            className={`${l.startsWith('$') ? 'text-emerald-400' : l.startsWith('>') ? 'text-slate-300 pl-3' : 'text-slate-500'}`}
+          >
+            {l}
+            {i === line && <span className="inline-block w-2 h-4 bg-blue-400 ml-0.5 animate-pulse align-middle" />}
+          </motion.div>
+        ))}
+      </div>
     </div>
   )
 }
@@ -44,9 +153,11 @@ export default function Home() {
     <PageTransition>
       {/* ═══════ HERO ═══════ */}
       <section className="relative pt-40 pb-24">
-        <HeroBg />
+        <ParticleNetwork />
+        <CursorGlow />
         <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
-          <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} className="max-w-3xl">
+          <div className="grid lg:grid-cols-5 gap-10 items-center">
+          <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} className="lg:col-span-3">
             <div className="flex items-center gap-3 mb-6">
               <span className="relative flex h-2.5 w-2.5">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
@@ -79,6 +190,14 @@ export default function Home() {
 
             <p className="mt-8 text-xs text-slate-600">{personalInfo.heroCredibility}</p>
           </motion.div>
+
+          {/* Terminal showcase */}
+          <div className="lg:col-span-2 hidden lg:block">
+            <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8, delay: 0.3 }}>
+              <TerminalShowcase />
+            </motion.div>
+          </div>
+          </div>
         </div>
       </section>
 
