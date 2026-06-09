@@ -246,7 +246,7 @@ export default function Home() {
                 viewport={{ once: true, margin: '-50px' }}
                 transition={{ duration: 0.5, delay: i * 0.1, ease: [0.22, 0.1, 0.2, 1] }}
               >
-                <div className="bg-[#111827] rounded-2xl p-6 h-full border border-white/[0.04] hover:border-white/[0.08] transition-all">
+                <div className="bg-[#111827] rounded-2xl p-6 h-full border border-white/[0.04] hover:border-blue-500/20 hover:-translate-y-1 hover:shadow-[0_8px_30px_rgba(99,102,241,0.12)] transition-all duration-300">
                   <h3 className="text-base font-bold text-white mb-3">{s.title}</h3>
                   <p className="text-sm text-slate-400 leading-relaxed">{s.desc}</p>
                 </div>
@@ -287,7 +287,7 @@ export default function Home() {
                         transition={{ duration: 0.5, delay: i * 0.1, ease: [0.22, 0.1, 0.2, 1] }}
                       >
                         <Link to={p.link}>
-                          <TiltCard className="group bg-[#111827] rounded-2xl border border-white/[0.04] hover:border-white/[0.08] transition-all overflow-hidden h-full flex flex-col">
+                          <TiltCard className="group bg-[#111827] rounded-2xl border border-white/[0.04] hover:border-blue-500/20 hover:shadow-[0_8px_30px_rgba(99,102,241,0.15)] transition-all duration-300 overflow-hidden h-full flex flex-col">
                             {p.images?.[0]&&<ParallaxImage src={p.images[0]} alt={p.title} />}
                             <div className="p-5 flex-1 flex flex-col">
                               <p className="text-[10px] font-medium text-slate-500 uppercase tracking-wider mb-1.5">{p.category}</p>
@@ -326,7 +326,7 @@ export default function Home() {
                 { id:'demo-saas', title:'CloudFlow 平台', sub:'SaaS 数据分析平台', link:'/saas' },
                 { id:'demo-marketing', title:'GrowthPulse', sub:'数字营销官网', link:'/marketing' },
               ].map(p=>(
-                <ScrollReveal key={p.id}><Link to={p.link} className="block bg-[#111827] border border-white/[0.03] rounded-xl p-4 hover:border-white/[0.08] hover:bg-[#161b2a] transition-all group">
+                <ScrollReveal key={p.id}><Link to={p.link} className="block bg-[#111827] border border-white/[0.03] rounded-xl p-4 hover:border-blue-500/20 hover:-translate-x-1 hover:shadow-[0_4px_20px_rgba(99,102,241,0.1)] hover:bg-[#161b2a] transition-all duration-200 group">
                   <h4 className="text-sm font-semibold text-white group-hover:text-blue-400 transition-colors">{p.title}</h4>
                   <p className="text-xs text-slate-500 mt-0.5">{p.sub}</p>
                 </Link></ScrollReveal>
@@ -338,7 +338,7 @@ export default function Home() {
                 { id:'demo-ecommerce', title:'LuxeCart', sub:'高端时尚电商', link:'/ecommerce' },
                 { id:'demo-corporate', title:'Meridian 集团', sub:'跨国企业官网', link:'/corporate' },
               ].map(p=>(
-                <ScrollReveal key={p.id}><Link to={p.link} className="block bg-[#111827] border border-white/[0.03] rounded-xl p-4 hover:border-white/[0.08] hover:bg-[#161b2a] transition-all group">
+                <ScrollReveal key={p.id}><Link to={p.link} className="block bg-[#111827] border border-white/[0.03] rounded-xl p-4 hover:border-blue-500/20 hover:-translate-x-1 hover:shadow-[0_4px_20px_rgba(99,102,241,0.1)] hover:bg-[#161b2a] transition-all duration-200 group">
                   <h4 className="text-sm font-semibold text-white group-hover:text-blue-400 transition-colors">{p.title}</h4>
                   <p className="text-xs text-slate-500 mt-0.5">{p.sub}</p>
                 </Link></ScrollReveal>
@@ -349,7 +349,7 @@ export default function Home() {
               {[
                 { id:'demo-mobile', title:'FitTrack Pro', sub:'健康追踪 App 落地页', link:'/mobile-app' },
               ].map(p=>(
-                <ScrollReveal key={p.id}><Link to={p.link} className="block bg-[#111827] border border-white/[0.03] rounded-xl p-4 hover:border-white/[0.08] hover:bg-[#161b2a] transition-all group">
+                <ScrollReveal key={p.id}><Link to={p.link} className="block bg-[#111827] border border-white/[0.03] rounded-xl p-4 hover:border-blue-500/20 hover:-translate-x-1 hover:shadow-[0_4px_20px_rgba(99,102,241,0.1)] hover:bg-[#161b2a] transition-all duration-200 group">
                   <h4 className="text-sm font-semibold text-white group-hover:text-blue-400 transition-colors">{p.title}</h4>
                   <p className="text-xs text-slate-500 mt-0.5">{p.sub}</p>
                 </Link></ScrollReveal>
@@ -362,7 +362,7 @@ export default function Home() {
       {/* ═══════ CTA ═══════ */}
       <section id="contact" className="pb-28">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="bg-[#111827] border border-white/[0.05] rounded-3xl p-12 sm:p-16">
+          <div className="bg-[#111827] border border-white/[0.05] rounded-3xl p-12 sm:p-16 hover:border-blue-500/10 hover:shadow-[0_8px_40px_rgba(99,102,241,0.1)] transition-all duration-300">
             <div className="max-w-2xl mx-auto text-center">
               <ScrollReveal>
                 <h2 className="text-3xl sm:text-4xl font-extrabold text-white mb-4">有项目需要落地？</h2>
