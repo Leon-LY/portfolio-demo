@@ -12,6 +12,20 @@ export default function SaaS() {
 
   return (
     <PageTransition>
+      <div className="pt-20 bg-[#0a0e1a] border-b border-white/[0.04]">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 py-4">
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-xs text-slate-500">
+            <span className="text-slate-400 font-medium">Demo 项目 · 仅供技术展示</span>
+            <span>展示能力：</span>
+            <span className="px-2 py-0.5 bg-white/[0.03] rounded-md">SaaS 产品设计</span>
+            <span className="px-2 py-0.5 bg-white/[0.03] rounded-md">定价方案系统</span>
+            <span className="px-2 py-0.5 bg-white/[0.03] rounded-md">实时数据看板</span>
+            <span className="px-2 py-0.5 bg-white/[0.03] rounded-md">FAQ 交互组件</span>
+            <span className="px-2 py-0.5 bg-white/[0.03] rounded-md">功能列表布局</span>
+            <span className="px-2 py-0.5 bg-white/[0.03] rounded-md">响应式设计</span>
+          </div>
+        </div>
+      </div>
       {/* Hero */}
       <section className="relative pt-32 pb-24 overflow-hidden">
         <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-blue-500/4 rounded-full blur-[160px]" />

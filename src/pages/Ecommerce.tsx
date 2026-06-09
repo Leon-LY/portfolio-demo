@@ -13,6 +13,20 @@ export default function Ecommerce() {
 
   return (
     <PageTransition>
+      <div className="pt-20 bg-[#0a0e1a] border-b border-white/[0.04]">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 py-4">
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-xs text-slate-500">
+            <span className="text-slate-400 font-medium">Demo 项目 · 仅供技术展示</span>
+            <span>展示能力：</span>
+            <span className="px-2 py-0.5 bg-white/[0.03] rounded-md">商品图片画廊</span>
+            <span className="px-2 py-0.5 bg-white/[0.03] rounded-md">SKU 选择系统</span>
+            <span className="px-2 py-0.5 bg-white/[0.03] rounded-md">购物车交互</span>
+            <span className="px-2 py-0.5 bg-white/[0.03] rounded-md">用户评价系统</span>
+            <span className="px-2 py-0.5 bg-white/[0.03] rounded-md">推荐算法展示</span>
+            <span className="px-2 py-0.5 bg-white/[0.03] rounded-md">响应式电商布局</span>
+          </div>
+        </div>
+      </div>
       <AnimatePresence>
         {notify && <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }}
           className="fixed top-24 left-1/2 -translate-x-1/2 z-50 bg-emerald-500 text-white px-6 py-3 rounded-xl shadow-2xl text-sm font-semibold flex items-center gap-2">

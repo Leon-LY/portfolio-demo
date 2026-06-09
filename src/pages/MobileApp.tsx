@@ -11,6 +11,20 @@ export default function MobileApp() {
 
   return (
     <PageTransition>
+      <div className="pt-20 bg-[#0a0e1a] border-b border-white/[0.04]">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 py-4">
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-xs text-slate-500">
+            <span className="text-slate-400 font-medium">Demo 项目 · 仅供技术展示</span>
+            <span>展示能力：</span>
+            <span className="px-2 py-0.5 bg-white/[0.03] rounded-md">App 落地页设计</span>
+            <span className="px-2 py-0.5 bg-white/[0.03] rounded-md">手机框架模拟</span>
+            <span className="px-2 py-0.5 bg-white/[0.03] rounded-md">功能轮播展示</span>
+            <span className="px-2 py-0.5 bg-white/[0.03] rounded-md">下载转化布局</span>
+            <span className="px-2 py-0.5 bg-white/[0.03] rounded-md">用户评价卡片</span>
+            <span className="px-2 py-0.5 bg-white/[0.03] rounded-md">数据统计展示</span>
+          </div>
+        </div>
+      </div>
       <section className="relative pt-32 pb-24 overflow-hidden">
         <div className="absolute top-10 right-0 w-[500px] h-[500px] bg-emerald-500/5 rounded-full blur-[150px]" />
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
