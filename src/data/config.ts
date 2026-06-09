@@ -10,7 +10,7 @@
 export const personalInfo = {
   name: 'Leon',
   title: '全栈软件工程师',
-  bio: '8 年全栈开发经验，深耕智慧城市、政务数字化领域。主导过多个城市核心系统——大数据可视化大屏、智慧社区移动端、省统一身份认证、政务服务平台。熟悉 Vue.js / React 生态，擅长复杂业务需求的技术落地。',
+  bio: '10 年全栈开发经验，深耕智慧城市、政务数字化领域。主导过多个城市核心系统——大数据可视化大屏、智慧社区移动端、省统一身份认证、政务服务平台。熟悉 Vue.js / React 生态，擅长复杂业务需求的技术落地。',
   email: '554295000@qq.com',
 }
 
@@ -28,7 +28,7 @@ export const skills = [
 
 // ▸ Hero 统计数字
 export const heroStats = [
-  { value: '8+', label: '年经验' },
+  { value: '10+', label: '年经验' },
   { value: '30+', label: '交付项目' },
   { value: '20+', label: '服务部门' },
   { value: '10万+', label: '覆盖用户' },
