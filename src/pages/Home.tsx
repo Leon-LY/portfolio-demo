@@ -82,6 +82,9 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ═══════ FADE OVERLAY ═══════ */}
+      <div className="relative z-[5] h-32 -mt-32 bg-gradient-to-b from-transparent to-[#0a0e1a] pointer-events-none" />
+
       {/* ═══════ SERVICES ═══════ */}
       <section id="services" className="relative z-10 py-24 border-t border-white/[0.04] bg-[#0a0e1a]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
