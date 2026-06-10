@@ -6,22 +6,47 @@ import { loadAdminData, saveAdminData, resetAdminData, downloadJSON } from '../d
 import type { AdminData } from '../data/adminStore'
 import type { Project } from '../data/projects'
 
-/** Image uploader — reads files as data URLs */
+/** Compress an image via canvas and return as JPEG data URL */
+function compressImage(file: File): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const img = new Image()
+    img.onload = () => {
+      const MAX = 800 // max width/height
+      let { width, height } = img
+      if (width > MAX || height > MAX) {
+        if (width > height) { height = Math.round(height * MAX / width); width = MAX }
+        else { width = Math.round(width * MAX / height); height = MAX }
+      }
+      const canvas = document.createElement('canvas')
+      canvas.width = width
+      canvas.height = height
+      const ctx = canvas.getContext('2d')!
+      ctx.drawImage(img, 0, 0, width, height)
+      resolve(canvas.toDataURL('image/jpeg', 0.75))
+    }
+    img.onerror = () => reject(new Error('Failed to load image'))
+    img.src = URL.createObjectURL(file)
+  })
+}
+
+/** Image uploader — auto-compresses to ~30-80KB JPEG before storing */
 function ImageUploader({ images, onChange }: { images: string[]; onChange: (imgs: string[]) => void }) {
   const fileRef = useRef<HTMLInputElement>(null)
+  const [uploading, setUploading] = useState(false)
 
-  const handleFiles = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFiles = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files
     if (!files) return
-    const readers: Promise<string>[] = []
+    setUploading(true)
+    const compressed: string[] = []
     for (let i = 0; i < files.length; i++) {
-      readers.push(new Promise(resolve => {
-        const reader = new FileReader()
-        reader.onload = () => resolve(reader.result as string)
-        reader.readAsDataURL(files[i])
-      }))
+      try {
+        const url = await compressImage(files[i])
+        compressed.push(url)
+      } catch { /* skip broken files */ }
     }
-    Promise.all(readers).then(urls => onChange([...images, ...urls]))
+    onChange([...images, ...compressed])
+    setUploading(false)
     if (fileRef.current) fileRef.current.value = ''
   }
 
@@ -31,7 +56,7 @@ function ImageUploader({ images, onChange }: { images: string[]; onChange: (imgs
 
   return (
     <div>
-      <span className="text-[10px] text-slate-500 mb-2 block">项目图片（点击上传或拖入文件）</span>
+      <span className="text-[10px] text-slate-500 mb-2 block">项目图片 — 直接上传，自动压缩</span>
       <div className="flex flex-wrap gap-2 mb-3">
         {images.map((img, i) => (
           <div key={i} className="relative w-20 h-14 rounded-lg overflow-hidden border border-white/[0.06] group">
@@ -39,12 +64,15 @@ function ImageUploader({ images, onChange }: { images: string[]; onChange: (imgs
             <button onClick={() => removeImage(i)} className="absolute top-0.5 right-0.5 w-5 h-5 rounded-full bg-black/60 flex items-center justify-center text-white/60 hover:text-white hover:bg-red-500/80 transition-all opacity-0 group-hover:opacity-100"><X size={10} /></button>
           </div>
         ))}
-        <button onClick={() => fileRef.current?.click()} className="w-20 h-14 rounded-lg border border-dashed border-white/[0.1] flex items-center justify-center text-slate-600 hover:text-white hover:border-white/[0.2] transition-all">
-          <Upload size={14} />
+        <button onClick={() => fileRef.current?.click()} disabled={uploading}
+          className={`w-20 h-14 rounded-lg border border-dashed flex items-center justify-center transition-all ${
+            uploading ? 'border-blue-500/30 text-blue-400' : 'border-white/[0.1] text-slate-600 hover:text-white hover:border-white/[0.2]'
+          }`}>
+          {uploading ? <span className="text-[9px]">压缩中</span> : <Upload size={14} />}
         </button>
       </div>
       <input ref={fileRef} type="file" accept="image/*" multiple onChange={handleFiles} className="hidden" />
-      <p className="text-[10px] text-slate-600">图片以 Data URL 存储。大图请用路径：</p>
+      <p className="text-[10px] text-slate-600">上传后自动压缩至 800px 宽 · JPEG 格式 · 单张约 30-80KB</p>
       <textarea rows={2} value={images.filter(i => !i.startsWith('data:')).join('\n')}
         onChange={e => {
           const paths = e.target.value.split('\n').filter(Boolean)
