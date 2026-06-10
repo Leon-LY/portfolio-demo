@@ -250,17 +250,28 @@ function TerminalShowcase() {
 }
 
 /* ═══════════════════════════════════════════════════════
-   Parallax Image
+   Parallax Image — with blur-up loading
    ═══════════════════════════════════════════════════════ */
 function ParallaxImage({ src, alt }: { src: string; alt: string }) {
   const ref = useRef<HTMLDivElement>(null)
+  const [loaded, setLoaded] = useState(false)
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] })
   const y = useTransform(scrollYProgress, [0, 1], ['-10%', '10%'])
+
   return (
-    <div ref={ref} className="aspect-[16/9] overflow-hidden relative">
+    <div ref={ref} className="aspect-[16/9] overflow-hidden relative bg-[#0d1117]">
+      {/* Skeleton shimmer */}
+      {!loaded && (
+        <div className="absolute inset-0 animate-pulse bg-gradient-to-r from-[#0d1117] via-[#1a2236] to-[#0d1117] bg-[length:200%_100%] animate-shimmer" />
+      )}
       <motion.img
-        src={src} alt={alt} loading="lazy" style={{ y }}
-        className="w-full h-[120%] object-cover -mt-[10%]"
+        src={src}
+        alt={alt}
+        loading="lazy"
+        decoding="async"
+        onLoad={() => setLoaded(true)}
+        style={{ y, opacity: loaded ? 1 : 0 }}
+        className="w-full h-[120%] object-cover -mt-[10%] transition-opacity duration-500"
       />
       <div className="absolute inset-0 bg-gradient-to-t from-[#111827]/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
     </div>
@@ -541,9 +552,12 @@ export default function Home() {
                               <p className="text-[10px] font-medium text-slate-500 uppercase tracking-wider mb-1.5">
                                 {p.category}
                               </p>
-                              <h4 className="text-base font-bold text-white mb-1.5 group-hover:text-blue-400 transition-colors duration-300">
+                              <h4 className="text-base font-bold text-white mb-1 group-hover:text-blue-400 transition-colors duration-300">
                                 {p.title}
                               </h4>
+                              {p.subtitle && (
+                                <p className="text-[11px] text-slate-500 mb-1.5 line-clamp-1">{p.subtitle}</p>
+                              )}
                               <p className="text-sm text-slate-400 leading-relaxed flex-1 line-clamp-2">
                                 {p.overview || p.description}
                               </p>

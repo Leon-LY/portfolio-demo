@@ -6,6 +6,7 @@ import PageTransition from '../components/PageTransition'
 import ScrollReveal from '../components/ScrollReveal'
 import { allProjects } from '../data/projects'
 
+
 export default function ProjectDetail() {
   const { id } = useParams<{ id: string }>()
   const project = allProjects[id || '']
@@ -41,9 +42,12 @@ export default function ProjectDetail() {
               <span className="text-xs text-slate-500">{project.category}</span>
             </div>
 
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-[0.95] mb-6">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-[0.95] mb-3">
               {project.title}
             </h1>
+            {project.subtitle && (
+              <p className="text-lg text-blue-300/80 font-medium mb-5">{project.subtitle}</p>
+            )}
             <p className="text-lg text-slate-400 leading-relaxed max-w-3xl mb-8">
               {project.description}
             </p>
@@ -123,6 +127,25 @@ export default function ProjectDetail() {
         </section>
       )}
 
+      {/* Result highlight */}
+      {project.result && (
+        <section className="pb-12">
+          <div className="max-w-7xl mx-auto px-6 lg:px-8">
+            <ScrollReveal>
+              <div className="bg-gradient-to-r from-emerald-500/5 to-blue-500/5 border border-emerald-500/10 rounded-2xl p-6 sm:p-8">
+                <div className="flex items-start gap-4">
+                  <span className="text-2xl flex-shrink-0">🏆</span>
+                  <div>
+                    <h3 className="text-sm font-bold text-emerald-400 uppercase tracking-wider mb-2">项目成效</h3>
+                    <p className="text-slate-300 leading-relaxed">{project.result}</p>
+                  </div>
+                </div>
+              </div>
+            </ScrollReveal>
+          </div>
+        </section>
+      )}
+
       {/* Related projects */}
       <section className="pb-16">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
@@ -192,6 +215,8 @@ function ImageCarousel({ images, title }: { images: string[]; title: string }) {
             key={active}
             src={images[active]}
             alt={`${title} ${active + 1}`}
+            loading="lazy"
+            decoding="async"
             initial={{ opacity: 0, scale: 1.02 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.98 }}
@@ -235,7 +260,7 @@ function ImageCarousel({ images, title }: { images: string[]; title: string }) {
                   : 'border-transparent opacity-50 hover:opacity-80 hover:border-white/10'
               }`}
             >
-              <img src={img} alt="" className="w-full h-full object-cover" />
+              <img src={img} alt="" loading="lazy" decoding="async" className="w-full h-full object-cover" />
             </button>
           ))}
         </div>
