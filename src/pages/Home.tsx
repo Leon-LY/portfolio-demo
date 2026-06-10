@@ -497,9 +497,6 @@ export default function Home() {
           </div>
         </div>
         </section>
-
-        {/* Fade particles out at the end of services, not at hero boundary */}
-        <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-[#0a0e1a] to-transparent pointer-events-none z-[1]" />
       </div>
 
       {/* ═══════ PROJECTS ═══════ */}
