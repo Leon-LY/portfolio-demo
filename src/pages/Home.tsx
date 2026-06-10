@@ -349,11 +349,11 @@ export default function Home() {
       <ScrollProgress />
 
       {/* ═══════ HERO ═══════ */}
-      <section className="relative pt-44 pb-32 overflow-hidden">
+      <section className="relative pt-44 pb-24">
         <ParticleNetwork />
         <CursorGlow />
         {/* Bottom fade — blends particles/glow into page background */}
-        <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-[#0a0e1a] to-transparent pointer-events-none z-[1]" />
+        <div className="absolute inset-x-0 bottom-0 h-64 bg-gradient-to-t from-[#0a0e1a] via-[#0a0e1a]/40 to-transparent pointer-events-none z-[1]" />
 
         <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
           <div className="grid lg:grid-cols-5 gap-12 items-center">
