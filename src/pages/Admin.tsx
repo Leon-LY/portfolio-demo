@@ -87,7 +87,33 @@ export default function Admin() {
 
   const save = async () => {
     setSaveStatus('saving')
-    const ok = await saveToServer(data)
+
+    // Auto-generate placeholder for projects without images
+    const projects = { ...data.allProjects }
+    for (const [id, p] of Object.entries(projects)) {
+      if (!p.images || p.images.length === 0) {
+        try {
+          const res = await fetch('/api/portfolio/placeholder', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              project_id: id,
+              name: p.title,
+              category: p.category,
+              tags: p.tech || [],
+            }),
+          })
+          if (res.ok) {
+            const { url } = await res.json()
+            projects[id] = { ...p, images: [url] }
+          }
+        } catch {}
+      }
+    }
+    const saveData = { ...data, allProjects: projects }
+
+    const ok = await saveToServer(saveData)
+    if (ok) setData(saveData)
     setSaveStatus(ok ? 'saved' : 'failed')
     setTimeout(() => setSaveStatus('idle'), 2500)
   }
@@ -110,7 +136,7 @@ export default function Admin() {
     })
   }
 
-  const addProject = async () => {
+  const addProject = () => {
     if (!data) return
     const id = 'project-' + Date.now()
     const newProject: Project = {
@@ -118,20 +144,6 @@ export default function Admin() {
       tech: [], link: '/project/' + id, images: [],
       overview: '', capabilities: [], techNote: '', real: true,
     }
-
-    // Auto-generate placeholder via API
-    try {
-      const res = await fetch('/api/portfolio/placeholder', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ project_id: id, name: '新项目', tags: [] }),
-      })
-      if (res.ok) {
-        const { url } = await res.json()
-        newProject.images = [url]
-      }
-    } catch {}
-
     update({ allProjects: { ...data.allProjects, [id]: newProject } })
     setEditingProject(id)
   }
