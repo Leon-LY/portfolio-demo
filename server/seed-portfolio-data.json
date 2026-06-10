@@ -1,0 +1,56 @@
+{
+  "allProjects": {
+    "bigscreen": {
+      "images": [
+        "/uploads/portfolio/bigscreen-bigscreen.svg",
+        "/uploads/portfolio/bigscreen-bigscreen1.jpg",
+        "/uploads/portfolio/bigscreen-bigscreen2.jpg"
+      ]
+    },
+    "economy-platform": {
+      "images": [
+        "/uploads/portfolio/economy-platform-economy-platform.svg",
+        "/uploads/portfolio/economy-platform-economy-platform1.jpg",
+        "/uploads/portfolio/economy-platform-economy-platform2.jpg"
+      ]
+    },
+    "building": {
+      "images": [
+        "/uploads/portfolio/building-building.svg",
+        "/uploads/portfolio/building-building1.jpeg",
+        "/uploads/portfolio/building-building2.jpeg",
+        "/uploads/portfolio/building-building3.jpeg",
+        "/uploads/portfolio/building-building4.jpeg",
+        "/uploads/portfolio/building-building5.jpeg"
+      ]
+    },
+    "smart-community": {
+      "images": [
+        "/uploads/portfolio/smart-community-smart-community.svg",
+        "/uploads/portfolio/smart-community-smart-community1.jpg",
+        "/uploads/portfolio/smart-community-smart-community2.jpg",
+        "/uploads/portfolio/smart-community-smart-community3.jpg",
+        "/uploads/portfolio/smart-community-smart-community4.jpg",
+        "/uploads/portfolio/smart-community-smart-community5.jpg"
+      ]
+    },
+    "river-chief": {
+      "images": [
+        "/uploads/portfolio/river-chief-river-chief.svg",
+        "/uploads/portfolio/river-chief-river-chief1.jpg",
+        "/uploads/portfolio/river-chief-river-chief2.jpg",
+        "/uploads/portfolio/river-chief-river-chief3.jpg",
+        "/uploads/portfolio/river-chief-river-chief4.jpg"
+      ]
+    },
+    "invest-learn": {
+      "images": [
+        "/uploads/portfolio/invest-learn-invest-learn.svg",
+        "/uploads/portfolio/invest-learn-invest-learn1.jpg",
+        "/uploads/portfolio/invest-learn-invest-learn2.jpg",
+        "/uploads/portfolio/invest-learn-invest-learn3.jpg",
+        "/uploads/portfolio/invest-learn-invest-learn4.jpg"
+      ]
+    }
+  }
+}

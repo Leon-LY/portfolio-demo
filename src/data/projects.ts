@@ -37,7 +37,7 @@ export const allProjects: Record<string, Project> = {
     category: '数据可视化 · ECharts / DataV / WebSocket',
     description: '部署于市指挥中心的巨型数据可视化系统，汇聚经济、民生、交通、环境等 20+ 核心领域数据，秒级刷新，为市领导决策和应急指挥提供实时支撑。',
     tech: ['Vue.js', 'ECharts', 'DataV', 'WebSocket', 'Java'],
-    images: ['/projects/bigscreen.svg', '/projects/bigscreen1.png', '/projects/bigscreen2.png'],
+    images: ['/uploads/portfolio/bigscreen-bigscreen.svg', '/uploads/portfolio/bigscreen-bigscreen1.jpg', '/uploads/portfolio/bigscreen-bigscreen2.jpg'],
     overview: '荣成市"城市大脑"是市政府指挥中心的核心展示系统。它不是一个普通的仪表盘，而是一面覆盖整墙的巨型屏幕，实时呈现整座城市的"生命体征"——从经济运行到交通流量，从环境监测到民生服务，20 多个维度的数据以直观的图表和动画同时展现。',
     capabilities: [
       '实时监控 20+ 数据维度：经济指标、交通流量、环境质量、民生服务等核心领域全覆盖',
@@ -57,7 +57,7 @@ export const allProjects: Record<string, Project> = {
     category: '数据可视化 · SpringBoot / MyBatis / Redis',
     description: '为荣成市经济发展部门打造的综合数据管理平台，TCP 实时接收各经济指标数据并自动入库分析，内置代码生成器可将数据库表一键转为管理页面，效率提升数十倍。',
     tech: ['SpringBoot', 'MyBatis', 'Redis', 'MySQL', 'Hutool'],
-    images: ['/projects/economy-platform.svg', '/projects/economy-platform1.png', '/projects/economy-platform2.png'],
+    images: ['/uploads/portfolio/economy-platform-economy-platform.svg', '/uploads/portfolio/economy-platform-economy-platform1.jpg', '/uploads/portfolio/economy-platform-economy-platform2.jpg'],
     overview: '这是一个"会自己写代码"的数据管理平台。它通过 TCP 协议自动从各个经济部门接收数据报文，解析后存入数据库，并自动生成分析报表。更惊人的是，它内置了一套代码生成引擎——只需选择数据库表，就能一键生成完整的增删改查管理页面，将原本需要数天的开发工作压缩到几秒钟。',
     capabilities: [
       'TCP 协议异步接收各经济部门数据报文，自动解析入库，无需人工干预',
@@ -77,7 +77,7 @@ export const allProjects: Record<string, Project> = {
     category: '企业官网 · Nuxt 4 / Express / PostgreSQL',
     description: '为山东威海方外建筑设计工作室打造的品牌官网 + 后台管理系统。前台 SSG 高性能渲染、SEO 友好；后台含 15 个管理模块，覆盖项目、客户、支付、文件等全业务流程。',
     tech: ['Nuxt 4', 'Vue 3', 'TypeScript', 'Express', 'PostgreSQL'],
-    images: ['/projects/building.svg', '/projects/building1.jpeg', '/projects/building2.jpeg', '/projects/building3.jpeg', '/projects/building4.jpeg', '/projects/building5.jpeg'],
+    images: ['/uploads/portfolio/building-building.svg', '/uploads/portfolio/building-building1.jpeg', '/uploads/portfolio/building-building2.jpeg', '/uploads/portfolio/building-building3.jpeg', '/uploads/portfolio/building-building4.jpeg', '/uploads/portfolio/building-building5.jpeg'],
     overview: '方外设计是一家位于山东威海的建筑设计工作室。这个项目不只是"做个官网"——前台以 Nuxt 4 静态生成技术实现秒级首屏加载和完美的搜索引擎收录；后台则是一个完整的企业管理系统，涵盖 15 个功能模块：项目管理、作品分类、客户联系人、在线支付、文件上传、样式定制、用户权限等，等于把一个 ERP 系统的核心能力集成进了企业官网。',
     capabilities: [
       'Nuxt 4 SSG 静态生成：首屏加载速度 < 1 秒，Google Lighthouse 评分 95+',
@@ -99,7 +99,7 @@ export const allProjects: Record<string, Project> = {
     category: '移动端应用 · Vue 3 / Vite / Vant UI',
     description: '内嵌于"爱山东"App 的 H5 智慧社区应用，覆盖荣成市全部 30+ 社区，为居民提供公告通知、报修投诉、便民服务、活动报名等一站式服务，月均处理工单 5000+ 条。',
     tech: ['Vue 3', 'Vite', 'Pinia', 'Vant UI', 'Axios'],
-    images: ['/projects/smart-community.svg', '/projects/smart-community1.jpg', '/projects/smart-community2.jpg', '/projects/smart-community3.jpg', '/projects/smart-community4.jpg', '/projects/smart-community5.jpg'],
+    images: ['/uploads/portfolio/smart-community-smart-community.svg', '/uploads/portfolio/smart-community-smart-community1.jpg', '/uploads/portfolio/smart-community-smart-community2.jpg', '/uploads/portfolio/smart-community-smart-community3.jpg', '/uploads/portfolio/smart-community-smart-community4.jpg', '/uploads/portfolio/smart-community-smart-community5.jpg'],
     overview: '这是荣成市居民日常使用频率最高的政务服务应用之一。你可以在上面看到社区公告、提交报修申请、报名参加社区活动、查询便民服务——就像一个"社区版微信"，但背后连接的是政府各职能部门的真实业务流程。它内嵌在山东省统一的"爱山东"政务 App 中，覆盖全市 30 多个社区，每天有超过 2 万居民在使用。',
     capabilities: [
       '社区公告即时推送：重要通知一键触达全社区或指定楼栋居民',
@@ -121,7 +121,7 @@ export const allProjects: Record<string, Project> = {
     category: '移动端应用 · Uni-app / GIS',
     description: '面向荣成市水务和环保部门的移动巡查管理系统。全市各级河长、湖长、湾长通过手机 App 完成 GPS 轨迹记录、现场拍照取证、问题上报和整改追踪，将传统纸质巡查全面数字化。',
     tech: ['Uni-app', 'Vue.js', 'Node.js', 'GIS', 'PostgreSQL'],
-    images: ['/projects/river-chief.svg', '/projects/river-chief1.jpg', '/projects/river-chief2.jpg', '/projects/river-chief3.jpg', '/projects/river-chief4.jpg'],
+    images: ['/uploads/portfolio/river-chief-river-chief.svg', '/uploads/portfolio/river-chief-river-chief1.jpg', '/uploads/portfolio/river-chief-river-chief2.jpg', '/uploads/portfolio/river-chief-river-chief3.jpg', '/uploads/portfolio/river-chief-river-chief4.jpg'],
     overview: '荣成市三面环海，河湖众多，传统的河道巡查靠"人到现场、手动填表"，效率低且容易遗漏。这个平台将整个巡查流程数字化：巡河人员打开手机 App，系统自动记录 GPS 轨迹；发现问题直接拍照上传，后台自动定位到具体河段；整改任务自动推送给责任部门，完成后上传整改照片形成闭环。后台还能根据历史数据生成问题分布热力图和统计分析报表，帮助管理者一目了然地掌握全市水系状况。',
     capabilities: [
       'GPS 巡查轨迹自动记录：无需手动打卡，系统全程记录巡查路径，公里数和覆盖区域自动统计',
@@ -142,7 +142,7 @@ export const allProjects: Record<string, Project> = {
     category: 'AI 应用 · Vue 3 / FastAPI / DeepSeek',
     description: '融合 DeepSeek + 通义千问双 AI 引擎的智能投资分析工具。实时 K 线图表、AI 市场解读、金融知识库、自然语言问答——让普通投资者也能获得机构级的分析能力。',
     tech: ['Vue 3', 'TypeScript', 'FastAPI', 'PostgreSQL', 'DeepSeek'],
-    images: ['/projects/invest-learn.svg', '/projects/invest-learn1.jpg', '/projects/invest-learn2.jpg', '/projects/invest-learn3.jpg', '/projects/invest-learn4.jpg'],
+    images: ['/uploads/portfolio/invest-learn-invest-learn.svg', '/uploads/portfolio/invest-learn-invest-learn1.jpg', '/uploads/portfolio/invest-learn-invest-learn2.jpg', '/uploads/portfolio/invest-learn-invest-learn3.jpg', '/uploads/portfolio/invest-learn-invest-learn4.jpg'],
     overview: '远见 FarSight 是一个将 AI 大模型能力引入投资分析的创新产品。它整合了 DeepSeek 和通义千问两个 AI 引擎——一个擅长深度文字分析，一个擅长多模态识别——为用户提供全方位的智能投资辅助。你可以查看实时 K 线和技术指标，同时让 AI 用通俗语言解读当前市场状况；也可以上传一张财报截图，让 AI 自动提取关键数据并生成分析摘要。所有后端服务通过 Docker Compose 一键部署，已稳定运行上线。',
     capabilities: [
       '双 AI 引擎协同：DeepSeek 负责深度文字分析和金融知识问答，通义千问处理图表识别和多模态理解',
