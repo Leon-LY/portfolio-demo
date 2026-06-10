@@ -248,4 +248,36 @@ router.post('/placeholder', authMiddleware, async (req, res) => {
   }
 })
 
+// ═══════════════════════════════════════════════
+// PUT /api/portfolio/change-password
+// ═══════════════════════════════════════════════
+router.put('/change-password', authMiddleware, async (req, res) => {
+  try {
+    const { currentPassword, newPassword } = req.body
+    if (!currentPassword || !newPassword) {
+      return res.status(400).json({ error: 'Current and new password required' })
+    }
+    if (newPassword.length < 6) {
+      return res.status(400).json({ error: 'New password must be at least 6 characters' })
+    }
+
+    // Load bcrypt dynamically (ESM compat)
+    const bcrypt = await import('bcryptjs').then(m => m.default || m)
+
+    const { rows } = await query('SELECT * FROM admins WHERE id = $1', [req.user.id])
+    if (rows.length === 0) return res.status(404).json({ error: 'User not found' })
+
+    const valid = await bcrypt.compare(currentPassword, rows[0].password)
+    if (!valid) return res.status(401).json({ error: 'Current password is incorrect' })
+
+    const hash = await bcrypt.hash(newPassword, 10)
+    await query('UPDATE admins SET password = $1 WHERE id = $2', [hash, req.user.id])
+
+    res.json({ ok: true })
+  } catch (err) {
+    console.error('PUT /change-password error:', err)
+    res.status(500).json({ error: 'Failed to change password' })
+  }
+})
+
 export default router

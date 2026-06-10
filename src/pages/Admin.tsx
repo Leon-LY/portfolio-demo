@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react'
 import { Link } from 'react-router-dom'
-import { ArrowLeft, Save, RotateCcw, Download, Plus, Trash2, Edit3, Eye, Upload, X, ChevronLeft, ChevronRight, LogOut, Lock } from 'lucide-react'
+import { ArrowLeft, Save, RotateCcw, Download, Plus, Trash2, Edit3, Eye, Upload, X, ChevronLeft, ChevronRight, LogOut, Lock, Key } from 'lucide-react'
 import { usePortfolioData, type PortfolioData } from '../data/usePortfolioData'
 import { uploadProjectImage } from '../data/adminStore'
 import { personalInfo, services, heroStats, typewriterTexts, workflowSteps, clients, faqItems } from '../data/config'
@@ -151,6 +151,33 @@ export default function Admin() {
   const [editingProject, setEditingProject] = useState<string | null>(null)
   const [saveStatus, setSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'failed'>('idle')
 
+  const [showChangePwd, setShowChangePwd] = useState(false)
+  const [pwdCurrent, setPwdCurrent] = useState('')
+  const [pwdNew, setPwdNew] = useState('')
+  const [pwdError, setPwdError] = useState('')
+  const [pwdOk, setPwdOk] = useState(false)
+
+  const changePassword = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setPwdError('')
+    setPwdOk(false)
+    try {
+      const res = await fetch('/api/portfolio/change-password', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json', ...authHeaders() },
+        body: JSON.stringify({ currentPassword: pwdCurrent, newPassword: pwdNew }),
+      })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error || 'Failed')
+      setPwdOk(true)
+      setPwdCurrent('')
+      setPwdNew('')
+      setTimeout(() => { setShowChangePwd(false); setPwdOk(false) }, 1500)
+    } catch (err: any) {
+      setPwdError(err.message)
+    }
+  }
+
   if (!authed) {
     return <LoginForm onLogin={() => setAuthed(true)} />
   }
@@ -252,6 +279,7 @@ export default function Admin() {
             <h1 className="text-lg font-bold">后台管理</h1>
           </div>
           <div className="flex items-center gap-3">
+            <button onClick={() => setShowChangePwd(true)} className="flex items-center gap-1.5 px-3 py-1.5 text-xs text-slate-400 hover:text-white transition-colors"><Key size={13} /> 改密</button>
             <button onClick={() => { logout(); setAuthed(false) }} className="flex items-center gap-1.5 px-3 py-1.5 text-xs text-slate-400 hover:text-white transition-colors"><LogOut size={13} /> 退出</button>
             <button onClick={reset} className="flex items-center gap-1.5 px-3 py-1.5 text-xs text-slate-400 hover:text-red-400 transition-colors"><RotateCcw size={13} /> 重置</button>
             <button onClick={() => {
@@ -501,6 +529,27 @@ export default function Admin() {
           </div>
         )}
       </div>
+
+      {/* ═══ Change Password Modal ═══ */}
+      {showChangePwd && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm" onClick={() => setShowChangePwd(false)}>
+          <div className="bg-[#111827] border border-white/[0.08] rounded-2xl p-6 w-full max-w-sm mx-4" onClick={e => e.stopPropagation()}>
+            <h3 className="text-lg font-bold text-white mb-4">修改密码</h3>
+            <form onSubmit={changePassword} className="space-y-3">
+              <input type="password" value={pwdCurrent} onChange={e => setPwdCurrent(e.target.value)} placeholder="当前密码" required
+                className="w-full px-4 py-2.5 bg-[#0d1117] border border-white/[0.08] rounded-xl text-sm text-white placeholder:text-slate-600 focus:outline-none focus:border-blue-500/50" />
+              <input type="password" value={pwdNew} onChange={e => setPwdNew(e.target.value)} placeholder="新密码（至少6位）" required minLength={6}
+                className="w-full px-4 py-2.5 bg-[#0d1117] border border-white/[0.08] rounded-xl text-sm text-white placeholder:text-slate-600 focus:outline-none focus:border-blue-500/50" />
+              {pwdError && <p className="text-xs text-red-400">{pwdError}</p>}
+              {pwdOk && <p className="text-xs text-emerald-400">密码修改成功 ✓</p>}
+              <div className="flex gap-2 pt-2">
+                <button type="button" onClick={() => setShowChangePwd(false)} className="flex-1 py-2.5 text-sm text-slate-400 hover:text-white transition-colors">取消</button>
+                <button type="submit" className="flex-1 py-2.5 bg-blue-600 text-white text-sm font-semibold rounded-xl hover:bg-blue-500 transition-all">确认修改</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
