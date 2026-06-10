@@ -42,10 +42,26 @@ function getDefaults(): PortfolioData {
 
 const STORAGE_KEY = 'portfolio-admin-data'
 
+/** Deep-merge API data over defaults — preserves project fields */
+function mergeData(defaults: PortfolioData, apiData: Record<string, any>): PortfolioData {
+  const merged = { ...defaults, ...apiData }
+  // Deep-merge allProjects at the project level
+  if (apiData.allProjects && defaults.allProjects) {
+    merged.allProjects = { ...defaults.allProjects }
+    for (const [id, apiProject] of Object.entries(apiData.allProjects)) {
+      merged.allProjects[id] = {
+        ...(defaults.allProjects[id] || {}),
+        ...(apiProject as any),
+      }
+    }
+  }
+  return merged
+}
+
 function loadFromLocal(): PortfolioData | null {
   try {
     const raw = localStorage.getItem(STORAGE_KEY)
-    if (raw) return { ...getDefaults(), ...JSON.parse(raw) }
+    if (raw) return mergeData(getDefaults(), JSON.parse(raw))
   } catch {}
   return null
 }
@@ -57,7 +73,7 @@ async function fetchFromAPI(): Promise<PortfolioData | null> {
     if (res.ok) {
       const data = await res.json()
       if (data && Object.keys(data).length > 0) {
-        return { ...getDefaults(), ...data }
+        return mergeData(getDefaults(), data)
       }
     }
   } catch {}
