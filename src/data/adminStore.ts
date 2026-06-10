@@ -6,7 +6,41 @@ import { personalInfo, services, heroStats, typewriterTexts, workflowSteps, clie
 import type { Project } from './projects'
 import { projectGroups, allProjects } from './projects'
 
-const API_URL = '/api/admin-data'
+const API_URL = '/api/portfolio/data'
+
+/** Upload an image file to the server — returns the URL */
+export async function uploadProjectImage(
+  projectId: string,
+  file: File,
+): Promise<{ id: number; url: string; filename: string } | null> {
+  const form = new FormData()
+  form.append('image', file)
+  form.append('project_id', projectId)
+  try {
+    const res = await fetch('/api/portfolio/images/upload', { method: 'POST', body: form })
+    if (res.ok) return await res.json()
+  } catch (e) {
+    console.error('Image upload failed:', e)
+  }
+  return null
+}
+
+/** Fetch images for a project from server */
+export async function fetchProjectImages(projectId: string): Promise<Array<{ id: number; url: string; sort_order: number }>> {
+  try {
+    const res = await fetch(`/api/portfolio/images/${projectId}`)
+    if (res.ok) return await res.json()
+  } catch {}
+  return []
+}
+
+/** Delete an image from the server */
+export async function deleteProjectImage(imageId: number): Promise<boolean> {
+  try {
+    const res = await fetch(`/api/portfolio/images/${imageId}`, { method: 'DELETE' })
+    return res.ok
+  } catch { return false }
+}
 
 export interface AdminData {
   personalInfo: typeof personalInfo

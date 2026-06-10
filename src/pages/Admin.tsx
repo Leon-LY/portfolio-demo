@@ -2,35 +2,12 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useRef } from 'react'
 import { ArrowLeft, Save, RotateCcw, Download, Plus, Trash2, Edit3, Eye, Upload, X } from 'lucide-react'
-import { loadAdminData, saveAdminData, resetAdminData, downloadJSON } from '../data/adminStore'
+import { loadAdminData, saveAdminData, resetAdminData, downloadJSON, uploadProjectImage } from '../data/adminStore'
 import type { AdminData } from '../data/adminStore'
 import type { Project } from '../data/projects'
 
-/** Compress an image via canvas and return as JPEG data URL */
-function compressImage(file: File): Promise<string> {
-  return new Promise((resolve, reject) => {
-    const img = new Image()
-    img.onload = () => {
-      const MAX = 800 // max width/height
-      let { width, height } = img
-      if (width > MAX || height > MAX) {
-        if (width > height) { height = Math.round(height * MAX / width); width = MAX }
-        else { width = Math.round(width * MAX / height); height = MAX }
-      }
-      const canvas = document.createElement('canvas')
-      canvas.width = width
-      canvas.height = height
-      const ctx = canvas.getContext('2d')!
-      ctx.drawImage(img, 0, 0, width, height)
-      resolve(canvas.toDataURL('image/jpeg', 0.75))
-    }
-    img.onerror = () => reject(new Error('Failed to load image'))
-    img.src = URL.createObjectURL(file)
-  })
-}
-
-/** Image uploader — auto-compresses to ~30-80KB JPEG before storing */
-function ImageUploader({ images, onChange }: { images: string[]; onChange: (imgs: string[]) => void }) {
+/** Image uploader — uploads to server API, stores URL in project data */
+function ImageUploader({ images, onChange, projectId }: { images: string[]; onChange: (imgs: string[]) => void; projectId: string }) {
   const fileRef = useRef<HTMLInputElement>(null)
   const [uploading, setUploading] = useState(false)
 
@@ -38,14 +15,12 @@ function ImageUploader({ images, onChange }: { images: string[]; onChange: (imgs
     const files = e.target.files
     if (!files) return
     setUploading(true)
-    const compressed: string[] = []
+    const newUrls: string[] = []
     for (let i = 0; i < files.length; i++) {
-      try {
-        const url = await compressImage(files[i])
-        compressed.push(url)
-      } catch { /* skip broken files */ }
+      const result = await uploadProjectImage(projectId, files[i])
+      if (result) newUrls.push(result.url)
     }
-    onChange([...images, ...compressed])
+    onChange([...images, ...newUrls])
     setUploading(false)
     if (fileRef.current) fileRef.current.value = ''
   }
@@ -56,7 +31,7 @@ function ImageUploader({ images, onChange }: { images: string[]; onChange: (imgs
 
   return (
     <div>
-      <span className="text-[10px] text-slate-500 mb-2 block">项目图片 — 直接上传，自动压缩</span>
+      <span className="text-[10px] text-slate-500 mb-2 block">项目图片 — 上传到服务器数据库</span>
       <div className="flex flex-wrap gap-2 mb-3">
         {images.map((img, i) => (
           <div key={i} className="relative w-20 h-14 rounded-lg overflow-hidden border border-white/[0.06] group">
@@ -68,19 +43,11 @@ function ImageUploader({ images, onChange }: { images: string[]; onChange: (imgs
           className={`w-20 h-14 rounded-lg border border-dashed flex items-center justify-center transition-all ${
             uploading ? 'border-blue-500/30 text-blue-400' : 'border-white/[0.1] text-slate-600 hover:text-white hover:border-white/[0.2]'
           }`}>
-          {uploading ? <span className="text-[9px]">压缩中</span> : <Upload size={14} />}
+          {uploading ? <span className="text-[9px]">上传中</span> : <Upload size={14} />}
         </button>
       </div>
       <input ref={fileRef} type="file" accept="image/*" multiple onChange={handleFiles} className="hidden" />
-      <p className="text-[10px] text-slate-600">上传后自动压缩至 800px 宽 · JPEG 格式 · 单张约 30-80KB</p>
-      <textarea rows={2} value={images.filter(i => !i.startsWith('data:')).join('\n')}
-        onChange={e => {
-          const paths = e.target.value.split('\n').filter(Boolean)
-          const dataUrls = images.filter(i => i.startsWith('data:'))
-          onChange([...dataUrls, ...paths])
-        }}
-        className="w-full px-3 py-2 bg-white/[0.04] border border-white/[0.06] rounded-lg text-xs text-white focus:outline-none focus:border-blue-500/50 resize-none font-mono mt-1"
-        placeholder="或输入图片路径：/projects/my-image.png" />
+      <p className="text-[10px] text-slate-600">图片上传到服务器 PostgreSQL 数据库 + 文件系统。换电脑/清缓存不会丢失。</p>
     </div>
   )
 }
@@ -322,7 +289,7 @@ export default function Admin() {
                       <label className="block"><span className="text-[10px] text-slate-500 mb-1 block">技术栈（逗号分隔）</span>
                         <input value={p.tech.join(', ')} onChange={e => update({ allProjects: { ...data.allProjects, [p.id]: { ...p, tech: e.target.value.split(',').map(t => t.trim()).filter(Boolean) } } })}
                           className="w-full px-3 py-2 bg-white/[0.04] border border-white/[0.06] rounded-lg text-sm text-white focus:outline-none focus:border-blue-500/50 font-mono" /></label>
-                      <ImageUploader images={p.images || []} onChange={imgs => update({ allProjects: { ...data.allProjects, [p.id]: { ...p, images: imgs } } })} />
+                      <ImageUploader projectId={p.id} images={p.images || []} onChange={imgs => update({ allProjects: { ...data.allProjects, [p.id]: { ...p, images: imgs } } })} />
                       <label className="block"><span className="text-[10px] text-slate-500 mb-1 block">核心能力（每行一个）</span>
                         <textarea rows={3} value={(p.capabilities || []).join('\n')} onChange={e => update({ allProjects: { ...data.allProjects, [p.id]: { ...p, capabilities: e.target.value.split('\n').filter(Boolean) } } })}
                           className="w-full px-3 py-2 bg-white/[0.04] border border-white/[0.06] rounded-lg text-sm text-white focus:outline-none focus:border-blue-500/50 resize-none" /></label>
