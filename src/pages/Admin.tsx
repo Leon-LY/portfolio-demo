@@ -62,7 +62,6 @@ type Tab = 'personal' | 'hero' | 'services' | 'projects' | 'workflow' | 'clients
 export default function Admin() {
   const [data, setData] = useState<AdminData | null>(null)
   const [tab, setTab] = useState<Tab>('personal')
-  const [saved, setSaved] = useState(false)
   const [editingProject, setEditingProject] = useState<string | null>(null)
 
   useEffect(() => { loadAdminData().then(setData) }, [])
@@ -72,12 +71,14 @@ export default function Admin() {
     setData({ ...data, ...partial })
   }
 
-  const save = () => {
+  const [saveStatus, setSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'failed'>('idle')
+
+  const save = async () => {
     if (!data) return
-    saveAdminData(data).then(() => {
-      setSaved(true)
-      setTimeout(() => setSaved(false), 2000)
-    })
+    setSaveStatus('saving')
+    const ok = await saveAdminData(data)
+    setSaveStatus(ok ? 'saved' : 'failed')
+    setTimeout(() => setSaveStatus('idle'), 2500)
   }
 
   const reset = () => {
@@ -129,7 +130,15 @@ export default function Admin() {
           <div className="flex items-center gap-3">
             <button onClick={reset} className="flex items-center gap-1.5 px-3 py-1.5 text-xs text-slate-400 hover:text-red-400 transition-colors"><RotateCcw size={13} /> 重置</button>
             <button onClick={() => downloadJSON(data)} className="flex items-center gap-1.5 px-3 py-1.5 text-xs bg-white/[0.04] border border-white/[0.08] rounded-lg text-slate-300 hover:bg-white/[0.08] transition-all"><Download size={13} /> 导出备份</button>
-            <button onClick={save} className={`flex items-center gap-1.5 px-4 py-1.5 text-xs font-semibold rounded-lg transition-all ${saved ? 'bg-emerald-600 text-white' : 'bg-blue-600 text-white hover:bg-blue-500'}`}><Save size={13} /> {saved ? '已保存' : '保存'}</button>
+            <button onClick={save} disabled={saveStatus === 'saving'} className={`flex items-center gap-1.5 px-4 py-1.5 text-xs font-semibold rounded-lg transition-all ${
+  saveStatus === 'saved' ? 'bg-emerald-600 text-white' :
+  saveStatus === 'failed' ? 'bg-red-600 text-white' :
+  saveStatus === 'saving' ? 'bg-slate-600 text-white' :
+  'bg-blue-600 text-white hover:bg-blue-500'
+}`}>
+  <Save size={13} />
+  {saveStatus === 'saving' ? '保存中...' : saveStatus === 'saved' ? '已保存' : saveStatus === 'failed' ? '保存失败' : '保存'}
+</button>
           </div>
         </div>
       </div>
@@ -351,7 +360,11 @@ export default function Admin() {
               <input value={data.personalInfo.email} onChange={e => update({ personalInfo: { ...data.personalInfo, email: e.target.value } })}
                 className="w-full px-4 py-2.5 bg-[#111827] border border-white/[0.08] rounded-xl text-sm text-white focus:outline-none focus:border-blue-500/50" /></label>
             <div className="bg-amber-500/5 border border-amber-500/10 rounded-xl p-4">
-              <p className="text-xs text-amber-400/80">修改后点击右上角「保存」按钮。数据存储在浏览器 localStorage 中。导出备份可保存到本地。</p>
+              <p className="text-xs text-amber-400/80 leading-relaxed">
+                  修改后点击右上角「保存」按钮。数据存储在浏览器 localStorage 中。
+                  <br /><strong>⚠️ 图片请用文件路径（如 /projects/my-image.png），不要上传 data URL —— base64 图片太大会导致保存失败。</strong>
+                  <br />图片文件放到 public/projects/ 目录，然后在这里输入路径即可。
+                </p>
             </div>
           </div>
         )}

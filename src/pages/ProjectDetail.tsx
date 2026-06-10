@@ -4,11 +4,11 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { ArrowLeft, ChevronLeft, ChevronRight, ExternalLink } from 'lucide-react'
 import PageTransition from '../components/PageTransition'
 import ScrollReveal from '../components/ScrollReveal'
-import { allProjects } from '../data/projects'
-
+import { loadProjectData } from '../data/adminStore'
 
 export default function ProjectDetail() {
   const { id } = useParams<{ id: string }>()
+  const { allProjects } = loadProjectData()
   const project = allProjects[id || '']
 
   if (!project) {

@@ -54,8 +54,8 @@ export async function loadAdminData(): Promise<AdminData> {
   return loadFromLocal()
 }
 
-/** 保存数据到服务器 */
-export async function saveAdminData(data: AdminData) {
+/** 保存数据到服务器。返回 true 表示保存成功。 */
+export async function saveAdminData(data: AdminData): Promise<boolean> {
   data._updatedAt = new Date().toISOString()
   try {
     const res = await fetch(API_URL, {
@@ -64,12 +64,11 @@ export async function saveAdminData(data: AdminData) {
       body: JSON.stringify(data),
     })
     if (res.ok) {
-      // 同时存 localStorage 作为离线备份
       saveToLocal(data)
-      return
+      return true
     }
   } catch { /* 降级到 localStorage */ }
-  saveToLocal(data)
+  return saveToLocal(data)
 }
 
 /** 重置为默认 */
@@ -90,8 +89,20 @@ export function downloadJSON(data: AdminData) {
 // ── localStorage 降级 ──
 const STORAGE_KEY = 'portfolio-admin-data'
 
-function saveToLocal(data: AdminData) {
-  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)) } catch {}
+function saveToLocal(data: AdminData): boolean {
+  try {
+    const json = JSON.stringify(data)
+    // Warn if approaching localStorage limit (5MB typical)
+    const sizeKB = Math.round(json.length / 1024)
+    if (sizeKB > 4000) {
+      console.warn(`Admin data is ${sizeKB}KB — approaching localStorage limit. Consider using file paths instead of data URLs for images.`)
+    }
+    localStorage.setItem(STORAGE_KEY, json)
+    return true
+  } catch (e) {
+    console.error('localStorage save failed — data too large?', e)
+    return false
+  }
 }
 
 function loadFromLocal(): AdminData {
@@ -100,4 +111,26 @@ function loadFromLocal(): AdminData {
     if (raw) return { ...getDefaults(), ...JSON.parse(raw) }
   } catch {}
   return getDefaults()
+}
+
+/**
+ * 同步读取项目数据（供前台页面使用）
+ * 优先读取 localStorage 中 admin 保存的数据，没有则用默认数据
+ */
+export function loadProjectData(): {
+  projectGroups: typeof projectGroups
+  allProjects: Record<string, Project>
+} {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY)
+    if (raw) {
+      const saved = JSON.parse(raw)
+      if (saved.projectGroups && saved.allProjects) {
+        // Merge: saved data overrides defaults, but keep any new projects from code
+        const mergedProjects = { ...JSON.parse(JSON.stringify(allProjects)), ...saved.allProjects }
+        return { projectGroups: saved.projectGroups, allProjects: mergedProjects }
+      }
+    }
+  } catch {}
+  return { projectGroups, allProjects: JSON.parse(JSON.stringify(allProjects)) }
 }

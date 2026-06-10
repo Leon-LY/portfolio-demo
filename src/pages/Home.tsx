@@ -5,7 +5,7 @@ import { ArrowUpRight } from 'lucide-react'
 import PageTransition from '../components/PageTransition'
 import ScrollReveal from '../components/ScrollReveal'
 import { personalInfo, services, heroStats, workflowSteps, clients, faqItems } from '../data/config'
-import { projectGroups, allProjects } from '../data/projects'
+import { loadProjectData } from '../data/adminStore'
 import Counter from '../components/Counter'
 
 /* ═══════════════════════════════════════════════════════
@@ -355,6 +355,8 @@ function FaqItem({ q, a, index }: { q: string; a: string; index: number }) {
    HOME PAGE
    ═══════════════════════════════════════════════════════ */
 export default function Home() {
+  // Re-read on every mount so admin changes show immediately
+  const { projectGroups, allProjects } = loadProjectData()
   return (
     <PageTransition>
       <ScrollProgress />
