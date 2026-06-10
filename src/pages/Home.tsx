@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { motion, useMotionValue, useScroll, useTransform, AnimatePresence } from 'framer-motion'
-import { ArrowUpRight, ChevronDown } from 'lucide-react'
+import { ArrowUpRight } from 'lucide-react'
 import PageTransition from '../components/PageTransition'
 import ScrollReveal from '../components/ScrollReveal'
 import { personalInfo, services, heroStats, workflowSteps, clients, faqItems } from '../data/config'
@@ -349,21 +349,9 @@ export default function Home() {
       <ScrollProgress />
 
       {/* ═══════ HERO ═══════ */}
-      <section className="relative pt-44 pb-28 overflow-hidden">
+      <section className="relative pt-44 pb-20 overflow-hidden">
         <ParticleNetwork />
         <CursorGlow />
-
-        {/* Floating orbs */}
-        <motion.div
-          animate={{ y: [0, -30, 0], opacity: [0.3, 0.5, 0.3] }}
-          transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
-          className="absolute top-1/4 right-1/4 w-64 h-64 rounded-full bg-blue-500/8 blur-[120px] pointer-events-none"
-        />
-        <motion.div
-          animate={{ y: [0, 20, 0], opacity: [0.2, 0.4, 0.2] }}
-          transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
-          className="absolute bottom-1/3 left-1/3 w-48 h-48 rounded-full bg-violet-500/6 blur-[100px] pointer-events-none"
-        />
 
         <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
           <div className="grid lg:grid-cols-5 gap-12 items-center">
@@ -467,26 +455,10 @@ export default function Home() {
             </div>
           </div>
         </div>
-
-        {/* Scroll indicator */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.5, duration: 0.6 }}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-10"
-        >
-          <span className="text-[10px] text-slate-600 tracking-widest uppercase">Scroll</span>
-          <motion.div
-            animate={{ y: [0, 6, 0] }}
-            transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-          >
-            <ChevronDown size={14} className="text-slate-600" />
-          </motion.div>
-        </motion.div>
       </section>
 
-      {/* ═══════ FADE OVERLAY ═══════ */}
-      <div className="relative z-[5] h-32 -mt-32 bg-gradient-to-b from-transparent to-[#0a0e1a] pointer-events-none" />
+      {/* ═══════ SOFT TRANSITION ═══════ */}
+      <div className="relative z-[5] h-24 -mt-24 bg-gradient-to-b from-transparent via-[#0a0e1a]/60 to-[#0a0e1a] pointer-events-none" />
 
       {/* ═══════ SERVICES ═══════ */}
       <section id="services" className="relative z-10 py-24">

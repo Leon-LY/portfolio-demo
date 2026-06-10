@@ -76,10 +76,10 @@ body::after {
 /* ── Scroll progress bar ── */
 .scroll-progress {
   position: fixed;
-  top: 0;
+  top: 64px;
   left: 0;
   height: 2px;
-  z-index: 100;
+  z-index: 49;
   background: linear-gradient(90deg, var(--accent-1), var(--accent-2), var(--accent-3));
   transition: width 0.1s linear;
 }
