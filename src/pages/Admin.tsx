@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react'
 import { Link } from 'react-router-dom'
-import { ArrowLeft, Save, RotateCcw, Download, Plus, Trash2, Edit3, Eye, Upload, X } from 'lucide-react'
+import { ArrowLeft, Save, RotateCcw, Download, Plus, Trash2, Edit3, Eye, Upload, X, ChevronLeft, ChevronRight } from 'lucide-react'
 import { usePortfolioData, type PortfolioData } from '../data/usePortfolioData'
 import { uploadProjectImage } from '../data/adminStore'
 import { personalInfo, services, heroStats, typewriterTexts, workflowSteps, clients, faqItems } from '../data/config'
@@ -26,18 +26,38 @@ function ImageUploader({ images, onChange, projectId }: { images: string[]; onCh
     if (fileRef.current) fileRef.current.value = ''
   }
 
+  const moveImage = (idx: number, direction: -1 | 1) => {
+    const newIdx = idx + direction
+    if (newIdx < 0 || newIdx >= images.length) return
+    const reordered = [...images]
+    ;[reordered[idx], reordered[newIdx]] = [reordered[newIdx], reordered[idx]]
+    onChange(reordered)
+  }
+
   const removeImage = (idx: number) => {
     onChange(images.filter((_, i) => i !== idx))
   }
 
   return (
     <div>
-      <span className="text-[10px] text-slate-500 mb-2 block">项目图片 — 上传到服务器数据库</span>
+      <span className="text-[10px] text-slate-500 mb-2 block">项目图片 — 上传到服务器数据库 · 拖拽或箭头排序</span>
       <div className="flex flex-wrap gap-2 mb-3">
         {images.map((img, i) => (
           <div key={i} className="relative w-20 h-14 rounded-lg overflow-hidden border border-white/[0.06] group">
             <img src={img} alt="" className="w-full h-full object-cover" />
+            {/* Delete button */}
             <button onClick={() => removeImage(i)} className="absolute top-0.5 right-0.5 w-5 h-5 rounded-full bg-black/60 flex items-center justify-center text-white/60 hover:text-white hover:bg-red-500/80 transition-all opacity-0 group-hover:opacity-100"><X size={10} /></button>
+            {/* Reorder arrows */}
+            <div className="absolute bottom-0 inset-x-0 flex justify-between opacity-0 group-hover:opacity-100 transition-all">
+              <button onClick={() => moveImage(i, -1)} disabled={i === 0}
+                className="w-5 h-5 flex items-center justify-center bg-black/60 hover:bg-black/80 text-white/60 hover:text-white disabled:opacity-30 disabled:cursor-default transition-all rounded-br">
+                <ChevronLeft size={10} />
+              </button>
+              <button onClick={() => moveImage(i, 1)} disabled={i === images.length - 1}
+                className="w-5 h-5 flex items-center justify-center bg-black/60 hover:bg-black/80 text-white/60 hover:text-white disabled:opacity-30 disabled:cursor-default transition-all rounded-bl">
+                <ChevronRight size={10} />
+              </button>
+            </div>
           </div>
         ))}
         <button onClick={() => fileRef.current?.click()} disabled={uploading}
