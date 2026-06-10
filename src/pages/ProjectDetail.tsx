@@ -4,12 +4,12 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { ArrowLeft, ChevronLeft, ChevronRight, ExternalLink } from 'lucide-react'
 import PageTransition from '../components/PageTransition'
 import ScrollReveal from '../components/ScrollReveal'
-import { loadProjectData } from '../data/adminStore'
+import { usePortfolioData } from '../data/usePortfolioData'
 
 export default function ProjectDetail() {
   const { id } = useParams<{ id: string }>()
-  const { allProjects } = loadProjectData()
-  const project = allProjects[id || '']
+  const { data } = usePortfolioData()
+  const project = data.allProjects[id || '']
 
   if (!project) {
     return (
@@ -151,7 +151,7 @@ export default function ProjectDetail() {
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <h3 className="text-lg font-bold text-white mb-6">探索其他项目</h3>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {Object.values(allProjects).filter(p => p.id !== id && p.real).slice(0, 4).map(p => (
+            {Object.values(data.allProjects).filter((p: any) => p.id !== id && p.real).slice(0, 4).map((p: any) => (
               <Link key={p.id} to={p.link}
                 className="group block bg-[#111827]/60 backdrop-blur-sm border border-white/[0.04] rounded-xl p-5 hover:border-blue-500/20 hover:-translate-y-1 hover:shadow-[0_8px_30px_rgba(99,102,241,0.1)] transition-all duration-300">
                 <h4 className="text-sm font-semibold text-white group-hover:text-blue-400 transition-colors duration-300">{p.title}</h4>

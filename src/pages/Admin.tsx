@@ -1,9 +1,10 @@
-import { useState, useEffect } from 'react'
+import { useState, useRef } from 'react'
 import { Link } from 'react-router-dom'
-import { useRef } from 'react'
 import { ArrowLeft, Save, RotateCcw, Download, Plus, Trash2, Edit3, Eye, Upload, X } from 'lucide-react'
-import { loadAdminData, saveAdminData, resetAdminData, downloadJSON, uploadProjectImage } from '../data/adminStore'
-import type { AdminData } from '../data/adminStore'
+import { usePortfolioData, type PortfolioData } from '../data/usePortfolioData'
+import { uploadProjectImage } from '../data/adminStore'
+import { personalInfo, services, heroStats, typewriterTexts, workflowSteps, clients, faqItems } from '../data/config'
+import { projectGroups as defaultGroups, allProjects as defaultProjects } from '../data/projects'
 import type { Project } from '../data/projects'
 
 /** Image uploader — uploads to server API, stores URL in project data */
@@ -55,30 +56,38 @@ function ImageUploader({ images, onChange, projectId }: { images: string[]; onCh
 type Tab = 'personal' | 'hero' | 'services' | 'projects' | 'workflow' | 'clients' | 'faq' | 'contact'
 
 export default function Admin() {
-  const [data, setData] = useState<AdminData | null>(null)
+  const { data, setData, loading, save: saveToServer } = usePortfolioData()
   const [tab, setTab] = useState<Tab>('personal')
   const [editingProject, setEditingProject] = useState<string | null>(null)
+  const [saveStatus, setSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'failed'>('idle')
 
-  useEffect(() => { loadAdminData().then(setData) }, [])
-
-  const update = (partial: Partial<AdminData>) => {
-    if (!data) return
+  const update = (partial: Partial<PortfolioData>) => {
     setData({ ...data, ...partial })
   }
 
-  const [saveStatus, setSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'failed'>('idle')
-
   const save = async () => {
-    if (!data) return
     setSaveStatus('saving')
-    const ok = await saveAdminData(data)
+    const ok = await saveToServer(data)
     setSaveStatus(ok ? 'saved' : 'failed')
     setTimeout(() => setSaveStatus('idle'), 2500)
   }
 
   const reset = () => {
     if (!confirm('确认重置所有数据？此操作不可撤销。')) return
-    setData(resetAdminData())
+    setData({
+      personalInfo: { ...personalInfo },
+      services: services.map(s => ({ ...s })),
+      heroStats: heroStats.map(s => ({ ...s })),
+      typewriterTexts: [...typewriterTexts],
+      workflowSteps: workflowSteps.map(s => ({ ...s })),
+      clients: [...clients],
+      faqItems: faqItems.map(f => ({ ...f })),
+      heroTitle: '',
+      heroBio: '',
+      heroCredibility: '',
+      projectGroups: defaultGroups.map(g => ({ ...g, items: [...g.items] })),
+      allProjects: JSON.parse(JSON.stringify(defaultProjects)),
+    })
   }
 
   const addProject = () => {
@@ -100,7 +109,7 @@ export default function Admin() {
     update({ allProjects: rest, projectGroups: groups })
   }
 
-  if (!data) return <div className="min-h-screen flex items-center justify-center text-white">加载中...</div>
+  if (loading) return <div className="min-h-screen flex items-center justify-center text-white text-sm">加载数据中...</div>
 
   const tabs: { key: Tab; label: string }[] = [
     { key: 'personal', label: '个人信息' },
@@ -124,7 +133,14 @@ export default function Admin() {
           </div>
           <div className="flex items-center gap-3">
             <button onClick={reset} className="flex items-center gap-1.5 px-3 py-1.5 text-xs text-slate-400 hover:text-red-400 transition-colors"><RotateCcw size={13} /> 重置</button>
-            <button onClick={() => downloadJSON(data)} className="flex items-center gap-1.5 px-3 py-1.5 text-xs bg-white/[0.04] border border-white/[0.08] rounded-lg text-slate-300 hover:bg-white/[0.08] transition-all"><Download size={13} /> 导出备份</button>
+            <button onClick={() => {
+              const json = JSON.stringify(data, null, 2)
+              const blob = new Blob([json], { type: 'application/json' })
+              const url = URL.createObjectURL(blob)
+              const a = document.createElement('a')
+              a.href = url; a.download = `portfolio-backup-${new Date().toISOString().slice(0,10)}.json`; a.click()
+              URL.revokeObjectURL(url)
+            }} className="flex items-center gap-1.5 px-3 py-1.5 text-xs bg-white/[0.04] border border-white/[0.08] rounded-lg text-slate-300 hover:bg-white/[0.08] transition-all"><Download size={13} /> 导出备份</button>
             <button onClick={save} disabled={saveStatus === 'saving'} className={`flex items-center gap-1.5 px-4 py-1.5 text-xs font-semibold rounded-lg transition-all ${
   saveStatus === 'saved' ? 'bg-emerald-600 text-white' :
   saveStatus === 'failed' ? 'bg-red-600 text-white' :

@@ -4,8 +4,7 @@ import { motion, useMotionValue, useScroll, useTransform, AnimatePresence } from
 import { ArrowUpRight } from 'lucide-react'
 import PageTransition from '../components/PageTransition'
 import ScrollReveal from '../components/ScrollReveal'
-import { personalInfo, services, heroStats, workflowSteps, clients, faqItems } from '../data/config'
-import { loadProjectData } from '../data/adminStore'
+import { usePortfolioData } from '../data/usePortfolioData'
 import Counter from '../components/Counter'
 
 /* ═══════════════════════════════════════════════════════
@@ -355,8 +354,8 @@ function FaqItem({ q, a, index }: { q: string; a: string; index: number }) {
    HOME PAGE
    ═══════════════════════════════════════════════════════ */
 export default function Home() {
-  // Re-read on every mount so admin changes show immediately
-  const { projectGroups, allProjects } = loadProjectData()
+  const { data } = usePortfolioData()
+  const { personalInfo, services, heroStats, workflowSteps, clients, faqItems, projectGroups, allProjects } = data
   return (
     <PageTransition>
       <ScrollProgress />
