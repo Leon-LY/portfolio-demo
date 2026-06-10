@@ -348,14 +348,14 @@ export default function Home() {
     <PageTransition>
       <ScrollProgress />
 
-      {/* ═══════ HERO ═══════ */}
-      <section className="relative pt-44 pb-24">
+      {/* ═══════ HERO + SERVICES WRAPPER — shared particle/glow effects ═══════ */}
+      <div className="relative">
         <ParticleNetwork />
         <CursorGlow />
-        {/* Bottom fade — blends particles/glow into page background */}
-        <div className="absolute inset-x-0 bottom-0 h-64 bg-gradient-to-t from-[#0a0e1a] via-[#0a0e1a]/40 to-transparent pointer-events-none z-[1]" />
 
-        <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
+        {/* ═══════ HERO ═══════ */}
+        <section className="relative pt-44 pb-24">
+          <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
           <div className="grid lg:grid-cols-5 gap-12 items-center">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -457,10 +457,10 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </section>
+        </section>
 
-      {/* ═══════ SERVICES ═══════ */}
-      <section id="services" className="relative py-24">
+        {/* ═══════ SERVICES ═══════ */}
+        <section id="services" className="relative py-24">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <ScrollReveal>
             <p className="text-xs font-medium text-blue-400 uppercase tracking-widest mb-3">服务方向</p>
@@ -496,7 +496,11 @@ export default function Home() {
             ))}
           </div>
         </div>
-      </section>
+        </section>
+
+        {/* Fade particles out at the end of services, not at hero boundary */}
+        <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-[#0a0e1a] to-transparent pointer-events-none z-[1]" />
+      </div>
 
       {/* ═══════ PROJECTS ═══════ */}
       <section id="portfolio" className="pb-16">
