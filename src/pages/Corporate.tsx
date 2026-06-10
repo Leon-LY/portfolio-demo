@@ -3,7 +3,7 @@ import { motion, useScroll, useTransform } from 'framer-motion'
 import { ArrowUpRight, ChevronRight, Calendar } from 'lucide-react'
 import PageTransition from '../components/PageTransition'
 import ScrollReveal from '../components/ScrollReveal'
-import { ImgPlaceholder, AvatarPlaceholder } from '../components/PlaceholderImage'
+import { ImgPlaceholder } from '../components/PlaceholderImage'
 import { companyInfo, timeline, teamMembers, partners, newsArticles, values } from '../data/corporate'
 
 export default function Corporate() {

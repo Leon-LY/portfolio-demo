@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Copy, Check, Key, Shield, Zap, Play, ChevronDown, ChevronRight, Server } from 'lucide-react'
+import { Copy, Check, Key, Shield, Zap, Play, ChevronDown, ChevronRight } from 'lucide-react'
 import PageTransition from '../components/PageTransition'
 
 const groups = [

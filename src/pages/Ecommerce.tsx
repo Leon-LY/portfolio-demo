@@ -62,7 +62,7 @@ export default function Ecommerce() {
 
       {/* Zoom overlay */}
       <AnimatePresence>{zoom&&<motion.div initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} onClick={()=>setZoom(false)} className="fixed inset-0 z-40 bg-black/80 backdrop-blur-sm flex items-center justify-center cursor-zoom-out">
-        <img src={imgs[img]?.url||allImages[0].url} alt="" className="max-w-[90vw] max-h-[90vh] object-contain rounded-2xl" />
+        <ImgPlaceholder aspect="1/1" idx={imgs[img]?.idx ?? 0} className="max-w-[90vw] max-h-[90vh] w-[600px] h-[600px] rounded-2xl" />
       </motion.div>}</AnimatePresence>
 
       <div className="pt-8 max-w-7xl mx-auto px-6 lg:px-8">

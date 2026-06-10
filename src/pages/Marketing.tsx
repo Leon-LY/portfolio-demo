@@ -83,7 +83,7 @@ export default function Marketing() {
 
             {/* Animated chart */}
             <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.9, delay: 0.2 }} className="hidden lg:block">
-              <div className="bg-[#111827] border border-white/[0.05] rounded-3xl p-8">
+              <div className="bg-[#111827]/70 backdrop-blur-sm border border-white/[0.05] rounded-3xl p-8">
                 <div className="flex items-center justify-between mb-8">
                   <div><p className="text-sm font-semibold text-white">营销 ROI 趋势</p><p className="text-xs text-slate-500">过去 12 个月</p></div>
                   <span className="text-[10px] font-medium text-emerald-400 bg-emerald-400/10 px-2.5 py-1 rounded-full">↑ 168%</span>
@@ -114,7 +114,7 @@ export default function Marketing() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {kpiData.map((k, i) => (
               <ScrollReveal key={k.label} delay={i*0.08}>
-                <div className="bg-[#111827] border border-white/[0.04] rounded-2xl p-6 text-center hover:border-white/[0.08] transition-all group">
+                <div className="bg-[#111827]/70 backdrop-blur-sm border border-white/[0.04] rounded-2xl p-6 text-center hover:border-white/[0.08] transition-all group">
                   <k.icon size={22} className={`mx-auto mb-3 ${k.color}`} />
                   <div className="text-3xl font-extrabold text-white"><Counter to={k.value} suffix={k.suffix} /></div>
                   <div className="text-xs text-slate-500 mt-1">{k.label}</div>
@@ -135,7 +135,7 @@ export default function Marketing() {
           <div className="grid md:grid-cols-4 gap-4">
             {timelineData.map((t, i) => (
               <ScrollReveal key={t.step} delay={i*0.1}>
-                <div className="relative bg-[#111827] border border-white/[0.04] rounded-2xl p-6 h-full hover:border-white/[0.08] transition-all group">
+                <div className="relative bg-[#111827]/70 backdrop-blur-sm border border-white/[0.04] rounded-2xl p-6 h-full hover:border-white/[0.08] transition-all group">
                   <span className="text-5xl font-black text-white/[0.04] absolute top-4 right-5">{t.step}</span>
                   <h3 className="text-base font-bold text-white mb-2 relative z-10">{t.title}</h3>
                   <p className="text-sm text-slate-500 leading-relaxed relative z-10">{t.desc}</p>
@@ -165,7 +165,7 @@ export default function Marketing() {
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
             {['🏗️ 建筑','🛒 零售','🏥 医疗','💻 科技','🍽️ 餐饮','🏭 制造'].map((item, i) => (
               <ScrollReveal key={item} delay={i*0.05}>
-                <motion.div whileHover={{ y: -3 }} className="bg-[#111827] border border-white/[0.04] rounded-2xl p-5 text-center hover:border-white/[0.08] transition-all cursor-pointer">
+                <motion.div whileHover={{ y: -3 }} className="bg-[#111827]/70 backdrop-blur-sm border border-white/[0.04] rounded-2xl p-5 text-center hover:border-white/[0.08] transition-all cursor-pointer">
                   <div className="text-2xl mb-2">{item.split(' ')[0]}</div>
                   <div className="text-xs text-slate-400 font-medium">{item.split(' ')[1]}</div>
                 </motion.div>
@@ -186,7 +186,7 @@ export default function Marketing() {
           <div className="relative">
             <AnimatePresence mode="wait">
               <motion.blockquote key={activeTestimonial} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.35 }}
-                className="bg-[#111827] border border-white/[0.05] rounded-3xl p-8 lg:p-12 text-center">
+                className="bg-[#111827]/70 backdrop-blur-sm border border-white/[0.05] rounded-3xl p-8 lg:p-12 text-center">
                 <div className="text-4xl mb-4">{testimonials[activeTestimonial].avatar}</div>
                 <p className="text-lg lg:text-xl text-white leading-relaxed mb-6">&ldquo;{testimonials[activeTestimonial].quote}&rdquo;</p>
                 <p className="text-sm font-semibold text-white">{testimonials[activeTestimonial].name}</p>

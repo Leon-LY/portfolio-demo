@@ -65,7 +65,7 @@ export default function Admin() {
   const [saved, setSaved] = useState(false)
   const [editingProject, setEditingProject] = useState<string | null>(null)
 
-  useEffect(() => { setData(loadAdminData()) }, [])
+  useEffect(() => { loadAdminData().then(setData) }, [])
 
   const update = (partial: Partial<AdminData>) => {
     if (!data) return
@@ -74,9 +74,10 @@ export default function Admin() {
 
   const save = () => {
     if (!data) return
-    saveAdminData(data)
-    setSaved(true)
-    setTimeout(() => setSaved(false), 2000)
+    saveAdminData(data).then(() => {
+      setSaved(true)
+      setTimeout(() => setSaved(false), 2000)
+    })
   }
 
   const reset = () => {

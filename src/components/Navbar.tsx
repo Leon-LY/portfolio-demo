@@ -25,45 +25,96 @@ export default function Navbar() {
 
   return (
     <nav className={`fixed top-0 inset-x-0 z-50 transition-all duration-500 ${
-      scrolled ? 'bg-[#0a0e1a]/85 backdrop-blur-2xl shadow-[0_1px_0_0_rgba(255,255,255,0.04)]' : ''
+      scrolled
+        ? 'bg-[#0a0e1a]/80 backdrop-blur-2xl border-b border-white/[0.06] shadow-[0_4px_32px_rgba(0,0,0,0.3)]'
+        : ''
     }`}>
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-        <Link to="/" className="text-lg font-extrabold tracking-tight text-white">
-          Leon<span className="text-blue-500">.</span>
+        {/* Logo */}
+        <Link to="/" className="group flex items-center gap-0.5">
+          <span className="text-lg font-extrabold tracking-tight text-white transition-colors group-hover:text-blue-400">
+            Leon
+          </span>
+          <span className="text-lg font-extrabold text-blue-500 group-hover:text-violet-400 transition-all duration-300">.</span>
         </Link>
 
+        {/* Desktop nav */}
         <div className="hidden lg:flex items-center gap-1">
           {links.map((l) => {
             const active = isHome && (l.to === '/' || (l.to.startsWith('/#') && hash === l.to.replace('/', '')))
             return (
               <a key={l.to} href={l.to}
-                className={`relative px-3.5 py-2 text-[13px] font-medium rounded-lg transition-colors ${
-                  active ? 'text-white' : 'text-slate-500 hover:text-slate-300'
+                className={`relative px-3.5 py-2 text-[13px] font-medium rounded-lg transition-all duration-300 ${
+                  active ? 'text-white' : 'text-slate-500 hover:text-slate-200'
                 }`}
               >
                 {l.label}
-                {active && <motion.span layoutId="nav" className="absolute inset-0 bg-white/[0.05] rounded-lg"
-                  transition={{ type: 'spring', bounce: 0.15, duration: 0.5 }} />}
+                {active && (
+                  <motion.span
+                    layoutId="nav-active"
+                    className="absolute inset-x-0 bottom-0 h-[2px] bg-gradient-to-r from-blue-500 to-violet-500 rounded-full"
+                    transition={{ type: 'spring', bounce: 0.2, duration: 0.5 }}
+                  />
+                )}
               </a>
             )
           })}
         </div>
 
-        <button onClick={() => setOpen(!open)} className="lg:hidden p-2 text-slate-400 hover:text-white text-lg">
-          {open ? '✕' : '☰'}
+        {/* Mobile toggle */}
+        <button
+          onClick={() => setOpen(!open)}
+          className="lg:hidden relative w-10 h-10 flex items-center justify-center rounded-lg text-slate-400 hover:text-white hover:bg-white/[0.04] transition-all"
+          aria-label={open ? '关闭菜单' : '打开菜单'}
+        >
+          <motion.div
+            animate={open ? 'open' : 'closed'}
+            className="flex flex-col gap-1.5"
+          >
+            <motion.span
+              variants={{ closed: { rotate: 0, y: 0 }, open: { rotate: 45, y: 5.5 } }}
+              className="block w-5 h-[1.5px] bg-current rounded-full"
+            />
+            <motion.span
+              variants={{ closed: { opacity: 1 }, open: { opacity: 0 } }}
+              className="block w-5 h-[1.5px] bg-current rounded-full"
+            />
+            <motion.span
+              variants={{ closed: { rotate: 0, y: 0 }, open: { rotate: -45, y: -5.5 } }}
+              className="block w-5 h-[1.5px] bg-current rounded-full"
+            />
+          </motion.div>
         </button>
       </div>
 
+      {/* Mobile menu */}
       <AnimatePresence>
         {open && (
-          <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }} className="lg:hidden bg-[#0b1120]/95 backdrop-blur-xl border-b border-white/[0.05]">
-            <div className="px-4 py-3 space-y-1">
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.25, ease: 'easeInOut' }}
+            className="lg:hidden bg-[#0a0e1a]/95 backdrop-blur-2xl border-b border-white/[0.06] overflow-hidden"
+          >
+            <div className="px-4 py-4 space-y-1">
               {links.map((l, i) => (
-                <motion.div key={l.to} initial={{ opacity: 0, x: -12 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.03 }}>
-                  <a href={l.to} className={`block px-4 py-2.5 rounded-lg text-sm font-medium ${
-                    (l.to === '/' && isHome) ? 'bg-white/[0.05] text-white' : 'text-slate-500'
-                  }`}>{l.label}</a>
+                <motion.div
+                  key={l.to}
+                  initial={{ opacity: 0, x: -16 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.06, duration: 0.2 }}
+                >
+                  <a
+                    href={l.to}
+                    className={`block px-4 py-3 rounded-xl text-sm font-medium transition-all ${
+                      (l.to === '/' && isHome)
+                        ? 'bg-gradient-to-r from-blue-500/10 to-violet-500/10 text-white border border-blue-500/20'
+                        : 'text-slate-400 hover:text-white hover:bg-white/[0.03]'
+                    }`}
+                  >
+                    {l.label}
+                  </a>
                 </motion.div>
               ))}
             </div>
