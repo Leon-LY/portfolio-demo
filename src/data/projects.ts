@@ -16,8 +16,8 @@ export const projectGroups = [
     items: ['bigscreen', 'economy-platform'] as string[],
   },
   {
-    label: '企业官网与品牌站',
-    items: ['building'] as string[],
+    label: '全栈应用与平台',
+    items: ['booking', 'building'] as string[],
   },
   {
     label: '移动端与 H5 应用',
@@ -156,6 +156,28 @@ export const allProjects: Record<string, Project> = {
     link: '/project/invest-learn',
     real: true,
     featured: true,
+  },
+  'booking': {
+    id: 'booking',
+    title: '设计咨询预约平台',
+    subtitle: '全栈预约系统 — Next.js 16 · Prisma · NextAuth · 后台管理',
+    category: '全栈应用 · Next.js 16 / Prisma / PostgreSQL',
+    description: '面向设计咨询行业的在线预约管理平台。客户浏览服务、选择时段、一键预约；商家拥有完整后台：订单管理、客户 CRM、时段配置、数据统计仪表盘。从数据库到 UI 全栈独立开发。',
+    tech: ['Next.js 16', 'React 19', 'TypeScript', 'Prisma', 'PostgreSQL', 'NextAuth', 'shadcn/ui', 'Docker'],
+    images: ['/projects/booking.svg'],
+    overview: '这是一个面向设计咨询行业的全栈预约管理平台——类似于 Calendly 但更贴近国内设计行业的实际业务流程。客户在前端浏览设计师服务，选择合适的时段一键预约；商家在后台管理所有预约订单、客户信息、服务项目、可用时段和节假日，配有实时数据统计仪表盘。整个系统从数据库设计（Prisma + PostgreSQL）到前端 UI（Next.js + shadcn/ui）再到 Docker 容器化部署，均为全栈独立完成。',
+    capabilities: [
+      '多步预约流程：浏览服务 → 选择日期时段 → 填写信息 → 确认提交 → 预约成功，每个步骤有清晰的进度指示',
+      '智能时段管理：支持按星期几配置可用时段、设置节假日屏蔽、自动检测时段冲突',
+      '完整后台管理系统：预约订单 CRUD（支持状态流转：待确认→已确认→已完成→已取消）、客户信息管理、服务项目上下架',
+      '数据统计仪表盘：今日预约数、待处理订单、累计收入、客户总数等核心指标实时展示',
+      'NextAuth 凭证认证：管理员登录保护后台，bcrypt 密码加密',
+      'Docker Compose 一键部署：Next.js + PostgreSQL + Nginx，一条命令启动全部服务',
+    ],
+    techNote: '前端 Next.js 16 App Router + React 19 + shadcn/ui，后端 API Routes 处理所有业务逻辑，Prisma ORM 管理 PostgreSQL 数据库。Zod + React Hook Form 表单验证，date-fns 日期处理，sonner 通知提示。Docker 多阶段构建 + Nginx 反向代理部署。',
+    result: '完整实现了从数据库设计、API 开发、前后端联调到 Docker 部署的全栈闭环。预约流程、时段冲突检测、后台 CRUD、权限认证等核心功能均已稳定运行。',
+    link: '/project/booking',
+    real: true,
   },
   // Demo 模板
   'demo-marketing': {
