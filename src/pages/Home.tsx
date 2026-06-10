@@ -133,7 +133,7 @@ function ParticleNetwork() {
     }
   }, [])
 
-  return <canvas ref={canvasRef} className="absolute inset-0 pointer-events-none" style={{ zIndex: 0 }} />
+  return <canvas ref={canvasRef} className="fixed inset-0 pointer-events-none" style={{ zIndex: 0 }} />
 }
 
 /* ═══════════════════════════════════════════════════════
@@ -169,12 +169,12 @@ function CursorGlow() {
   }, [])
 
   return (
-    <div className="absolute inset-0 pointer-events-none overflow-hidden" style={{ zIndex: 0 }}>
+    <div className="fixed inset-0 pointer-events-none" style={{ zIndex: 0 }}>
       <div
         ref={glowRef}
-        className="absolute w-[800px] h-[800px] rounded-full will-change-transform"
+        className="absolute w-[900px] h-[900px] rounded-full will-change-transform"
         style={{
-          background: 'radial-gradient(circle, rgba(99,102,241,0.25) 0%, rgba(139,92,246,0.1) 30%, rgba(6,182,212,0.05) 50%, transparent 70%)',
+          background: 'radial-gradient(circle, rgba(99,102,241,0.22) 0%, rgba(139,92,246,0.08) 30%, rgba(6,182,212,0.04) 50%, transparent 70%)',
           left: '50%',
           top: '50%',
           transform: 'translate(-50%,-50%)',
@@ -347,11 +347,11 @@ export default function Home() {
   return (
     <PageTransition>
       <ScrollProgress />
+      <ParticleNetwork />
+      <CursorGlow />
 
-      {/* ═══════ HERO + SERVICES WRAPPER — shared particle/glow effects ═══════ */}
+      {/* ═══════ HERO + SERVICES ═══════ */}
       <div className="relative">
-        <ParticleNetwork />
-        <CursorGlow />
 
         {/* ═══════ HERO ═══════ */}
         <section className="relative pt-44 pb-24">
