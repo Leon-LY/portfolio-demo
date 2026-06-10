@@ -9,6 +9,8 @@ import { projectGroups, allProjects } from './projects'
 const API_URL = '/api/portfolio/data'
 
 /** Upload an image file to the server — returns the URL */
+import { authHeaders } from './auth'
+
 export async function uploadProjectImage(
   projectId: string,
   file: File,
@@ -17,7 +19,11 @@ export async function uploadProjectImage(
   form.append('image', file)
   form.append('project_id', projectId)
   try {
-    const res = await fetch('/api/portfolio/images/upload', { method: 'POST', body: form })
+    const res = await fetch('/api/portfolio/images/upload', {
+      method: 'POST',
+      body: form,
+      headers: authHeaders(),
+    })
     if (res.ok) return await res.json()
   } catch (e) {
     console.error('Image upload failed:', e)

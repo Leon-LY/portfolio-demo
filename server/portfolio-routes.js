@@ -8,6 +8,7 @@ import path from 'path'
 import fs from 'fs'
 import { fileURLToPath } from 'url'
 import { query } from '../db.js'
+import { authMiddleware } from '../auth.js'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const UPLOAD_DIR = process.env.UPLOAD_DIR || path.join(__dirname, '../../uploads')
@@ -53,7 +54,7 @@ router.get('/data', async (_req, res) => {
 // ═══════════════════════════════════════════════
 // PUT /api/portfolio/data — save all admin data
 // ═══════════════════════════════════════════════
-router.put('/data', async (req, res) => {
+router.put('/data', authMiddleware, async (req, res) => {
   try {
     await query(
       'INSERT INTO portfolio_data (id, data, updated_at) VALUES (1, $1, NOW()) ON CONFLICT (id) DO UPDATE SET data = $1, updated_at = NOW()',
@@ -69,7 +70,7 @@ router.put('/data', async (req, res) => {
 // ═══════════════════════════════════════════════
 // POST /api/portfolio/images/upload — upload project image
 // ═══════════════════════════════════════════════
-router.post('/images/upload', upload.single('image'), async (req, res) => {
+router.post('/images/upload', authMiddleware, upload.single('image'), async (req, res) => {
   if (!req.file) return res.status(400).json({ error: 'No file uploaded' })
   const { project_id } = req.body
   if (!project_id) return res.status(400).json({ error: 'project_id required' })
@@ -129,7 +130,7 @@ router.get('/images/:projectId', async (req, res) => {
 // ═══════════════════════════════════════════════
 // DELETE /api/portfolio/images/:id
 // ═══════════════════════════════════════════════
-router.delete('/images/:id', async (req, res) => {
+router.delete('/images/:id', authMiddleware, async (req, res) => {
   try {
     const { rows } = await query('SELECT * FROM portfolio_images WHERE id = $1', [req.params.id])
     if (rows.length === 0) return res.status(404).json({ error: 'Not found' })
@@ -151,7 +152,7 @@ router.delete('/images/:id', async (req, res) => {
 // ═══════════════════════════════════════════════
 // PUT /api/portfolio/images/reorder
 // ═══════════════════════════════════════════════
-router.put('/images/reorder', async (req, res) => {
+router.put('/images/reorder', authMiddleware, async (req, res) => {
   const { project_id, image_ids } = req.body
   if (!project_id || !Array.isArray(image_ids)) {
     return res.status(400).json({ error: 'project_id and image_ids required' })
@@ -209,7 +210,7 @@ function generatePlaceholderSVG({ name, en, tags, accent, icon, bgTop, bgBottom 
 </svg>`
 }
 
-router.post('/placeholder', async (req, res) => {
+router.post('/placeholder', authMiddleware, async (req, res) => {
   try {
     const { project_id, name, category, tags } = req.body
     if (!project_id || !name) {

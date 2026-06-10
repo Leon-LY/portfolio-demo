@@ -1,11 +1,80 @@
 import { useState, useRef } from 'react'
 import { Link } from 'react-router-dom'
-import { ArrowLeft, Save, RotateCcw, Download, Plus, Trash2, Edit3, Eye, Upload, X, ChevronLeft, ChevronRight } from 'lucide-react'
+import { ArrowLeft, Save, RotateCcw, Download, Plus, Trash2, Edit3, Eye, Upload, X, ChevronLeft, ChevronRight, LogOut, Lock } from 'lucide-react'
 import { usePortfolioData, type PortfolioData } from '../data/usePortfolioData'
 import { uploadProjectImage } from '../data/adminStore'
 import { personalInfo, services, heroStats, typewriterTexts, workflowSteps, clients, faqItems } from '../data/config'
 import { projectGroups as defaultGroups, allProjects as defaultProjects } from '../data/projects'
+import { isAuthenticated, loginAPI, logout, authHeaders } from '../data/auth'
 import type { Project } from '../data/projects'
+
+/** Login form */
+function LoginForm({ onLogin }: { onLogin: () => void }) {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [error, setError] = useState('')
+  const [loading, setLoading] = useState(false)
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setError('')
+    setLoading(true)
+    try {
+      await loginAPI(email, password)
+      onLogin()
+    } catch (err: any) {
+      setError(err.message || '登录失败')
+    }
+    setLoading(false)
+  }
+
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-[#0a0e1a] px-4">
+      <div className="w-full max-w-sm">
+        <div className="text-center mb-8">
+          <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/10 mb-4">
+            <Lock size={20} className="text-blue-400" />
+          </div>
+          <h1 className="text-xl font-bold text-white">后台管理</h1>
+          <p className="text-xs text-slate-500 mt-1">请输入管理员账号登录</p>
+        </div>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <input
+              type="text"
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+              placeholder="手机号或邮箱"
+              required
+              className="w-full px-4 py-2.5 bg-[#111827] border border-white/[0.08] rounded-xl text-sm text-white placeholder:text-slate-600 focus:outline-none focus:border-blue-500/50 transition-all"
+            />
+          </div>
+          <div>
+            <input
+              type="password"
+              value={password}
+              onChange={e => setPassword(e.target.value)}
+              placeholder="密码"
+              required
+              className="w-full px-4 py-2.5 bg-[#111827] border border-white/[0.08] rounded-xl text-sm text-white placeholder:text-slate-600 focus:outline-none focus:border-blue-500/50 transition-all"
+            />
+          </div>
+          {error && <p className="text-xs text-red-400">{error}</p>}
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full py-2.5 bg-blue-600 text-white text-sm font-semibold rounded-xl hover:bg-blue-500 disabled:opacity-50 transition-all"
+          >
+            {loading ? '登录中...' : '登录'}
+          </button>
+        </form>
+        <p className="text-[10px] text-slate-600 text-center mt-6">
+          首次使用？请通过服务器创建管理员账号
+        </p>
+      </div>
+    </div>
+  )
+}
 
 /** Image uploader — uploads to server API, stores URL in project data */
 function ImageUploader({ images, onChange, projectId }: { images: string[]; onChange: (imgs: string[]) => void; projectId: string }) {
@@ -76,10 +145,15 @@ function ImageUploader({ images, onChange, projectId }: { images: string[]; onCh
 type Tab = 'personal' | 'hero' | 'services' | 'projects' | 'workflow' | 'clients' | 'faq' | 'contact'
 
 export default function Admin() {
+  const [authed, setAuthed] = useState(isAuthenticated())
   const { data, setData, loading, save: saveToServer } = usePortfolioData()
   const [tab, setTab] = useState<Tab>('personal')
   const [editingProject, setEditingProject] = useState<string | null>(null)
   const [saveStatus, setSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'failed'>('idle')
+
+  if (!authed) {
+    return <LoginForm onLogin={() => setAuthed(true)} />
+  }
 
   const update = (partial: Partial<PortfolioData>) => {
     setData({ ...data, ...partial })
@@ -95,7 +169,7 @@ export default function Admin() {
         try {
           const res = await fetch('/api/portfolio/placeholder', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'application/json', ...authHeaders() },
             body: JSON.stringify({
               project_id: id,
               name: p.title,
@@ -178,6 +252,7 @@ export default function Admin() {
             <h1 className="text-lg font-bold">后台管理</h1>
           </div>
           <div className="flex items-center gap-3">
+            <button onClick={() => { logout(); setAuthed(false) }} className="flex items-center gap-1.5 px-3 py-1.5 text-xs text-slate-400 hover:text-white transition-colors"><LogOut size={13} /> 退出</button>
             <button onClick={reset} className="flex items-center gap-1.5 px-3 py-1.5 text-xs text-slate-400 hover:text-red-400 transition-colors"><RotateCcw size={13} /> 重置</button>
             <button onClick={() => {
               const json = JSON.stringify(data, null, 2)

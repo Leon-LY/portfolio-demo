@@ -5,6 +5,7 @@
 import { useState, useEffect, useCallback } from 'react'
 import { personalInfo, services, heroStats, typewriterTexts, workflowSteps, clients, faqItems } from './config'
 import { projectGroups as defaultGroups, allProjects as defaultProjects } from './projects'
+import { authHeaders } from './auth'
 import type { Project } from './projects'
 
 export interface PortfolioData {
@@ -146,7 +147,7 @@ export function usePortfolioData() {
     try {
       const res = await fetch('/api/portfolio/data', {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', ...authHeaders() },
         body: JSON.stringify(payload),
       })
       if (res.ok) {
