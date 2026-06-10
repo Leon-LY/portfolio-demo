@@ -24,9 +24,9 @@ export default function Navbar() {
   const isHome = pathname === '/'
 
   return (
-    <nav className={`fixed top-0 inset-x-0 z-50 transition-all duration-500 ${
+    <nav className={`fixed top-0 inset-x-0 z-50 ${
       scrolled
-        ? 'bg-[#0a0e1a]/80 backdrop-blur-2xl border-b border-white/[0.06] shadow-[0_4px_32px_rgba(0,0,0,0.3)]'
+        ? 'bg-[#0a0e1a]/85 backdrop-blur-2xl shadow-[0_1px_0_0_rgba(255,255,255,0.05),0_4px_24px_rgba(0,0,0,0.25)]'
         : ''
     }`}>
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">

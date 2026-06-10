@@ -349,9 +349,11 @@ export default function Home() {
       <ScrollProgress />
 
       {/* ═══════ HERO ═══════ */}
-      <section className="relative pt-44 pb-20 overflow-hidden">
+      <section className="relative pt-44 pb-32 overflow-hidden">
         <ParticleNetwork />
         <CursorGlow />
+        {/* Bottom fade — blends particles/glow into page background */}
+        <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-[#0a0e1a] to-transparent pointer-events-none z-[1]" />
 
         <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
           <div className="grid lg:grid-cols-5 gap-12 items-center">
@@ -457,11 +459,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ═══════ SOFT TRANSITION ═══════ */}
-      <div className="relative z-[5] h-24 -mt-24 bg-gradient-to-b from-transparent via-[#0a0e1a]/60 to-[#0a0e1a] pointer-events-none" />
-
       {/* ═══════ SERVICES ═══════ */}
-      <section id="services" className="relative z-10 py-24">
+      <section id="services" className="relative py-24">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <ScrollReveal>
             <p className="text-xs font-medium text-blue-400 uppercase tracking-widest mb-3">服务方向</p>
