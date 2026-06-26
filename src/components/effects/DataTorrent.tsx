@@ -16,20 +16,24 @@ interface Particle {
 type Phase = 'idle' | 'converge' | 'hold' | 'disperse' | 'static'
 
 function getLogoPoints(cx: number, cy: number): Array<{ x: number; y: number }> {
-  const scale = 0.9
+  const scale = 1.0
   const points: Array<{ x: number; y: number }> = []
-  // L
-  for (let y = -40; y <= 40; y += 6) points.push({ x: -70, y })
-  for (let x = -70; x <= -30; x += 6) points.push({ x, y: 40 })
-  // e
-  for (let a = 0; a < Math.PI * 2; a += 0.35)
-    points.push({ x: -5 + Math.cos(a) * 22, y: 5 + Math.sin(a) * 18 })
-  // o
-  for (let a = 0; a < Math.PI * 2; a += 0.35)
-    points.push({ x: 45 + Math.cos(a) * 22, y: 5 + Math.sin(a) * 18 })
-  // n
-  for (let y = -35; y <= 30; y += 6) points.push({ x: 80, y })
-  for (let y = -30; y <= 25; y += 6) points.push({ x: 115, y: y + 5 })
+  // L — dense vertical + horizontal
+  for (let y = -44; y <= 44; y += 3.5) points.push({ x: -72, y })
+  for (let x = -72; x <= -26; x += 3.5) points.push({ x, y: 44 })
+  // e — dense circular path
+  for (let a = 0; a < Math.PI * 2; a += 0.15)
+    points.push({ x: -4 + Math.cos(a) * 24, y: 6 + Math.sin(a) * 20 })
+  for (let a = 0; a < Math.PI * 2; a += 0.2)
+    points.push({ x: -4 + Math.cos(a) * 14, y: 6 + Math.sin(a) * 12 })
+  // o — dense double ring
+  for (let a = 0; a < Math.PI * 2; a += 0.15)
+    points.push({ x: 46 + Math.cos(a) * 24, y: 6 + Math.sin(a) * 20 })
+  for (let a = 0; a < Math.PI * 2; a += 0.2)
+    points.push({ x: 46 + Math.cos(a) * 14, y: 6 + Math.sin(a) * 12 })
+  // n — two verticals + curve
+  for (let y = -40; y <= 36; y += 3.5) points.push({ x: 82, y })
+  for (let y = -36; y <= 30; y += 3.5) points.push({ x: 118, y: y + 4 })
 
   return points.map(p => ({ x: cx + p.x * scale, y: cy + p.y * scale }))
 }
@@ -145,7 +149,7 @@ export default function DataTorrent({
           if (elapsed > 300) phaseRef.current = 'converge'
         } else if (elapsed >= 1200 && phaseRef.current !== 'hold' && phaseRef.current !== 'disperse') {
           phaseRef.current = 'hold'
-        } else if (elapsed >= 2000 && phaseRef.current === 'hold') {
+        } else if (elapsed >= 3000 && phaseRef.current === 'hold') {
           phaseRef.current = 'disperse'
           particles.forEach(p => {
             p.targetX = Math.random() * w
@@ -209,12 +213,20 @@ export default function DataTorrent({
 
       // Center glow during hold
       if (phaseRef.current === 'hold') {
-        const grd = ctx.createRadialGradient(cx, cy, 10, cx, cy, 140)
-        grd.addColorStop(0, 'rgba(0, 229, 255, 0.1)')
-        grd.addColorStop(0.5, 'rgba(0, 229, 255, 0.03)')
+        const grd = ctx.createRadialGradient(cx, cy, 5, cx, cy, 200)
+        grd.addColorStop(0, 'rgba(0, 229, 255, 0.18)')
+        grd.addColorStop(0.4, 'rgba(0, 229, 255, 0.06)')
+        grd.addColorStop(0.7, 'rgba(124, 58, 237, 0.03)')
         grd.addColorStop(1, 'rgba(0, 0, 0, 0)')
         ctx.fillStyle = grd
-        ctx.fillRect(cx - 140, cy - 140, 280, 280)
+        ctx.fillRect(cx - 200, cy - 200, 400, 400)
+        // Pulsing ring during hold
+        const ringAlpha = 0.1 + Math.sin(elapsed * 0.005) * 0.05
+        ctx.beginPath()
+        ctx.arc(cx, cy, 120, 0, Math.PI * 2)
+        ctx.strokeStyle = `rgba(0, 229, 255, ${ringAlpha})`
+        ctx.lineWidth = 0.5
+        ctx.stroke()
       }
 
       // Connection lines in static/disperse

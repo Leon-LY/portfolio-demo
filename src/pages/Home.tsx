@@ -12,6 +12,7 @@ import TiltCard3D from '../components/effects/TiltCard3D'
 import GlowCard from '../components/effects/GlowCard'
 import DataTorrent from '../components/effects/DataTorrent'
 import ParticleField from '../components/effects/ParticleField'
+import Hero3D from '../components/effects/Hero3D'
 
 /* ═══════════════════════════════════════════════════════
    Service icons + color mapping
@@ -21,12 +22,6 @@ const serviceIcons: Record<string, typeof BarChart3> = {
   '数据可视化': BarChart3,
   '移动端 & 小程序': Building2,
   'AI 集成 & 架构': Brain,
-}
-const serviceGlowColors: Record<string, string> = {
-  '全栈应用开发': 'rgba(0, 229, 255, 0.07)',
-  '数据可视化': 'rgba(124, 58, 237, 0.08)',
-  '移动端 & 小程序': 'rgba(16, 185, 129, 0.07)',
-  'AI 集成 & 架构': 'rgba(245, 158, 11, 0.06)',
 }
 
 /* ═══════════════════════════════════════════════════════
@@ -95,40 +90,9 @@ function SectionIndicator() {
 }
 
 /* ═══════════════════════════════════════════════════════
-   Geometric Core — CSS 3D nested rings
-   ═══════════════════════════════════════════════════════ */
-function GeometricCore({ visible }: { visible: boolean }) {
-  return (
-    <motion.div className="relative w-[320px] h-[320px] lg:w-[420px] lg:h-[420px] flex items-center justify-center"
-      style={{ perspective: 800 }}
-      animate={visible ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.5 }}
-      transition={{ duration: 1.4, ease: [0.22, 0.1, 0.2, 1] }}>
-      <div className="absolute inset-0 rounded-full border border-white/[0.06] animate-spin-slow" />
-      <div className="absolute inset-[15%] rounded-full border border-accent/10 animate-spin-reverse"
-        style={{ transform: 'rotateX(60deg)' }} />
-      <div className="absolute inset-[30%] rounded-full border-2 border-accent/20 animate-spin-slow"
-        style={{ transform: 'rotateY(45deg)' }} />
-      {/* Core pulse */}
-      <motion.div className="absolute w-3 h-3 rounded-full bg-accent"
-        animate={{ boxShadow: ['0 0 20px rgba(0,229,255,0.5),0 0 60px rgba(0,229,255,0.2)', '0 0 35px rgba(0,229,255,0.7),0 0 90px rgba(0,229,255,0.3)', '0 0 20px rgba(0,229,255,0.5),0 0 60px rgba(0,229,255,0.2)'] }}
-        transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }} />
-      {/* Orbiting dots */}
-      <div className="absolute w-2 h-2 rounded-full bg-accent/60"
-        style={{ animation: 'spin-slow 8s linear infinite', transform: 'translateX(160px)' }} />
-      <div className="absolute w-2 h-2 rounded-full bg-accent-deep/60"
-        style={{ animation: 'spin-reverse 10s linear infinite', transform: 'translateX(140px) rotateX(30deg)' }} />
-      <div className="absolute inset-x-0 top-[45%] h-px bg-gradient-to-r from-transparent via-accent/15 to-transparent animate-pulse-slow" />
-      <div className="absolute inset-x-[10%] top-[55%] h-px bg-gradient-to-r from-transparent via-accent/10 to-transparent animate-pulse-slow"
-        style={{ animationDelay: '1s' }} />
-    </motion.div>
-  )
-}
-
-/* ═══════════════════════════════════════════════════════
    Service Card
    ═══════════════════════════════════════════════════════ */
 function ServiceCard({ s, i, Icon }: { s: { title: string; desc: string }; i: number; Icon: typeof BarChart3 }) {
-  const glowColor = serviceGlowColors[s.title] || 'rgba(0, 229, 255, 0.07)'
   return (
     <motion.div
       initial={{ opacity: 0, y: 40 }}
@@ -136,7 +100,7 @@ function ServiceCard({ s, i, Icon }: { s: { title: string; desc: string }; i: nu
       viewport={{ once: true, margin: '-80px' }}
       transition={{ duration: 0.6, delay: i * 0.12, ease: [0.22, 0.1, 0.2, 1] }}>
       <TiltCard3D tiltMax={6}>
-        <GlowCard glowColor={glowColor} glowSize={280}
+        <GlowCard glowColor="rgba(0, 229, 255, 0.06)" glowSize={280}
           className="card-solid rounded-2xl p-7 border-white/[0.06] hover:border-accent/20 transition-all duration-300 group h-full cursor-default">
           <div className="flex gap-5 items-start relative z-10">
             <div className="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center shrink-0 group-hover:bg-accent/15 group-hover:scale-110 transition-all duration-300">
@@ -326,10 +290,12 @@ export default function Home() {
                 {personalInfo.heroCredibility}
               </motion.p>
             </motion.div>
-            {/* Right: Geometric */}
-            <div className="hidden lg:flex items-center justify-center">
-              <GeometricCore visible={heroVisible} />
-            </div>
+            {/* Right: 3D Data Torus */}
+            <motion.div className="hidden lg:block"
+              animate={heroVisible ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
+              transition={{ duration: 1.4, delay: 0.3, ease: [0.22, 0.1, 0.2, 1] }}>
+              <Hero3D />
+            </motion.div>
           </div>
 
           {/* ═══════ Metrics with Counter ═══════ */}
