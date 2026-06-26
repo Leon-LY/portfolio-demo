@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { ArrowLeft, ChevronLeft, ChevronRight, ExternalLink } from 'lucide-react'
 import PageTransition from '../components/PageTransition'
 import ScrollReveal from '../components/ScrollReveal'
+import Lightbox from '../components/ui/Lightbox'
 import { usePortfolioData } from '../data/usePortfolioData'
 
 export default function ProjectDetail() {
@@ -17,7 +18,7 @@ export default function ProjectDetail() {
         <div className="min-h-screen flex items-center justify-center">
           <div className="text-center">
             <h1 className="text-3xl font-bold text-white mb-4">项目未找到</h1>
-            <Link to="/" className="text-blue-400 hover:text-blue-300 transition-colors">← 返回首页</Link>
+            <Link to="/" className="text-accent hover:text-accent-bright transition-colors">← 返回首页</Link>
           </div>
         </div>
       </PageTransition>
@@ -28,33 +29,33 @@ export default function ProjectDetail() {
     <PageTransition>
       {/* Hero */}
       <section className="relative pt-32 pb-16 overflow-hidden">
-        <div className="absolute top-0 left-0 w-full h-[400px] bg-gradient-to-b from-blue-500/5 via-violet-500/3 to-transparent pointer-events-none" />
+        <div className="absolute top-0 left-0 w-full h-[400px] bg-gradient-to-b from-accent/5 to-transparent pointer-events-none" />
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-            <Link to="/" className="inline-flex items-center gap-2 text-sm text-slate-500 hover:text-white transition-colors mb-8 group">
+            <Link to="/" className="inline-flex items-center gap-2 text-sm text-text-tertiary hover:text-white transition-colors mb-8 group">
               <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" /> 返回首页
             </Link>
 
             <div className="flex items-center gap-3 mb-5">
-              <span className="px-3 py-1 bg-emerald-500/10 text-emerald-400 text-[11px] font-semibold rounded-full border border-emerald-500/20">
+              <span className="px-3 py-1 bg-success/10 text-success text-[11px] font-semibold rounded-full border border-success/20">
                 真实项目
               </span>
-              <span className="text-xs text-slate-500">{project.category}</span>
+              <span className="text-xs text-text-tertiary">{project.category}</span>
             </div>
 
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-[0.95] mb-3">
               {project.title}
             </h1>
             {project.subtitle && (
-              <p className="text-lg text-blue-300/80 font-medium mb-5">{project.subtitle}</p>
+              <p className="text-lg text-accent-bright/80 font-medium mb-5">{project.subtitle}</p>
             )}
-            <p className="text-lg text-slate-400 leading-relaxed max-w-3xl mb-8">
+            <p className="text-lg text-text-secondary leading-relaxed max-w-3xl mb-8">
               {project.description}
             </p>
 
             <div className="flex flex-wrap gap-2">
               {project.tech.map(t => (
-                <span key={t} className="px-3 py-1.5 bg-white/[0.04] text-sm text-slate-300 rounded-lg border border-white/[0.06] hover:border-blue-500/30 hover:bg-white/[0.06] transition-all duration-200">
+                <span key={t} className="px-3 py-1.5 bg-white/[0.04] text-sm text-text-primary rounded-lg border border-white/[0.06] hover:border-accent/30 hover:bg-white/[0.06] transition-all duration-200">
                   {t}
                 </span>
               ))}
@@ -83,7 +84,7 @@ export default function ProjectDetail() {
                 {project.overview && (
                   <ScrollReveal>
                     <h2 className="text-lg font-bold text-white mb-4">项目概述</h2>
-                    <p className="text-slate-400 leading-relaxed">{project.overview}</p>
+                    <p className="text-text-secondary leading-relaxed">{project.overview}</p>
                   </ScrollReveal>
                 )}
                 {project.capabilities && (
@@ -92,8 +93,8 @@ export default function ProjectDetail() {
                     <div className="space-y-3">
                       {project.capabilities.map((c, i) => (
                         <div key={i} className="flex items-start gap-3 group">
-                          <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-blue-400 mt-2 shadow-[0_0_6px_rgba(96,165,250,0.4)] group-hover:bg-violet-400 transition-colors duration-300" />
-                          <span className="text-slate-400 leading-relaxed">{c}</span>
+                          <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-accent mt-2 shadow-accent/40 group-hover:bg-accent-bright transition-colors duration-300" />
+                          <span className="text-text-secondary leading-relaxed">{c}</span>
                         </div>
                       ))}
                     </div>
@@ -102,7 +103,7 @@ export default function ProjectDetail() {
                 {project.techNote && (
                   <ScrollReveal>
                     <h3 className="text-lg font-bold text-white mb-4">技术方案</h3>
-                    <p className="text-slate-500 text-sm leading-relaxed">{project.techNote}</p>
+                    <p className="text-text-tertiary text-sm leading-relaxed">{project.techNote}</p>
                   </ScrollReveal>
                 )}
               </div>
@@ -111,10 +112,10 @@ export default function ProjectDetail() {
               <div>
                 <ScrollReveal delay={0.1}>
                   <h3 className="text-lg font-bold text-white mb-5">技术栈</h3>
-                  <div className="bg-[#111827]/60 backdrop-blur-sm border border-white/[0.05] rounded-2xl p-6">
+                  <div className="bg-surface-2/60 backdrop-blur-sm border border-white/[0.05] rounded-2xl p-6">
                     <div className="flex flex-wrap gap-2">
                       {project.tech.map(t => (
-                        <span key={t} className="px-3 py-1.5 bg-white/[0.04] text-sm text-slate-300 rounded-lg border border-white/[0.06]">
+                        <span key={t} className="px-3 py-1.5 bg-white/[0.04] text-sm text-text-primary rounded-lg border border-white/[0.06]">
                           {t}
                         </span>
                       ))}
@@ -132,12 +133,12 @@ export default function ProjectDetail() {
         <section className="pb-12">
           <div className="max-w-7xl mx-auto px-6 lg:px-8">
             <ScrollReveal>
-              <div className="bg-gradient-to-r from-emerald-500/5 to-blue-500/5 border border-emerald-500/10 rounded-2xl p-6 sm:p-8">
+              <div className="bg-gradient-to-r from-success/5 to-accent/5 border border-success/10 rounded-2xl p-6 sm:p-8">
                 <div className="flex items-start gap-4">
                   <span className="text-2xl flex-shrink-0">🏆</span>
                   <div>
-                    <h3 className="text-sm font-bold text-emerald-400 uppercase tracking-wider mb-2">项目成效</h3>
-                    <p className="text-slate-300 leading-relaxed">{project.result}</p>
+                    <h3 className="text-sm font-bold text-success uppercase tracking-wider mb-2">项目成效</h3>
+                    <p className="text-text-primary leading-relaxed">{project.result}</p>
                   </div>
                 </div>
               </div>
@@ -153,10 +154,10 @@ export default function ProjectDetail() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {Object.values(data.allProjects).filter((p: any) => p.id !== id && p.real).slice(0, 4).map((p: any) => (
               <Link key={p.id} to={p.link}
-                className="group block bg-[#111827]/60 backdrop-blur-sm border border-white/[0.04] rounded-xl p-5 hover:border-blue-500/20 hover:-translate-y-1 hover:shadow-[0_8px_30px_rgba(99,102,241,0.1)] transition-all duration-300">
-                <h4 className="text-sm font-semibold text-white group-hover:text-blue-400 transition-colors duration-300">{p.title}</h4>
-                <p className="text-xs text-slate-500 mt-2 line-clamp-2">{p.description}</p>
-                <div className="flex items-center gap-1 mt-3 text-[10px] text-slate-600 group-hover:text-blue-400 transition-colors duration-300">
+                className="group block bg-surface-2/60 backdrop-blur-sm border border-white/[0.04] rounded-xl p-5 hover:border-accent/20 hover:-translate-y-1 hover:shadow-[0_8px_30px_rgba(245,158,11,0.1)] transition-all duration-300">
+                <h4 className="text-sm font-semibold text-white group-hover:text-accent transition-colors duration-300">{p.title}</h4>
+                <p className="text-xs text-text-tertiary mt-2 line-clamp-2">{p.description}</p>
+                <div className="flex items-center gap-1 mt-3 text-[10px] text-text-tertiary group-hover:text-accent transition-colors duration-300">
                   <span>查看详情</span>
                   <ExternalLink size={10} />
                 </div>
@@ -174,16 +175,16 @@ export default function ProjectDetail() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-50px' }}
             transition={{ duration: 0.6 }}
-            className="relative bg-gradient-to-br from-blue-600/[0.08] to-violet-600/[0.08] border border-blue-500/10 rounded-3xl p-10 sm:p-14 text-center overflow-hidden"
+            className="relative bg-gradient-to-br from-accent/5 to-success/5 border border-accent/10 rounded-3xl p-10 sm:p-14 text-center overflow-hidden"
           >
-            <div className="absolute -top-20 -right-20 w-48 h-48 rounded-full bg-blue-500/5 blur-[80px] pointer-events-none" />
-            <div className="absolute -bottom-16 -left-16 w-40 h-40 rounded-full bg-violet-500/5 blur-[80px] pointer-events-none" />
+            <div className="absolute -top-20 -right-20 w-48 h-48 rounded-full bg-accent/5 blur-[80px] pointer-events-none" />
+            <div className="absolute -bottom-16 -left-16 w-40 h-40 rounded-full bg-accent/5 blur-[80px] pointer-events-none" />
 
             <ScrollReveal>
               <h3 className="text-2xl font-bold text-white mb-3 relative z-10">需要类似的技术方案？</h3>
-              <p className="text-slate-400 mb-6 relative z-10">有类似需求？可以直接联系我，沟通具体方案。</p>
+              <p className="text-text-secondary mb-6 relative z-10">有类似需求？可以直接联系我，沟通具体方案。</p>
               <div className="flex flex-wrap justify-center gap-3 relative z-10">
-                <a href="tel:18389118642" className="btn-glow group inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-violet-600 text-white font-semibold rounded-xl hover:shadow-xl hover:shadow-blue-500/20 transition-all">
+                <a href="tel:18389118642" className="btn-glow group inline-flex items-center gap-2 px-6 py-3 bg-accent text-surface-0 font-semibold rounded-xl hover:bg-accent-bright hover:shadow-xl hover:shadow-accent/15 transition-all">
                   预约技术咨询
                   <ArrowLeft size={16} className="rotate-[135deg] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                 </a>
@@ -202,6 +203,7 @@ export default function ProjectDetail() {
 /* ── Enhanced Image Carousel ── */
 function ImageCarousel({ images, title }: { images: string[]; title: string }) {
   const [active, setActive] = useState(0)
+  const [lightboxOpen, setLightboxOpen] = useState(false)
 
   const prev = () => setActive(a => (a - 1 + images.length) % images.length)
   const next = () => setActive(a => (a + 1) % images.length)
@@ -209,7 +211,7 @@ function ImageCarousel({ images, title }: { images: string[]; title: string }) {
   return (
     <div>
       {/* Main image */}
-      <div className="relative bg-[#111827] rounded-2xl border border-white/[0.06] overflow-hidden mb-4 group">
+      <div className="relative bg-surface-2 rounded-2xl border border-white/[0.06] overflow-hidden mb-4 group">
         <AnimatePresence mode="wait">
           <motion.img
             key={active}
@@ -221,7 +223,8 @@ function ImageCarousel({ images, title }: { images: string[]; title: string }) {
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.98 }}
             transition={{ duration: 0.3 }}
-            className="w-full max-h-[520px] object-contain bg-[#0a0e1a]"
+            className="w-full max-h-[520px] object-contain bg-surface-0 cursor-zoom-in"
+            onClick={() => setLightboxOpen(true)}
           />
         </AnimatePresence>
 
@@ -256,7 +259,7 @@ function ImageCarousel({ images, title }: { images: string[]; title: string }) {
               onClick={() => setActive(i)}
               className={`flex-shrink-0 w-20 h-14 rounded-lg overflow-hidden border-2 transition-all duration-200 ${
                 i === active
-                  ? 'border-blue-500 opacity-100 shadow-[0_0_12px_rgba(59,130,246,0.3)]'
+                  ? 'border-accent opacity-100 shadow-[0_0_12px_rgba(245,158,11,0.3)]'
                   : 'border-transparent opacity-50 hover:opacity-80 hover:border-white/10'
               }`}
             >
@@ -265,6 +268,14 @@ function ImageCarousel({ images, title }: { images: string[]; title: string }) {
           ))}
         </div>
       )}
+
+      {/* Lightbox */}
+      <Lightbox
+        images={images}
+        initialIndex={active}
+        open={lightboxOpen}
+        onClose={() => setLightboxOpen(false)}
+      />
     </div>
   )
 }

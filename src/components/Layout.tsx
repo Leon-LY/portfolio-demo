@@ -3,6 +3,7 @@ import { Outlet, useLocation } from 'react-router-dom'
 import { AnimatePresence } from 'framer-motion'
 import Navbar from './Navbar'
 import Footer from './Footer'
+import { ErrorBoundary } from './ErrorBoundary'
 
 function ScrollToTop() {
   const { pathname } = useLocation()
@@ -15,9 +16,11 @@ export default function Layout() {
     <div className="min-h-screen text-[#e2e8f0]">
       <ScrollToTop />
       <Navbar />
-      <main>
+      <main id="main-content" role="main">
         <AnimatePresence mode="wait">
-          <Outlet />
+          <ErrorBoundary>
+            <Outlet />
+          </ErrorBoundary>
         </AnimatePresence>
       </main>
       <Footer />

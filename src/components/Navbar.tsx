@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
+import { personalInfo } from '../data/config'
 
 const links = [
-  { to: '/', label: '作品' },
-  { to: '/#services', label: '服务能力' },
-  { to: '/#contact', label: '技术合作' },
+  { to: '/', label: '案例' },
+  { to: '/#services', label: '服务' },
+  { to: '/about', label: '关于' },
+  { to: '/contact', label: '联系' },
 ]
 
 export default function Navbar() {
@@ -24,18 +26,22 @@ export default function Navbar() {
   const isHome = pathname === '/'
 
   return (
-    <nav className={`fixed top-0 inset-x-0 z-50 ${
-      scrolled
-        ? 'bg-[#0a0e1a]/85 backdrop-blur-2xl shadow-[0_1px_0_0_rgba(255,255,255,0.05),0_4px_24px_rgba(0,0,0,0.25)]'
-        : ''
-    }`}>
+    <nav
+      className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${
+        scrolled
+          ? 'bg-surface-0/90 backdrop-blur-xl shadow-[0_1px_0_0_rgba(255,255,255,0.04),0_4px_24px_rgba(0,0,0,0.3)]'
+          : ''
+      }`}
+      role="navigation"
+      aria-label="主导航"
+    >
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
         {/* Logo */}
-        <Link to="/" className="group flex items-center gap-0.5">
-          <span className="text-lg font-extrabold tracking-tight text-white transition-colors group-hover:text-blue-400">
-            Leon
+        <Link to="/" className="group flex items-center gap-1">
+          <span className="text-lg font-extrabold tracking-tight text-white transition-colors group-hover:text-accent">
+            {personalInfo.name}
           </span>
-          <span className="text-lg font-extrabold text-blue-500 group-hover:text-violet-400 transition-all duration-300">.</span>
+          <span className="w-1.5 h-1.5 rounded-full bg-accent group-hover:scale-125 transition-transform duration-300" />
         </Link>
 
         {/* Desktop nav */}
@@ -43,16 +49,18 @@ export default function Navbar() {
           {links.map((l) => {
             const active = isHome && (l.to === '/' || (l.to.startsWith('/#') && hash === l.to.replace('/', '')))
             return (
-              <a key={l.to} href={l.to}
+              <a
+                key={l.to}
+                href={l.to}
                 className={`relative px-3.5 py-2 text-[13px] font-medium rounded-lg transition-all duration-300 ${
-                  active ? 'text-white' : 'text-slate-500 hover:text-slate-200'
+                  active ? 'text-white' : 'text-text-tertiary hover:text-text-primary'
                 }`}
               >
                 {l.label}
                 {active && (
                   <motion.span
                     layoutId="nav-active"
-                    className="absolute inset-x-0 bottom-0 h-[2px] bg-gradient-to-r from-blue-500 to-violet-500 rounded-full"
+                    className="absolute inset-x-0 bottom-0 h-[2px] bg-accent rounded-full"
                     transition={{ type: 'spring', bounce: 0.2, duration: 0.5 }}
                   />
                 )}
@@ -64,13 +72,11 @@ export default function Navbar() {
         {/* Mobile toggle */}
         <button
           onClick={() => setOpen(!open)}
-          className="lg:hidden relative w-10 h-10 flex items-center justify-center rounded-lg text-slate-400 hover:text-white hover:bg-white/[0.04] transition-all"
+          className="lg:hidden relative w-10 h-10 flex items-center justify-center rounded-lg text-text-secondary hover:text-white hover:bg-white/[0.04] transition-all"
           aria-label={open ? '关闭菜单' : '打开菜单'}
+          aria-expanded={open}
         >
-          <motion.div
-            animate={open ? 'open' : 'closed'}
-            className="flex flex-col gap-1.5"
-          >
+          <motion.div animate={open ? 'open' : 'closed'} className="flex flex-col gap-1.5">
             <motion.span
               variants={{ closed: { rotate: 0, y: 0 }, open: { rotate: 45, y: 5.5 } }}
               className="block w-5 h-[1.5px] bg-current rounded-full"
@@ -95,7 +101,7 @@ export default function Navbar() {
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.25, ease: 'easeInOut' }}
-            className="lg:hidden bg-[#0a0e1a]/95 backdrop-blur-2xl border-b border-white/[0.06] overflow-hidden"
+            className="lg:hidden bg-surface-0/95 backdrop-blur-xl border-b border-white/[0.06] overflow-hidden"
           >
             <div className="px-4 py-4 space-y-1">
               {links.map((l, i) => (
@@ -108,9 +114,9 @@ export default function Navbar() {
                   <a
                     href={l.to}
                     className={`block px-4 py-3 rounded-xl text-sm font-medium transition-all ${
-                      (l.to === '/' && isHome)
-                        ? 'bg-gradient-to-r from-blue-500/10 to-violet-500/10 text-white border border-blue-500/20'
-                        : 'text-slate-400 hover:text-white hover:bg-white/[0.03]'
+                      l.to === '/' && isHome
+                        ? 'bg-accent/10 text-white border border-accent/20'
+                        : 'text-text-secondary hover:text-white hover:bg-white/[0.03]'
                     }`}
                   >
                     {l.label}

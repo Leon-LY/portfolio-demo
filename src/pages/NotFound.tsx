@@ -6,10 +6,10 @@ import PageTransition from '../components/PageTransition'
 export default function NotFound() {
   return (
     <PageTransition>
-      <div className="min-h-screen flex items-center justify-center bg-[#0a0e1a] relative overflow-hidden">
+      <div className="min-h-screen flex items-center justify-center bg-surface-0 relative overflow-hidden">
         {/* Background effects */}
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full bg-blue-500/5 blur-[140px] pointer-events-none" />
-        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 rounded-full bg-violet-500/5 blur-[120px] pointer-events-none" />
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full bg-accent/5 blur-[140px] pointer-events-none" />
+        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 rounded-full bg-accent/5 blur-[120px] pointer-events-none" />
 
         <div className="relative z-10 text-center px-6">
           {/* Glitch 404 */}
@@ -35,7 +35,7 @@ export default function NotFound() {
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">
               页面未找到
             </h1>
-            <p className="text-slate-500 mb-10 max-w-sm mx-auto leading-relaxed">
+            <p className="text-text-tertiary mb-10 max-w-sm mx-auto leading-relaxed">
               你访问的页面不存在或已被移除。请检查 URL 或返回首页。
             </p>
           </motion.div>
@@ -47,7 +47,7 @@ export default function NotFound() {
           >
             <Link
               to="/"
-              className="btn-glow group inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-violet-600 text-white text-sm font-semibold rounded-xl hover:from-blue-500 hover:to-violet-500 hover:shadow-xl hover:shadow-blue-500/25 transition-all duration-300"
+              className="btn-glow group inline-flex items-center gap-2 px-6 py-3 bg-accent text-surface-0 text-sm font-semibold rounded-xl hover:bg-accent-bright hover:shadow-xl hover:shadow-accent/20 transition-all duration-300"
             >
               <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
               返回首页

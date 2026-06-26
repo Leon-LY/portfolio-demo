@@ -3,7 +3,7 @@
  * Both frontend pages and admin panel use this as the single source of truth.
  */
 import { useState, useEffect, useCallback } from 'react'
-import { personalInfo, services, heroStats, typewriterTexts, workflowSteps, clients, faqItems } from './config'
+import { personalInfo, services, heroStats, workflowSteps, clients, faqItems } from './config'
 import { projectGroups as defaultGroups, allProjects as defaultProjects } from './projects'
 import { authHeaders } from './auth'
 import type { Project } from './projects'
@@ -12,13 +12,9 @@ export interface PortfolioData {
   personalInfo: typeof personalInfo
   services: typeof services
   heroStats: typeof heroStats
-  typewriterTexts: string[]
   workflowSteps: typeof workflowSteps
   clients: string[]
   faqItems: typeof faqItems
-  heroTitle: string
-  heroBio: string
-  heroCredibility: string
   projectGroups: typeof defaultGroups
   allProjects: Record<string, Project>
   _updatedAt?: string
@@ -29,13 +25,9 @@ function getDefaults(): PortfolioData {
     personalInfo: { ...personalInfo },
     services: services.map(s => ({ ...s })),
     heroStats: heroStats.map(s => ({ ...s })),
-    typewriterTexts: [...typewriterTexts],
     workflowSteps: workflowSteps.map(s => ({ ...s })),
     clients: [...clients],
     faqItems: faqItems.map(f => ({ ...f })),
-    heroTitle: (personalInfo as any).heroTitle || '',
-    heroBio: (personalInfo as any).heroBio || '',
-    heroCredibility: (personalInfo as any).heroCredibility || '',
     projectGroups: defaultGroups.map(g => ({ ...g, items: [...g.items] })),
     allProjects: JSON.parse(JSON.stringify(defaultProjects)),
   }

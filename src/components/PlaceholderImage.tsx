@@ -1,12 +1,12 @@
-/** Demo 页占位图 — 替代被墙的 Unsplash 外链 */
+/** Placeholder images — warm amber/monochrome gradients */
 
 const gradients = [
-  'from-blue-500/30 via-violet-500/20 to-purple-500/30',
-  'from-emerald-500/30 via-teal-500/20 to-cyan-500/30',
-  'from-amber-500/30 via-orange-500/20 to-rose-500/30',
-  'from-sky-500/30 via-indigo-500/20 to-blue-500/30',
-  'from-rose-500/30 via-pink-500/20 to-fuchsia-500/30',
-  'from-lime-500/30 via-green-500/20 to-emerald-500/30',
+  'from-amber-500/25 via-yellow-500/15 to-accent/25',
+  'from-emerald-500/25 via-teal-500/15 to-cyan-500/25',
+  'from-amber-500/25 via-orange-500/15 to-rose-500/25',
+  'from-accent/25 via-yellow-500/15 to-amber-500/25',
+  'from-rose-500/25 via-pink-500/15 to-fuchsia-500/25',
+  'from-lime-500/25 via-green-500/15 to-emerald-500/25',
 ]
 
 export function ImgPlaceholder({ aspect = '16/9', text = '', idx = 0, className = '' }: { aspect?: string; text?: string; idx?: number; className?: string }) {

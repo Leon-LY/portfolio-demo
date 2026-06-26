@@ -2,7 +2,7 @@
  * 后台管理数据层 — 通过服务器 API 读写，跨设备同步
  */
 
-import { personalInfo, services, heroStats, typewriterTexts, workflowSteps, clients, faqItems } from './config'
+import { personalInfo, services, heroStats, workflowSteps, clients, faqItems } from './config'
 import type { Project } from './projects'
 import { projectGroups, allProjects } from './projects'
 
@@ -52,10 +52,6 @@ export interface AdminData {
   personalInfo: typeof personalInfo
   services: typeof services
   heroStats: typeof heroStats
-  typewriterTexts: string[]
-  heroTitle: string
-  heroBio: string
-  heroCredibility: string
   workflowSteps: typeof workflowSteps
   clients: string[]
   faqItems: typeof faqItems
@@ -69,10 +65,6 @@ function getDefaults(): AdminData {
     personalInfo: { ...personalInfo },
     services: services.map(s => ({ ...s })),
     heroStats: heroStats.map(s => ({ ...s })),
-    typewriterTexts: [...typewriterTexts],
-    heroTitle: (personalInfo as any).heroTitle || '',
-    heroBio: (personalInfo as any).heroBio || '',
-    heroCredibility: (personalInfo as any).heroCredibility || '',
     workflowSteps: workflowSteps.map(s => ({ ...s })),
     clients: [...clients],
     faqItems: faqItems.map(f => ({ ...f })),
