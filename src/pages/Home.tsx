@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { Link } from 'react-router-dom'
-import { motion, AnimatePresence, useScroll, useTransform, useSpring, useInView } from 'framer-motion'
-import { ArrowUpRight, BarChart3, Building2, Layers, Brain, ChevronDown } from 'lucide-react'
+import { motion, AnimatePresence, useScroll, useSpring, useInView } from 'framer-motion'
+import { ArrowUpRight, BarChart3, Building2, Layers, Brain } from 'lucide-react'
 import PageTransition from '../components/PageTransition'
 import ScrollReveal from '../components/ScrollReveal'
 import Counter from '../components/Counter'
@@ -11,12 +11,8 @@ import TypewriterText from '../components/effects/TypewriterText'
 import TiltCard3D from '../components/effects/TiltCard3D'
 import GlowCard from '../components/effects/GlowCard'
 import DataTorrent from '../components/effects/DataTorrent'
-import ParticleField from '../components/effects/ParticleField'
-import Hero3D from '../components/effects/Hero3D'
 
-/* ═══════════════════════════════════════════════════════
-   Service icons + color mapping
-   ═══════════════════════════════════════════════════════ */
+/* ═══════ Icons ═══════ */
 const serviceIcons: Record<string, typeof BarChart3> = {
   '全栈应用开发': Layers,
   '数据可视化': BarChart3,
@@ -24,9 +20,7 @@ const serviceIcons: Record<string, typeof BarChart3> = {
   'AI 集成 & 架构': Brain,
 }
 
-/* ═══════════════════════════════════════════════════════
-   WordReveal
-   ═══════════════════════════════════════════════════════ */
+/* ═══════ WordReveal ═══════ */
 function WordReveal({ text, visible, className = '' }: { text: string; visible: boolean; className?: string }) {
   return (
     <span className={className}>
@@ -42,9 +36,7 @@ function WordReveal({ text, visible, className = '' }: { text: string; visible: 
   )
 }
 
-/* ═══════════════════════════════════════════════════════
-   Scroll Progress Bar
-   ═══════════════════════════════════════════════════════ */
+/* ═══════ Scroll Progress ═══════ */
 function ScrollProgress() {
   const { scrollYProgress } = useScroll()
   const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30 })
@@ -56,70 +48,7 @@ function ScrollProgress() {
   )
 }
 
-/* ═══════════════════════════════════════════════════════
-   Section Dot Indicator
-   ═══════════════════════════════════════════════════════ */
-const SECTION_IDS = ['hero', 'services', 'portfolio', 'process', 'clients', 'faq', 'cta']
-
-function SectionIndicator() {
-  const [active, setActive] = useState(0)
-  useEffect(() => {
-    const handle = () => {
-      const scrollPos = window.scrollY + window.innerHeight / 3
-      for (let i = SECTION_IDS.length - 1; i >= 0; i--) {
-        const el = document.getElementById(SECTION_IDS[i])
-        if (el && el.offsetTop <= scrollPos) { setActive(i); break }
-      }
-    }
-    window.addEventListener('scroll', handle, { passive: true })
-    return () => window.removeEventListener('scroll', handle)
-  }, [])
-  return (
-    <div className="hidden lg:flex fixed right-6 top-1/2 -translate-y-1/2 flex-col gap-3 z-40">
-      {SECTION_IDS.map((id, i) => (
-        <button key={id} onClick={() => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })}
-          className="group relative flex items-center justify-center w-2 h-2"
-          aria-label={`跳转到第${i + 1}屏`}>
-          <span className={`absolute rounded-full transition-all duration-300 ${
-            i === active ? 'w-2 h-2 bg-accent shadow-[0_0_8px_rgba(0,229,255,0.5)]' : 'w-1.5 h-1.5 bg-white/15 group-hover:bg-white/30'
-          }`} />
-        </button>
-      ))}
-    </div>
-  )
-}
-
-/* ═══════════════════════════════════════════════════════
-   Service Card
-   ═══════════════════════════════════════════════════════ */
-function ServiceCard({ s, i, Icon }: { s: { title: string; desc: string }; i: number; Icon: typeof BarChart3 }) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 40 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-80px' }}
-      transition={{ duration: 0.6, delay: i * 0.12, ease: [0.22, 0.1, 0.2, 1] }}>
-      <TiltCard3D tiltMax={6}>
-        <GlowCard glowColor="rgba(0, 229, 255, 0.06)" glowSize={280}
-          className="card-solid rounded-2xl p-7 border-white/[0.06] hover:border-accent/20 transition-all duration-300 group h-full cursor-default">
-          <div className="flex gap-5 items-start relative z-10">
-            <div className="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center shrink-0 group-hover:bg-accent/15 group-hover:scale-110 transition-all duration-300">
-              <Icon size={22} className="text-accent" />
-            </div>
-            <div>
-              <h3 className="text-lg font-bold text-text-primary mb-2 group-hover:text-accent transition-colors">{s.title}</h3>
-              <p className="text-sm text-text-secondary leading-relaxed">{s.desc}</p>
-            </div>
-          </div>
-        </GlowCard>
-      </TiltCard3D>
-    </motion.div>
-  )
-}
-
-/* ═══════════════════════════════════════════════════════
-   FAQ Item
-   ═══════════════════════════════════════════════════════ */
+/* ═══════ FAQ ═══════ */
 function FaqItem({ q, a, index }: { q: string; a: string; index: number }) {
   const [isOpen, setIsOpen] = useState(false)
   return (
@@ -149,17 +78,12 @@ function FaqItem({ q, a, index }: { q: string; a: string; index: number }) {
   )
 }
 
-/* ═══════════════════════════════════════════════════════
-   Process Step — individually animated timeline item
-   ═══════════════════════════════════════════════════════ */
+/* ═══════ Process Step ═══════ */
 function ProcessStep({ item, index, total }: { item: { step: string; title: string; desc: string }; index: number; total: number }) {
   const ref = useRef<HTMLDivElement>(null)
   const inv = useInView(ref, { once: false, margin: '-30% 0px -30% 0px' })
   useEffect(() => {
-    if (inv) {
-      const pct = ((index + 1) / total) * 100
-      document.documentElement.style.setProperty('--process-line-h', `${pct}%`)
-    }
+    if (inv) document.documentElement.style.setProperty('--process-line-h', `${((index + 1) / total) * 100}%`)
   }, [inv, index, total])
   return (
     <motion.div ref={ref}
@@ -181,58 +105,24 @@ function ProcessStep({ item, index, total }: { item: { step: string; title: stri
   )
 }
 
-/* ═══════════════════════════════════════════════════════
-   Client Marquee
-   ═══════════════════════════════════════════════════════ */
-function ClientMarquee({ clients }: { clients: string[] }) {
-  return (
-    <div className="overflow-hidden relative">
-      {/* Fade edges */}
-      <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-[#000] to-transparent z-10 pointer-events-none" />
-      <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-[#000] to-transparent z-10 pointer-events-none" />
-      <motion.div
-        className="flex gap-6 whitespace-nowrap"
-        animate={{ x: ['0%', '-50%'] }}
-        transition={{ duration: 30, repeat: Infinity, ease: 'linear' }}>
-        {[...clients, ...clients, ...clients, ...clients].map((name, i) => (
-          <span key={i}
-            className="text-sm text-text-secondary font-medium py-3 px-5 card-solid rounded-lg border-white/[0.04] inline-block">
-            {name}
-          </span>
-        ))}
-      </motion.div>
-    </div>
-  )
-}
-
-/* ═══════════════════════════════════════════════════════
-   HOME PAGE
-   ═══════════════════════════════════════════════════════ */
+/* ═══════ HOME PAGE ═══════ */
 export default function Home() {
   const { data } = usePortfolioData()
   const { personalInfo, services, workflowSteps, clients, faqItems, projectGroups, allProjects } = data
-  const { scrollYProgress } = useScroll()
-  const heroParallax = useTransform(scrollYProgress, [0, 0.3], [0, -80])
 
-  // ═══ DataTorrent — always play ═══
   const [showTorrent, setShowTorrent] = useState(true)
   const [heroVisible, setHeroVisible] = useState(false)
-
   const handleTorrentComplete = useCallback(() => {
     setHeroVisible(true)
-    setTimeout(() => setShowTorrent(false), 800)
+    setTimeout(() => setShowTorrent(false), 600)
   }, [])
 
   return (
     <PageTransition>
       <ScrollProgress />
-      <SectionIndicator />
-
-      {/* ═══════ GLOBAL PARTICLE FIELD ═══════ */}
-      <ParticleField />
 
       {/* ═══════ HERO ═══════ */}
-      <section id="hero" className="relative min-h-screen flex items-center overflow-hidden">
+      <section className="relative min-h-screen flex items-center overflow-hidden">
         {showTorrent && <DataTorrent onComplete={handleTorrentComplete} skipAnimation={false} />}
         {(!showTorrent || heroVisible) && (
           <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
@@ -247,7 +137,7 @@ export default function Home() {
               style={{ background: 'radial-gradient(ellipse at center, #00E5FF 0%, transparent 70%)', filter: 'blur(80px)' }} />
           </div>
         )}
-        <motion.div className="relative z-10 w-full max-w-7xl mx-auto px-6 lg:px-8" style={{ y: heroParallax }}>
+        <div className="relative z-10 w-full max-w-7xl mx-auto px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
             {/* Left */}
             <motion.div
@@ -290,15 +180,11 @@ export default function Home() {
                 {personalInfo.heroCredibility}
               </motion.p>
             </motion.div>
-            {/* Right: 3D Data Torus */}
-            <motion.div className="hidden lg:block"
-              animate={heroVisible ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
-              transition={{ duration: 1.4, delay: 0.3, ease: [0.22, 0.1, 0.2, 1] }}>
-              <Hero3D />
-            </motion.div>
+            {/* Right: empty for balance on large screens */}
+            <div className="hidden lg:block" />
           </div>
 
-          {/* ═══════ Metrics with Counter ═══════ */}
+          {/* Metrics */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={heroVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
@@ -322,42 +208,43 @@ export default function Home() {
               </motion.div>
             ))}
           </motion.div>
-        </motion.div>
-
-        {/* Scroll-down hint */}
-        <motion.div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10"
-          initial={{ opacity: 0 }} animate={heroVisible ? { opacity: 1 } : { opacity: 0 }}
-          transition={{ delay: 2 }}>
-          <motion.div animate={{ y: [0, 8, 0] }} transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-            className="w-6 h-10 rounded-full border border-white/10 flex items-start justify-center pt-2">
-            <ChevronDown size={12} className="text-white/30" />
-          </motion.div>
-        </motion.div>
+        </div>
       </section>
 
       {/* ═══════ SERVICES ═══════ */}
-      <section id="services" className="relative py-28 border-t border-white/[0.06]">
-        {/* Floating tech keywords */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-[0.025]" aria-hidden="true">
-          {['React', 'Vue', 'SpringBoot', 'Three.js', 'ECharts', 'Docker', 'PostgreSQL', 'Redis', 'TypeScript', 'Node.js',
-            'FastAPI', 'WebSocket', 'K8s', 'Prisma', 'GSAP', 'R3F'].map((kw, i) => (
-            <span key={kw} className="absolute text-[11px] font-mono text-accent whitespace-nowrap"
-              style={{
-                left: `${10 + ((i * 37) % 80)}%`,
-                top: `${5 + ((i * 23) % 90)}%`,
-                animation: `float ${6 + (i % 4)}s ease-in-out ${i * 0.7}s infinite`,
-              }}>{`<${kw} />`}</span>
-          ))}</div>
-        <div className="relative max-w-7xl mx-auto px-6 lg:px-8">
+      <section id="services" className="py-28 border-t border-white/[0.06]">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <ScrollReveal>
             <p className="text-xs font-mono text-accent uppercase tracking-widest mb-4">Capabilities</p>
             <h2 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-text-primary mb-6 tracking-tight">专注领域</h2>
             <div className="section-divider mb-14" />
           </ScrollReveal>
           <div className="grid md:grid-cols-2 gap-5">
-            {services.map((s, i) => (
-              <ServiceCard key={s.title} s={s} i={i} Icon={serviceIcons[s.title] || BarChart3} />
-            ))}
+            {services.map((s, i) => {
+              const Icon = serviceIcons[s.title] || BarChart3
+              return (
+                <motion.div key={s.title}
+                  initial={{ opacity: 0, y: 40 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: '-80px' }}
+                  transition={{ duration: 0.6, delay: i * 0.12, ease: [0.22, 0.1, 0.2, 1] }}>
+                  <TiltCard3D tiltMax={6}>
+                    <GlowCard glowColor="rgba(0, 229, 255, 0.06)" glowSize={280}
+                      className="card-solid rounded-2xl p-7 border-white/[0.06] hover:border-accent/20 transition-all duration-300 group h-full cursor-default">
+                      <div className="flex gap-5 items-start relative z-10">
+                        <div className="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center shrink-0 group-hover:bg-accent/15 group-hover:scale-110 transition-all duration-300">
+                          <Icon size={22} className="text-accent" />
+                        </div>
+                        <div>
+                          <h3 className="text-lg font-bold text-text-primary mb-2 group-hover:text-accent transition-colors">{s.title}</h3>
+                          <p className="text-sm text-text-secondary leading-relaxed">{s.desc}</p>
+                        </div>
+                      </div>
+                    </GlowCard>
+                  </TiltCard3D>
+                </motion.div>
+              )
+            })}
           </div>
         </div>
       </section>
@@ -430,7 +317,7 @@ export default function Home() {
       </section>
 
       {/* ═══════ PROCESS ═══════ */}
-      <section id="process" className="py-28 border-t border-white/[0.06]">
+      <section className="py-28 border-t border-white/[0.06]">
         <div className="max-w-4xl mx-auto px-6 lg:px-8">
           <ScrollReveal>
             <p className="text-xs font-mono text-accent uppercase tracking-widest mb-4">Process</p>
@@ -439,7 +326,6 @@ export default function Home() {
           </ScrollReveal>
           <div className="relative">
             <div className="absolute left-[19px] top-2 bottom-2 w-px bg-white/[0.04]" />
-            {/* Animated fill line — grows as you scroll */}
             <div className="absolute left-[19px] top-2 w-px bg-gradient-to-b from-accent/60 to-accent/20"
               style={{ height: 'var(--process-line-h, 0%)' }} />
             <div className="space-y-16">
@@ -452,15 +338,26 @@ export default function Home() {
       </section>
 
       {/* ═══════ CLIENTS ═══════ */}
-      <section id="clients" className="py-28 border-t border-white/[0.06]">
+      <section className="py-28 border-t border-white/[0.06]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <p className="text-xs font-mono text-accent uppercase tracking-widest mb-8 text-center">Trusted By</p>
-          <ClientMarquee clients={clients} />
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+            {clients.map((name, i) => (
+              <motion.div key={name}
+                initial={{ opacity: 0, y: 12 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.3, delay: i * 0.04 }}
+                className="card-solid rounded-xl p-5 text-center border-white/[0.06] hover:border-accent/20 transition-all duration-300">
+                <p className="text-sm text-text-secondary font-medium">{name}</p>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </section>
 
       {/* ═══════ FAQ ═══════ */}
-      <section id="faq" className="py-28 border-t border-white/[0.06]">
+      <section className="py-28 border-t border-white/[0.06]">
         <div className="max-w-5xl mx-auto px-6 lg:px-8">
           <ScrollReveal>
             <p className="text-xs font-mono text-accent uppercase tracking-widest mb-4">FAQ</p>
@@ -474,7 +371,7 @@ export default function Home() {
       </section>
 
       {/* ═══════ CTA ═══════ */}
-      <section id="cta" className="pb-28">
+      <section className="pb-28">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -482,7 +379,6 @@ export default function Home() {
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
             className="relative card-glass rounded-3xl p-14 sm:p-20 text-center overflow-hidden border-white/[0.06] group">
-            {/* Glow on hover */}
             <div className="absolute inset-0 bg-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none rounded-3xl" />
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-40 bg-accent/5 blur-[140px] pointer-events-none" />
             <div className="max-w-xl mx-auto relative z-10">

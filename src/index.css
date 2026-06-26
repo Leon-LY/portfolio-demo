@@ -39,19 +39,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
   background-color: var(--surface-0);
-  background-image:
-    radial-gradient(ellipse 80% 60% at 30% 20%, rgba(0, 229, 255, 0.06) 0%, transparent 50%),
-    radial-gradient(ellipse 60% 80% at 70% 60%, rgba(124, 58, 237, 0.04) 0%, transparent 50%),
-    radial-gradient(ellipse 50% 40% at 50% 90%, rgba(0, 184, 212, 0.03) 0%, transparent 50%);
-  background-size: 200% 200%;
-  animation: bg-drift 20s ease-in-out infinite alternate;
-}
-
-@keyframes bg-drift {
-  0% { background-position: 0% 0%; }
-  33% { background-position: 60% 40%; }
-  66% { background-position: 30% 80%; }
-  100% { background-position: 0% 0%; }
 }
 
 /* ── Hide default cursor (desktop only) ── */
