@@ -337,7 +337,6 @@ export default function Home() {
 
       {/* ═══════ SERVICES ═══════ */}
       <section id="services" className="relative py-28 border-t border-white/[0.06]">
-        <div className="absolute inset-0 bg-accent/[0.015]" />
         {/* Floating tech keywords */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-[0.025]" aria-hidden="true">
           {['React', 'Vue', 'SpringBoot', 'Three.js', 'ECharts', 'Docker', 'PostgreSQL', 'Redis', 'TypeScript', 'Node.js',

@@ -1,86 +1,78 @@
-import { useRef, useMemo } from 'react'
+import { useRef, useMemo, Suspense } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 
-/**
- * Rotating data torus — wireframe + particle orbit.
- * A dense tech visualization: nested rings + orbiting dots + core glow.
- */
-function DataRing({ radius, tubeR, color, segments }: { radius: number; tubeR: number; color: string; segments: number }) {
+function TorusRing({ radius, tube, color, opacity, rotationSpeed, tilt }: {
+  radius: number; tube: number; color: string; opacity: number; rotationSpeed: number; tilt: [number, number, number]
+}) {
   const ref = useRef<THREE.Mesh>(null)
-  const geom = useMemo(() => new THREE.TorusGeometry(radius, tubeR, 16, segments), [radius, tubeR, segments])
+  const geom = useMemo(() => new THREE.TorusGeometry(radius, tube, 24, 100), [radius, tube])
+  useFrame((_, delta) => {
+    if (ref.current) ref.current.rotation.z += delta * rotationSpeed
+  })
   return (
-    <mesh ref={ref} geometry={geom} rotation={[Math.PI / 2.5, 0, 0]}>
-      <meshBasicMaterial color={color} wireframe transparent opacity={0.15} />
+    <mesh ref={ref} geometry={geom} rotation={tilt}>
+      <meshBasicMaterial color={color} wireframe transparent opacity={opacity} />
     </mesh>
   )
 }
 
 function OrbitingDots({ count, radius, color }: { count: number; radius: number; color: string }) {
-  const groupRef = useRef<THREE.Group>(null)
+  const ref = useRef<THREE.Group>(null)
+  const geom = useMemo(() => new THREE.SphereGeometry(0.035, 6, 6), [])
   const dots = useMemo(() => {
-    const positions: number[] = []
+    const arr: number[] = []
     for (let i = 0; i < count; i++) {
-      const angle = (i / count) * Math.PI * 2
-      positions.push(Math.cos(angle) * radius, 0, Math.sin(angle) * radius)
+      const a = (i / count) * Math.PI * 2
+      arr.push(Math.cos(a) * radius, 0, Math.sin(a) * radius)
     }
-    return positions
+    return arr
   }, [count, radius])
 
-  const dotGeom = useMemo(() => new THREE.SphereGeometry(0.04, 6, 6), [])
+  useFrame((_, delta) => {
+    if (ref.current) ref.current.rotation.z += delta * 0.5
+  })
 
   return (
-    <group ref={groupRef}>
+    <group ref={ref}>
       {Array.from({ length: count }, (_, i) => (
-        <mesh key={i} geometry={dotGeom} position={[dots[i * 3], dots[i * 3 + 1], dots[i * 3 + 2]]}>
-          <meshBasicMaterial color={color} transparent opacity={0.8} />
+        <mesh key={i} geometry={geom} position={[dots[i * 3], dots[i * 3 + 1], dots[i * 3 + 2]]}>
+          <meshBasicMaterial color={color} transparent opacity={0.7} />
         </mesh>
       ))}
     </group>
   )
 }
 
-function SceneContent() {
-  const mainGroup = useRef<THREE.Group>(null)
-  const ring1Ref = useRef<THREE.Group>(null)
-  const ring2Ref = useRef<THREE.Group>(null)
-  const ring3Ref = useRef<THREE.Group>(null)
-
-  useFrame((state) => {
-    const t = state.clock.elapsedTime
-    if (mainGroup.current) {
-      mainGroup.current.rotation.y = t * 0.15
-      mainGroup.current.rotation.x = Math.sin(t * 0.2) * 0.1
+function Scene() {
+  const groupRef = useRef<THREE.Group>(null)
+  useFrame((_, delta) => {
+    if (groupRef.current) {
+      groupRef.current.rotation.y += delta * 0.12
+      groupRef.current.rotation.x = Math.sin(Date.now() * 0.0003) * 0.12
     }
-    if (ring1Ref.current) ring1Ref.current.rotation.z = t * speedVals[0]
-    if (ring2Ref.current) ring2Ref.current.rotation.x = t * speedVals[1]
-    if (ring3Ref.current) ring3Ref.current.rotation.y = t * speedVals[2]
   })
 
-  const speedVals = [0.4, -0.3, 0.25]
-  const radiusVals = [0.5, 0.8, 1.05]
-  const tubeVals = [0.02, 0.015, 0.02]
-
   return (
-    <group ref={mainGroup}>
-      {/* Nested torus rings */}
-      {radiusVals.map((r, i) => (
-        <group key={i} ref={[ring1Ref, ring2Ref, ring3Ref][i]}>
-          <DataRing radius={r} tubeR={tubeVals[i]} color={i === 0 ? '#00E5FF' : i === 1 ? '#7C3AED' : '#00B8D4'} segments={80 + i * 20} />
-        </group>
-      ))}
-      {/* Orbiting dots on each ring */}
-      <group ref={ring1Ref}><OrbitingDots count={40} radius={0.5} color="#00E5FF" /></group>
-      <group ref={ring2Ref}><OrbitingDots count={30} radius={0.8} color="#7C3AED" /></group>
-      <group ref={ring3Ref}><OrbitingDots count={50} radius={1.05} color="#00B8D4" /></group>
-      {/* Core glow sphere */}
+    <group ref={groupRef}>
+      <TorusRing radius={1.2} tube={0.015} color="#00E5FF" opacity={0.12} rotationSpeed={0.2} tilt={[1.2, 0, 0]} />
+      <TorusRing radius={0.85} tube={0.02} color="#7C3AED" opacity={0.1} rotationSpeed={-0.25} tilt={[0, 0.8, 0]} />
+      <TorusRing radius={0.5} tube={0.025} color="#00E5FF" opacity={0.2} rotationSpeed={0.35} tilt={[0.6, 0, 0]} />
+      <OrbitingDots count={60} radius={1.2} color="#00E5FF" />
+      <OrbitingDots count={40} radius={0.85} color="#7C3AED" />
+      <OrbitingDots count={30} radius={0.5} color="#00E5FF" />
+      {/* Core */}
       <mesh>
-        <sphereGeometry args={[0.08, 32, 32]} />
-        <meshBasicMaterial color="#00E5FF" transparent opacity={0.9} />
+        <sphereGeometry args={[0.06, 32, 32]} />
+        <meshBasicMaterial color="#00E5FF" />
       </mesh>
       <mesh>
-        <sphereGeometry args={[0.25, 32, 32]} />
-        <meshBasicMaterial color="#00E5FF" transparent opacity={0.06} />
+        <sphereGeometry args={[0.2, 32, 32]} />
+        <meshBasicMaterial color="#00E5FF" transparent opacity={0.08} />
+      </mesh>
+      <mesh>
+        <sphereGeometry args={[0.4, 32, 32]} />
+        <meshBasicMaterial color="#00E5FF" transparent opacity={0.03} />
       </mesh>
     </group>
   )
@@ -90,12 +82,14 @@ export default function Hero3D() {
   return (
     <div className="w-full h-full min-h-[320px] lg:min-h-[420px]">
       <Canvas
-        camera={{ position: [0, 0, 3.5], fov: 45 }}
+        camera={{ position: [0, 0, 3.2], fov: 50 }}
         dpr={[1, 1.5]}
         gl={{ antialias: true, alpha: true }}
         style={{ background: 'transparent' }}
       >
-        <SceneContent />
+        <Suspense fallback={null}>
+          <Scene />
+        </Suspense>
       </Canvas>
     </div>
   )
