@@ -87,7 +87,7 @@ export default function Navbar() {
               <a
                 key={l.to}
                 href={l.to}
-                className="inline-flex items-center justify-center px-3 py-2 font-bold uppercase transition-all duration-250"
+                className="inline-flex items-center justify-center px-3 py-2 font-vt323 uppercase tracking-[0.18em] transition-all duration-250"
                 style={{
                   fontSize: '0.66rem',
                   letterSpacing: '0.18em',
@@ -108,7 +108,7 @@ export default function Navbar() {
         <div className="hidden sm:block">
           <a
             href="/contact"
-            className="inline-flex items-center justify-center gap-2 px-4 py-3 font-bold uppercase transition-all duration-280"
+            className="inline-flex items-center justify-center gap-2 px-4 py-3 font-vt323 uppercase tracking-[0.20em] transition-all duration-280"
             style={{
               fontSize: '0.66rem',
               letterSpacing: '0.20em',

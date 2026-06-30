@@ -115,7 +115,7 @@ function ProcessStep({
         </span>
       </div>
       <div className="flex-1 pt-1">
-        <h3 className="font-display text-base font-extrabold text-text-primary mb-2 uppercase tracking-tight">{item.title}</h3>
+        <h3 className="font-vt323 text-base text-text-primary mb-2 uppercase tracking-wider">{item.title}</h3>
         <p className="text-sm text-text-secondary leading-relaxed" style={{ fontFamily: 'Space Mono, monospace' }}>{item.desc}</p>
       </div>
     </motion.div>
@@ -155,7 +155,7 @@ function FaqRevealItem({ item, index, total, scrollProgress }: {
         onClick={() => setIsOpen(!isOpen)}
         className="w-full flex items-center justify-between p-4 text-left hover:bg-white/[0.02] transition-colors cursor-pointer"
       >
-        <span className="text-sm font-semibold text-text-primary pr-4">{item.q}</span>
+        <span className="text-sm font-vt323 tracking-wider text-text-primary pr-4">{item.q}</span>
         <motion.span
           animate={{ rotate: isOpen ? 45 : 0 }}
           transition={{ type: 'spring', stiffness: 200, damping: 20 }}
@@ -265,7 +265,7 @@ export default function Home() {
 
               {/* Hero title — VT323, massive, text-glow */}
               <h1
-                className="font-vt323 uppercase tracking-[-0.035em] mb-6"
+                className="font-vt323 uppercase tracking-[-0.035em] mb-6 text-glow-pulse"
                 style={{
                   fontSize: 'clamp(4.5rem, 9vw, 8.4rem)',
                   lineHeight: 0.86,
@@ -573,7 +573,8 @@ export default function Home() {
               return (
                 <div key={group.label}>
                   <ScrollReveal>
-                    <h3 className="text-sm font-bold text-text-primary mb-8 flex items-center gap-3 font-display uppercase tracking-tight">
+                    <h3 className="font-vt323 text-sm tracking-[0.18em] mb-8 flex items-center gap-3 uppercase"
+                      style={{ color: '#35DDF2', textShadow: '0 0 14px rgba(53,221,242,0.35)' }}>
                       <span className="w-1.5 h-5 rounded-full" style={{ background: '#35DDF2' }} />
                       {group.label}
                     </h3>
