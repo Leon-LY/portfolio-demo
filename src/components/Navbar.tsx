@@ -38,7 +38,7 @@ export default function Navbar() {
             repeating-linear-gradient(45deg, rgba(248,243,255,0.02) 0, rgba(248,243,255,0.02) 1px, transparent 1px, transparent 8px),
             rgba(5,0,16,0.84)
           `,
-          backdropFilter: 'blur(22px)',
+          backdropFilter: 'blur(28px)',
           boxShadow: scrolled
             ? '0 22px 70px rgba(0,0,0,0.42), inset 0 1px 0 rgba(248,243,255,0.05)'
             : '0 8px 32px rgba(0,0,0,0.28), inset 0 1px 0 rgba(248,243,255,0.04)',

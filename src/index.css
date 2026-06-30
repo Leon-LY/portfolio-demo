@@ -63,16 +63,18 @@ html {
 body {
   margin: 0;
   background:
-    radial-gradient(circle at 72% 12%, rgba(53, 221, 242, 0.075), transparent 34%),
-    radial-gradient(circle at 18% 18%, rgba(244, 91, 168, 0.065), transparent 34%),
-    radial-gradient(circle at 52% 86%, rgba(232, 184, 93, 0.045), transparent 32%),
-    radial-gradient(circle at 40% 50%, rgba(94, 140, 255, 0.04), transparent 38%),
-    radial-gradient(circle at 85% 65%, rgba(164, 119, 255, 0.04), transparent 36%),
-    linear-gradient(180deg, var(--bg-cosmic), var(--bg-deep));
+    radial-gradient(circle at 72% 12%, rgba(53,221,242,0.07), transparent 36%),
+    radial-gradient(circle at 18% 18%, rgba(244,91,168,0.058), transparent 36%),
+    radial-gradient(circle at 52% 86%, rgba(232,184,93,0.06), transparent 34%),
+    radial-gradient(circle at 8% 50%, rgba(232,184,93,0.025), transparent 30%),
+    radial-gradient(circle at 40% 50%, rgba(94,140,255,0.035), transparent 40%),
+    radial-gradient(circle at 85% 65%, rgba(164,119,255,0.035), transparent 38%),
+    linear-gradient(180deg, #0a0618, var(--bg-deep));
   color: var(--text-primary);
   font-family: 'Space Mono', 'JetBrains Mono', monospace;
   overflow-x: hidden;
   min-height: 100vh;
+  line-height: 1.78;
   -webkit-font-smoothing: antialiased;
   text-rendering: geometricPrecision;
 }
@@ -136,7 +138,7 @@ body {
   }
 
   /* ═══════════════════════════════════════════════════════
-     CARD SYSTEM (5 tiers, all with grid texture + top highlight)
+     CARD SYSTEM (5 tiers — frosted glass + depth)
      ═══════════════════════════════════════════════════════ */
 
   /* Base grid texture — shared by all cards */
@@ -147,6 +149,7 @@ body {
   .card-glow {
     position: relative;
     overflow: hidden;
+    border-radius: var(--radius-lg);
   }
   .card-solid::before,
   .card-premium::before,
@@ -159,10 +162,10 @@ body {
     pointer-events: none;
     border-radius: inherit;
     background:
-      linear-gradient(rgba(248,243,255,0.025) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(248,243,255,0.02) 1px, transparent 1px);
+      linear-gradient(rgba(248,243,255,0.022) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(248,243,255,0.016) 1px, transparent 1px);
     background-size: 34px 34px;
-    opacity: 0.35;
+    opacity: 0.3;
     z-index: 1;
   }
   /* Ensure card content sits above grid */
@@ -175,93 +178,102 @@ body {
     z-index: 2;
   }
 
-  /* Tier 1: Solid */
+  /* Tier 1: Solid — subtle glass, everyday cards */
   .card-solid {
-    background: rgba(8, 5, 26, 0.68);
-    backdrop-filter: blur(16px);
-    border: 1px solid rgba(248, 243, 255, 0.08);
-    border-radius: var(--radius-lg);
+    background: linear-gradient(180deg, rgba(248,243,255,0.04), rgba(248,243,255,0.012));
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(248, 243, 255, 0.06);
     box-shadow:
-      0 4px 24px rgba(0, 0, 0, 0.25),
-      inset 0 1px 0 rgba(248, 243, 255, 0.04);
-    transition: all 0.35s cubic-bezier(0.22, 0.1, 0.2, 1);
+      0 1px 0 rgba(248,243,255,0.04) inset,
+      0 4px 20px rgba(0,0,0,0.18);
+    transition: all 0.4s cubic-bezier(0.22, 0.1, 0.2, 1);
   }
   .card-solid:hover {
-    border-color: rgba(53, 221, 242, 0.2);
+    border-color: rgba(53,221,242,0.16);
     box-shadow:
-      0 8px 32px rgba(0, 0, 0, 0.35),
-      inset 0 1px 0 rgba(248, 243, 255, 0.06);
+      0 1px 0 rgba(248,243,255,0.06) inset,
+      0 8px 28px rgba(0,0,0,0.28),
+      0 0 28px rgba(53,221,242,0.04);
     transform: translateY(-2px);
   }
 
-  /* Tier 2: Premium */
+  /* Tier 2: Premium — deeper glass, featured cards */
   .card-premium {
-    background: linear-gradient(180deg, rgba(248,243,255,0.045), rgba(248,243,255,0.01));
-    backdrop-filter: blur(40px);
-    border: 1px solid rgba(248, 243, 255, 0.07);
-    border-radius: var(--radius-lg);
+    background: linear-gradient(180deg, rgba(248,243,255,0.05), rgba(248,243,255,0.014));
+    backdrop-filter: blur(32px);
+    border: 1px solid rgba(248, 243, 255, 0.055);
     box-shadow:
-      0 8px 48px rgba(0, 0, 0, 0.35),
-      inset 0 1px 0 rgba(248, 243, 255, 0.05);
+      0 1px 0 rgba(248,243,255,0.05) inset,
+      0 8px 40px rgba(0,0,0,0.28);
     transition: all 0.4s cubic-bezier(0.22, 0.1, 0.2, 1);
   }
   .card-premium:hover {
-    border-color: rgba(53, 221, 242, 0.25);
+    border-color: rgba(53,221,242,0.2);
     box-shadow:
-      0 16px 56px rgba(0, 0, 0, 0.4),
-      0 0 40px rgba(53, 221, 242, 0.08),
-      inset 0 1px 0 rgba(248, 243, 255, 0.07);
+      0 1px 0 rgba(248,243,255,0.07) inset,
+      0 16px 48px rgba(0,0,0,0.36),
+      0 0 36px rgba(53,221,242,0.06),
+      0 0 60px rgba(232,184,93,0.03);
     transform: translateY(-3px);
   }
 
-  /* Tier 3: Glass */
+  /* Tier 3: Glass — airy, high-blur */
   .card-glass {
-    background: rgba(16, 10, 36, 0.55);
-    backdrop-filter: blur(48px);
-    border: 1px solid rgba(248, 243, 255, 0.07);
-    border-radius: var(--radius-xl);
+    background: linear-gradient(180deg, rgba(248,243,255,0.045), rgba(248,243,255,0.008));
+    backdrop-filter: blur(40px);
+    border: 1px solid rgba(248, 243, 255, 0.05);
     box-shadow:
-      0 8px 48px rgba(0, 0, 0, 0.35),
-      inset 0 1px 0 rgba(248, 243, 255, 0.05);
+      0 1px 0 rgba(248,243,255,0.05) inset,
+      0 8px 40px rgba(0,0,0,0.28);
     transition: all 0.4s cubic-bezier(0.22, 0.1, 0.2, 1);
   }
   .card-glass:hover {
-    background: rgba(23, 16, 50, 0.62);
-    border-color: rgba(53, 221, 242, 0.2);
+    background: linear-gradient(180deg, rgba(248,243,255,0.06), rgba(248,243,255,0.014));
+    border-color: rgba(53,221,242,0.16);
     box-shadow:
-      0 16px 56px rgba(0, 0, 0, 0.45),
-      0 0 48px rgba(53, 221, 242, 0.1),
-      inset 0 1px 0 rgba(248, 243, 255, 0.07);
+      0 1px 0 rgba(248,243,255,0.06) inset,
+      0 16px 48px rgba(0,0,0,0.4),
+      0 0 40px rgba(53,221,242,0.08);
     transform: translateY(-3px);
   }
 
-  /* Tier 4: Float */
+  /* Tier 4: Float — deepest depth, heavy blur */
   .card-float {
-    background: rgba(8, 5, 26, 0.72);
-    backdrop-filter: blur(56px);
-    border: 1px solid rgba(248, 243, 255, 0.06);
-    border-radius: var(--radius-lg);
+    background: linear-gradient(180deg, rgba(248,243,255,0.05), rgba(248,243,255,0.01));
+    backdrop-filter: blur(48px);
+    border: 1px solid rgba(248, 243, 255, 0.05);
     box-shadow:
-      0 16px 64px rgba(0, 0, 0, 0.5),
-      inset 0 1px 0 rgba(248, 243, 255, 0.04);
+      0 1px 0 rgba(248,243,255,0.04) inset,
+      0 16px 56px rgba(0,0,0,0.4);
     transition: all 0.4s cubic-bezier(0.22, 0.1, 0.2, 1);
   }
 
-  /* Tier 5: Glow */
+  /* Tier 5: Glow — subtle, glows on hover */
   .card-glow {
-    background: rgba(8, 5, 26, 0.6);
-    backdrop-filter: blur(20px);
-    border: 1px solid rgba(248, 243, 255, 0.06);
-    border-radius: var(--radius-lg);
-    box-shadow: inset 0 1px 0 rgba(248, 243, 255, 0.04);
+    background: linear-gradient(180deg, rgba(248,243,255,0.038), rgba(248,243,255,0.01));
+    backdrop-filter: blur(24px);
+    border: 1px solid rgba(248, 243, 255, 0.05);
+    box-shadow:
+      0 1px 0 rgba(248,243,255,0.03) inset,
+      0 4px 20px rgba(0,0,0,0.16);
     transition: all 0.4s cubic-bezier(0.22, 0.1, 0.2, 1);
   }
   .card-glow:hover {
-    border-color: var(--cyan);
+    border-color: rgba(53,221,242,0.18);
     box-shadow:
-      0 0 28px rgba(53, 221, 242, 0.18),
-      0 0 56px rgba(53, 221, 242, 0.06),
-      inset 0 1px 0 rgba(248, 243, 255, 0.06);
+      0 1px 0 rgba(248,243,255,0.06) inset,
+      0 8px 28px rgba(0,0,0,0.28),
+      0 0 36px rgba(53,221,242,0.12),
+      0 0 64px rgba(232,184,93,0.04);
+    transform: translateY(-2px);
+  }
+  .card-float:hover {
+    border-color: rgba(53,221,242,0.16);
+    box-shadow:
+      0 1px 0 rgba(248,243,255,0.06) inset,
+      0 20px 64px rgba(0,0,0,0.48),
+      0 0 40px rgba(53,221,242,0.06);
+    transform: translateY(-4px);
   }
 
   /* ═══════════════════════════════════════════════════════

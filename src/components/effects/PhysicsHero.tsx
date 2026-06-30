@@ -388,13 +388,13 @@ export default function PhysicsHero() {
           drawBlock(ctx, body.position.x, body.position.y, body.angle, b.size || BLOCK_SIZE, b.color, alpha)
         }
 
-        // 4) Gradient mask — lighter at top (hero visible), darker at bottom (subtle)
+        // 4) Gradient mask — lighter at top (hero visible), darker at bottom (subtle, warm)
         const maskGrad = ctx.createLinearGradient(0, 0, 0, pageH)
         maskGrad.addColorStop(0, 'rgba(2,3,10,0.0)')       // Hero: no mask
-        maskGrad.addColorStop(0.25, 'rgba(2,3,10,0.02)')   // Near hero: very light
-        maskGrad.addColorStop(0.50, 'rgba(2,3,10,0.06)')   // Middle: medium
-        maskGrad.addColorStop(0.75, 'rgba(2,3,10,0.10)')   // Lower: darker
-        maskGrad.addColorStop(1, 'rgba(2,3,10,0.13)')      // Bottom: darkest
+        maskGrad.addColorStop(0.25, 'rgba(6,4,10,0.02)')   // Near hero: very light
+        maskGrad.addColorStop(0.50, 'rgba(8,5,10,0.06)')   // Middle: medium
+        maskGrad.addColorStop(0.75, 'rgba(10,6,10,0.10)')  // Lower: darker
+        maskGrad.addColorStop(1, 'rgba(12,8,10,0.13)')     // Bottom: darkest (warm undertone)
         ctx.fillStyle = maskGrad
         ctx.fillRect(0, 0, vw, pageH)
 

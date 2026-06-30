@@ -114,7 +114,7 @@ export default function Credibility() {
   }, [])
 
   return (
-    <section ref={sectionRef} id="credibility" data-section-physics className="py-24 border-t border-white/[0.06]">
+    <section ref={sectionRef} id="credibility" data-section-physics className="py-32 border-t border-white/[0.05]">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <ScrollReveal>
           <div className="inline-flex items-center gap-2.5 mb-5 px-3 py-1.5 clip-notch"

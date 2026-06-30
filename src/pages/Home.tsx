@@ -445,7 +445,7 @@ export default function Home() {
       {/* ═══════════════════════════════════════════════════
           SERVICES — 3-col rail + info cards
           ═══════════════════════════════════════════════════ */}
-      <section id="services" data-section-physics className="section-bg-pink relative py-28 border-t" style={{ borderColor: 'rgba(244,91,168,0.12)' }}>
+      <section id="services" data-section-physics className="section-bg-pink relative py-32 border-t" style={{ borderColor: 'rgba(244,91,168,0.10)' }}>
         <div className="relative z-10 max-w-[90rem] mx-auto px-6 lg:px-12">
           <ScrollReveal>
             <div className="inline-flex items-center gap-2.5 mb-5 px-3 py-1.5 clip-notch"
@@ -551,7 +551,7 @@ export default function Home() {
       {/* ═══════════════════════════════════════════════════
           PROJECTS — 4-col cards
           ═══════════════════════════════════════════════════ */}
-      <section id="portfolio" data-section-physics className="section-bg-cyan relative py-28 border-t" style={{ borderColor: 'rgba(53,221,242,0.12)' }}>
+      <section id="portfolio" data-section-physics className="section-bg-cyan relative py-32 border-t" style={{ borderColor: 'rgba(53,221,242,0.10)' }}>
         <div className="relative z-10 max-w-[90rem] mx-auto px-6 lg:px-12">
           <ScrollReveal>
             <div className="inline-flex items-center gap-2.5 mb-5 px-3 py-1.5 clip-notch"
@@ -667,7 +667,7 @@ export default function Home() {
       {/* ═══════════════════════════════════════════════════
           PROCESS — alternating color cards
           ═══════════════════════════════════════════════════ */}
-      <section data-section-physics className="section-bg-gold relative py-28 border-t" style={{ borderColor: 'rgba(232,184,93,0.12)' }}>
+      <section data-section-physics className="section-bg-gold relative py-32 border-t" style={{ borderColor: 'rgba(232,184,93,0.10)' }}>
         <div className="relative z-10 max-w-5xl mx-auto px-6 lg:px-12">
           <ScrollReveal>
             <div className="inline-flex items-center gap-2.5 mb-5 px-3 py-1.5 clip-notch"
@@ -705,7 +705,7 @@ export default function Home() {
       {/* ═══════════════════════════════════════════════════
           CLIENTS
           ═══════════════════════════════════════════════════ */}
-      <section className="py-28 border-t" style={{ borderColor: 'rgba(248,243,255,0.06)' }}>
+      <section className="py-32 border-t" style={{ borderColor: 'rgba(248,243,255,0.05)' }}>
         <div className="max-w-[90rem] mx-auto px-6 lg:px-12">
           <div className="text-center mb-10">
             <span className="inline-flex items-center gap-2.5 px-3 py-1.5 clip-notch"
@@ -734,7 +734,7 @@ export default function Home() {
       {/* ═══════════════════════════════════════════════════
           TECH ARMORY
           ═══════════════════════════════════════════════════ */}
-      <section data-section-physics className="section-bg-pink relative py-28 border-t" style={{ borderColor: 'rgba(244,91,168,0.10)' }}>
+      <section data-section-physics className="section-bg-pink relative py-32 border-t" style={{ borderColor: 'rgba(244,91,168,0.10)' }}>
         <div className="relative z-10 max-w-[90rem] mx-auto px-6 lg:px-12">
           <ScrollReveal>
             <div className="inline-flex items-center gap-2.5 mb-5 px-3 py-1.5 clip-notch"
@@ -817,7 +817,7 @@ export default function Home() {
       {/* ═══════════════════════════════════════════════════
           FAQ
           ═══════════════════════════════════════════════════ */}
-      <section id="faq" data-section-physics className="py-28 border-t" style={{ borderColor: 'rgba(248,243,255,0.06)' }}>
+      <section id="faq" data-section-physics className="py-32 border-t" style={{ borderColor: 'rgba(248,243,255,0.05)' }}>
         <div className="max-w-5xl mx-auto px-6 lg:px-12">
           <ScrollReveal>
             <div className="inline-flex items-center gap-2.5 mb-5 px-3 py-1.5 clip-notch"
