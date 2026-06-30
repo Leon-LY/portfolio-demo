@@ -114,22 +114,27 @@ export default function Credibility() {
   }, [])
 
   return (
-    <section ref={sectionRef} className="py-24 border-t border-white/[0.06]">
+    <section ref={sectionRef} id="credibility" data-section-physics className="py-24 border-t border-white/[0.06]">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <ScrollReveal>
-          <p className="text-xs font-mono text-accent uppercase tracking-widest mb-3">Impact</p>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-text-primary mb-3">
-            系统改造实效
+          <div className="inline-flex items-center gap-2.5 mb-5 px-3 py-1.5 clip-notch"
+            style={{ border: '1px solid rgba(16,185,129,0.22)', background: 'rgba(16,185,129,0.05)', color: '#10B981', boxShadow: '0 0 14px rgba(16,185,129,0.06)' }}>
+            <span className="w-2 h-2 rounded-full" style={{ background: '#10B981', boxShadow: '0 0 10px rgba(16,185,129,0.6)' }} />
+            <span className="font-vt323 text-base tracking-[0.2em] uppercase">Key Metrics</span>
+          </div>
+          <h2 className="font-display font-extrabold uppercase tracking-[-0.06em] mb-12"
+            style={{ fontSize: 'clamp(2.8rem, 5vw, 5rem)', lineHeight: 0.92 }}>
+            <span className="block" style={{ color: '#F8F3FF', textShadow: '0 0 20px rgba(248,243,255,0.12)' }}>关键</span>
+            <span className="block" style={{ color: '#10B981', textShadow: '0 0 28px rgba(16,185,129,0.28)' }}>指标</span>
           </h2>
-          <div className="section-divider mb-12" />
         </ScrollReveal>
 
         <div className="grid lg:grid-cols-5 gap-8">
           {/* Left: Before/After bar charts with GSAP ScrollTrigger scrub */}
           <div className="lg:col-span-3">
-            <div className="card-solid rounded-2xl p-6 lg:p-8 border-white/[0.06]">
+            <div className="card-premium rounded-2xl p-6 lg:p-8 border-white/[0.06]">
               <h3 className="text-sm font-bold text-text-primary mb-6 flex items-center gap-2">
-                <span className="w-1.5 h-4 bg-accent rounded-full" />
+                <span className="w-1.5 h-4 rounded-full" style={{ background: '#06B6D4' }} />
                 改造前后对比
               </h3>
               <div className="space-y-5">
@@ -142,13 +147,15 @@ export default function Credibility() {
 
           {/* Right: Trust metrics */}
           <div className="lg:col-span-2">
-            <div className="card-solid rounded-2xl p-6 lg:p-8 border-white/[0.06] h-full">
+            <div className="card-premium rounded-2xl p-6 lg:p-8 border-white/[0.06] h-full">
               <h3 className="text-sm font-bold text-text-primary mb-6 flex items-center gap-2">
-                <span className="w-1.5 h-4 bg-accent rounded-full" />
+                <span className="w-1.5 h-4 rounded-full" style={{ background: '#10B981' }} />
                 交付数据
               </h3>
               <div className="space-y-1">
-                {trustMetrics.map((item, i) => (
+                {trustMetrics.map((item, i) => {
+                  const colors = ['#10B981', '#06B6D4', '#10B981', '#8B5CF6', '#2563EB']
+                  return (
                   <motion.div
                     key={item.label}
                     initial={{ opacity: 0, x: 20 }}
@@ -158,11 +165,12 @@ export default function Credibility() {
                     className="flex items-center justify-between py-3.5 border-b border-white/[0.04] last:border-0"
                   >
                     <span className="text-sm text-text-secondary">{item.label}</span>
-                    <span className="text-2xl font-black font-mono text-text-primary tabular-nums">
+                    <span className="text-2xl font-black font-mono tabular-nums" style={{ color: colors[i] }}>
                       <Counter to={parseFloat(item.value) || 0} suffix={item.suffix} />
                     </span>
                   </motion.div>
-                ))}
+                  )
+                })}
               </div>
             </div>
           </div>

@@ -1,78 +1,108 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
+const TERMINAL_LINES = [
+  'INITIALIZING COMMAND CENTER...',
+  'AUTHENTICATING COMMANDER...',
+  'LOADING MISSION ARCHIVE...',
+]
+
 export default function SplashScreen() {
   const [show, setShow] = useState(() => {
     if (typeof window === 'undefined') return true
     return !sessionStorage.getItem('splash-seen')
   })
+  const [terminalIndex, setTerminalIndex] = useState(0)
 
   useEffect(() => {
     if (show) {
-      const t = setTimeout(() => {
+      // Stagger terminal lines
+      const t1 = setTimeout(() => setTerminalIndex(1), 350)
+      const t2 = setTimeout(() => setTerminalIndex(2), 700)
+      // Dismiss after 1800ms
+      const t3 = setTimeout(() => {
         setShow(false)
         sessionStorage.setItem('splash-seen', '1')
       }, 1800)
-      return () => clearTimeout(t)
+      return () => {
+        clearTimeout(t1)
+        clearTimeout(t2)
+        clearTimeout(t3)
+      }
     }
   }, [show])
-
-  const particles = Array.from({ length: 16 }, (_, i) => ({
-    angle: (i / 16) * Math.PI * 2,
-    distance: 70 + Math.random() * 100,
-    delay: 0.4 + i * 0.02,
-  }))
 
   return (
     <AnimatePresence>
       {show && (
         <motion.div
-          className="fixed inset-0 bg-black flex items-center justify-center"
-          style={{ zIndex: 10000 }}
+          className="fixed inset-0 flex items-center justify-center overflow-hidden"
+          style={{
+            zIndex: 10000,
+            background: `
+              radial-gradient(circle at 50% 40%, rgba(53,221,242,0.10), transparent 40%),
+              radial-gradient(circle at 80% 20%, rgba(244,91,168,0.08), transparent 35%),
+              radial-gradient(circle at 30% 80%, rgba(232,184,93,0.06), transparent 38%),
+              #02030A
+            `,
+          }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.4, ease: 'easeInOut' }}
+          transition={{ duration: 0.35, ease: 'easeInOut' }}
         >
-          {/* Central pulse */}
+          {/* Top-left terminal log */}
+          <div className="absolute top-5 left-5 font-vt323 text-sm text-text-tertiary space-y-1">
+            {TERMINAL_LINES.map((line, i) => (
+              <motion.div
+                key={line}
+                initial={{ opacity: 0, x: -8 }}
+                animate={terminalIndex >= i ? { opacity: 1, x: 0 } : {}}
+                transition={{ duration: 0.3 }}
+              >
+                <span className="text-text-disabled">&gt;</span>{' '}
+                <span className={terminalIndex >= i ? 'text-[#35DDF2]' : ''}>
+                  {line}
+                </span>
+                {terminalIndex === i && (
+                  <span className="inline-block w-2 h-3.5 bg-[#35DDF2] ml-0.5 animate-pulse" />
+                )}
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Center: LEON.exe */}
           <motion.div
-            className="absolute w-4 h-4 rounded-full"
-            style={{ background: '#00E5FF' }}
-            animate={{
-              scale: [0, 3, 0.5, 6],
-              opacity: [1, 0.8, 1, 0],
-              boxShadow: [
-                '0 0 0px rgba(0,229,255,0)',
-                '0 0 40px rgba(0,229,255,0.8)',
-                '0 0 20px rgba(0,229,255,0.5)',
-                '0 0 80px rgba(0,229,255,0)',
-              ],
-            }}
-            transition={{ duration: 1.1, ease: 'easeInOut' }}
-          />
-          {/* Explosion particles */}
-          {particles.map((p, i) => (
-            <motion.div
-              key={i}
-              className="absolute w-1 h-1 rounded-full"
-              style={{ background: i % 3 === 0 ? '#00E5FF' : i % 3 === 1 ? '#00B8D4' : '#FFFFFF' }}
-              initial={{ x: 0, y: 0, opacity: 0 }}
-              animate={{
-                x: Math.cos(p.angle) * p.distance,
-                y: Math.sin(p.angle) * p.distance,
-                opacity: [0, 1, 0],
-              }}
-              transition={{ duration: 0.7, delay: p.delay, ease: 'easeOut' }}
-            />
-          ))}
-          {/* Logo text */}
-          <motion.h1
-            className="text-4xl font-black text-white relative"
-            style={{ zIndex: 10 }}
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: [0, 1, 1, 0], scale: [0.8, 1, 1, 0.9] }}
-            transition={{ duration: 1.6, delay: 0.3, times: [0, 0.12, 0.65, 1] }}
+            className="text-center relative z-10"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: [0, 1, 1, 0], scale: [0.9, 1, 1, 0.95] }}
+            transition={{ duration: 1.6, delay: 0.5, times: [0, 0.1, 0.6, 1] }}
           >
-            Leon<span style={{ color: '#00E5FF' }}>.</span>
-          </motion.h1>
+            <h1 className="font-vt323 text-7xl text-white tracking-widest text-glow-cyan">
+              LEON<span style={{ color: '#F45BA8' }}>.exe</span>
+            </h1>
+            {/* Cyan pulsing dot */}
+            <motion.div
+              className="mx-auto mt-4 w-2.5 h-2.5 rounded-full"
+              style={{ background: '#35DDF2' }}
+              animate={{
+                scale: [1, 1.6, 1],
+                opacity: [0.6, 1, 0.6],
+                boxShadow: [
+                  '0 0 4px rgba(53,221,242,0.4)',
+                  '0 0 18px rgba(53,221,242,0.9)',
+                  '0 0 4px rgba(53,221,242,0.4)',
+                ],
+              }}
+              transition={{ duration: 1, repeat: Infinity, ease: 'easeInOut' }}
+            />
+          </motion.div>
+
+          {/* Bottom scanline decoration */}
+          <div
+            className="absolute bottom-0 left-0 right-0 h-px"
+            style={{
+              background: 'linear-gradient(90deg, transparent, rgba(53,221,242,0.5), rgba(244,91,168,0.3), transparent)',
+            }}
+          />
         </motion.div>
       )}
     </AnimatePresence>

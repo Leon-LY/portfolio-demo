@@ -1,4 +1,4 @@
-import { lazy, Suspense } from 'react'
+import { lazy, Suspense, useEffect } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import Layout from './components/Layout'
 import Home from './pages/Home'
@@ -22,6 +22,14 @@ function LoadingFallback() {
 }
 
 export default function App() {
+  // Force scroll to top on mount — prevents browser from restoring previous position
+  useEffect(() => {
+    window.scrollTo(0, 0)
+    // Double-tap: some browsers restore scroll asynchronously after React mounts
+    const tid = setTimeout(() => window.scrollTo(0, 0), 100)
+    return () => clearTimeout(tid)
+  }, [])
+
   return (
     <>
       <SplashScreen />
