@@ -682,7 +682,7 @@ export default function Home() {
             </h2>
           </ScrollReveal>
 
-          <div className="max-w-5xl mx-auto">
+          <div className="relative max-w-4xl">
             {/* Progress line */}
             <div className="absolute left-[21px] top-2 bottom-2 w-px" style={{ background: 'rgba(248,243,255,0.05)' }} />
             <div
