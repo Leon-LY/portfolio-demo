@@ -4,7 +4,6 @@ import Layout from './components/Layout'
 import Home from './pages/Home'
 import ProjectDetail from './pages/ProjectDetail'
 import SplashScreen from './components/effects/SplashScreen'
-import MagneticCursor from './components/effects/MagneticCursor'
 import TerminalEasterEgg from './components/effects/TerminalEasterEgg'
 
 // Lazy-loaded: non-critical pages
@@ -33,7 +32,6 @@ export default function App() {
   return (
     <>
       <SplashScreen />
-      <MagneticCursor />
       <TerminalEasterEgg />
       <Suspense fallback={<LoadingFallback />}>
         <Routes>

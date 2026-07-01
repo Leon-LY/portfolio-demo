@@ -85,15 +85,6 @@ body {
 }
 
 /* ═══════════════════════════════════════════════════════════
-   HIDE DEFAULT CURSOR (desktop, MagneticCursor)
-   ═══════════════════════════════════════════════════════════ */
-@media (pointer: fine) {
-  html, body, a, button, input, textarea, [role="button"], [data-cursor] {
-    cursor: none !important;
-  }
-}
-
-/* ═══════════════════════════════════════════════════════════
    SCROLLBAR
    ═══════════════════════════════════════════════════════════ */
 ::-webkit-scrollbar { width: 4px; }
