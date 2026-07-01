@@ -668,7 +668,7 @@ export default function Home() {
           PROCESS — alternating color cards
           ═══════════════════════════════════════════════════ */}
       <section data-section-physics className="section-bg-gold relative py-32 border-t" style={{ borderColor: 'rgba(232,184,93,0.10)' }}>
-        <div className="relative z-10 max-w-5xl mx-auto px-6 lg:px-12">
+        <div className="relative z-10 max-w-[90rem] mx-auto px-6 lg:px-12">
           <ScrollReveal>
             <div className="inline-flex items-center gap-2.5 mb-5 px-3 py-1.5 clip-notch"
               style={{ border: '1px solid rgba(232,184,93,0.22)', background: 'rgba(232,184,93,0.05)', color: '#E8B85D', boxShadow: '0 0 14px rgba(232,184,93,0.06)' }}>
@@ -682,7 +682,7 @@ export default function Home() {
             </h2>
           </ScrollReveal>
 
-          <div className="relative">
+          <div className="max-w-5xl mx-auto">
             {/* Progress line */}
             <div className="absolute left-[21px] top-2 bottom-2 w-px" style={{ background: 'rgba(248,243,255,0.05)' }} />
             <div
@@ -818,7 +818,7 @@ export default function Home() {
           FAQ
           ═══════════════════════════════════════════════════ */}
       <section id="faq" data-section-physics className="py-32 border-t" style={{ borderColor: 'rgba(248,243,255,0.05)' }}>
-        <div className="max-w-5xl mx-auto px-6 lg:px-12">
+        <div className="max-w-[90rem] mx-auto px-6 lg:px-12">
           <ScrollReveal>
             <div className="inline-flex items-center gap-2.5 mb-5 px-3 py-1.5 clip-notch"
               style={{ border: '1px solid rgba(94,140,255,0.22)', background: 'rgba(94,140,255,0.05)', color: '#5E8CFF', boxShadow: '0 0 14px rgba(94,140,255,0.06)' }}>
@@ -830,14 +830,16 @@ export default function Home() {
               常见问题
             </h2>
           </ScrollReveal>
-          <FaqRevealGrid items={faqItems} />
+          <div className="max-w-5xl mx-auto">
+            <FaqRevealGrid items={faqItems} />
+          </div>
         </div>
       </section>
 
       {/* ═══════════════════════════════════════════════════
           CTA
           ═══════════════════════════════════════════════════ */}
-      <section data-section-physics className="pb-28">
+      <section data-section-physics className="pb-32">
         <div className="max-w-[90rem] mx-auto px-6 lg:px-12">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
