@@ -455,8 +455,8 @@ export default function Home() {
             </div>
             <h2 data-physics-collider className="font-display font-extrabold uppercase tracking-[-0.06em] mb-16"
               style={{ fontSize: 'clamp(2.8rem, 5vw, 5rem)', lineHeight: 0.92 }}>
-              <span className="block" style={{ color: '#F8F3FF', textShadow: '0 0 24px rgba(248,243,255,0.16)' }}>任务</span>
-              <span className="block" style={{ color: '#F45BA8', textShadow: '0 0 32px rgba(244,91,168,0.32)' }}>类型</span>
+              <span className="block" style={{ color: '#F8F3FF', textShadow: '0 0 14px rgba(248,243,255,0.40), 0 0 56px rgba(248,243,255,0.10)' }}>任务</span>
+              <span className="block" style={{ color: '#F45BA8', textShadow: '0 0 16px rgba(244,91,168,0.50), 0 0 48px rgba(244,91,168,0.20)' }}>类型</span>
             </h2>
           </ScrollReveal>
 
@@ -561,8 +561,8 @@ export default function Home() {
             </div>
             <h2 className="font-display font-extrabold uppercase tracking-[-0.06em] mb-16"
               style={{ fontSize: 'clamp(2.8rem, 5vw, 5rem)', lineHeight: 0.92 }}>
-              <span data-physics-collider className="block" style={{ color: '#F8F3FF', textShadow: '0 0 24px rgba(248,243,255,0.16)' }}>任务</span>
-              <span className="block" style={{ color: '#35DDF2', textShadow: '0 0 32px rgba(53,221,242,0.32)' }}>档案</span>
+              <span data-physics-collider className="block" style={{ color: '#F8F3FF', textShadow: '0 0 14px rgba(248,243,255,0.40), 0 0 56px rgba(248,243,255,0.10)' }}>任务</span>
+              <span className="block" style={{ color: '#35DDF2', textShadow: '0 0 16px rgba(53,221,242,0.50), 0 0 48px rgba(53,221,242,0.20)' }}>档案</span>
             </h2>
           </ScrollReveal>
 
@@ -677,8 +677,8 @@ export default function Home() {
             </div>
             <h2 className="font-display font-extrabold uppercase tracking-[-0.06em] mb-16"
               style={{ fontSize: 'clamp(2.8rem, 5vw, 5rem)', lineHeight: 0.92 }}>
-              <span data-physics-collider className="block" style={{ color: '#F8F3FF', textShadow: '0 0 24px rgba(248,243,255,0.16)' }}>合作</span>
-              <span className="block" style={{ color: '#E8B85D', textShadow: '0 0 32px rgba(232,184,93,0.32)' }}>流程</span>
+              <span data-physics-collider className="block" style={{ color: '#F8F3FF', textShadow: '0 0 14px rgba(248,243,255,0.40), 0 0 56px rgba(248,243,255,0.10)' }}>合作</span>
+              <span className="block" style={{ color: '#E8B85D', textShadow: '0 0 16px rgba(232,184,93,0.50), 0 0 48px rgba(232,184,93,0.20)' }}>流程</span>
             </h2>
           </ScrollReveal>
 
@@ -744,8 +744,8 @@ export default function Home() {
             </div>
             <h2 className="font-display font-extrabold uppercase tracking-[-0.06em] mb-16"
               style={{ fontSize: 'clamp(2.8rem, 5vw, 5rem)', lineHeight: 0.92 }}>
-              <span data-physics-collider className="block" style={{ color: '#F8F3FF', textShadow: '0 0 24px rgba(248,243,255,0.16)' }}>技术</span>
-              <span className="block" style={{ color: '#A477FF', textShadow: '0 0 32px rgba(164,119,255,0.32)' }}>装备</span>
+              <span data-physics-collider className="block" style={{ color: '#F8F3FF', textShadow: '0 0 14px rgba(248,243,255,0.40), 0 0 56px rgba(248,243,255,0.10)' }}>技术</span>
+              <span className="block" style={{ color: '#A477FF', textShadow: '0 0 16px rgba(164,119,255,0.50), 0 0 48px rgba(164,119,255,0.20)' }}>装备</span>
             </h2>
           </ScrollReveal>
 
@@ -827,8 +827,8 @@ export default function Home() {
             </div>
             <h2 className="font-display font-extrabold uppercase tracking-[-0.06em] mb-12"
               style={{ fontSize: 'clamp(2.8rem, 5vw, 5rem)', lineHeight: 0.92 }}>
-              <span className="block" style={{ color: '#F8F3FF', textShadow: '0 0 24px rgba(248,243,255,0.16)' }}>常见</span>
-              <span className="block" style={{ color: '#5E8CFF', textShadow: '0 0 32px rgba(94,140,255,0.32)' }}>问题</span>
+              <span className="block" style={{ color: '#F8F3FF', textShadow: '0 0 14px rgba(248,243,255,0.40), 0 0 56px rgba(248,243,255,0.10)' }}>常见</span>
+              <span className="block" style={{ color: '#5E8CFF', textShadow: '0 0 16px rgba(94,140,255,0.50), 0 0 48px rgba(94,140,255,0.20)' }}>问题</span>
             </h2>
           </ScrollReveal>
           <div className="max-w-5xl mx-auto">

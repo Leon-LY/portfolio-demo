@@ -124,8 +124,8 @@ export default function Credibility() {
           </div>
           <h2 className="font-display font-extrabold uppercase tracking-[-0.06em] mb-12"
             style={{ fontSize: 'clamp(2.8rem, 5vw, 5rem)', lineHeight: 0.92 }}>
-            <span className="block" style={{ color: '#F8F3FF', textShadow: '0 0 24px rgba(248,243,255,0.16)' }}>关键</span>
-            <span className="block" style={{ color: '#10B981', textShadow: '0 0 32px rgba(16,185,129,0.32)' }}>指标</span>
+            <span className="block" style={{ color: '#F8F3FF', textShadow: '0 0 14px rgba(248,243,255,0.40), 0 0 56px rgba(248,243,255,0.10)' }}>关键</span>
+            <span className="block" style={{ color: '#10B981', textShadow: '0 0 16px rgba(16,185,129,0.50), 0 0 48px rgba(16,185,129,0.20)' }}>指标</span>
           </h2>
         </ScrollReveal>
 
