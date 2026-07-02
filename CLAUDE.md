@@ -24,7 +24,8 @@
 | **框架** | React 19 + TypeScript |
 | **构建** | Vite 8 |
 | **样式** | Tailwind CSS 3 (PostCSS) |
-| **动画** | Framer Motion |
+| **动画** | Framer Motion + GSAP ScrollTrigger |
+| **物理** | Matter.js 0.20 (Hero 方块系统) |
 | **图标** | Lucide React |
 | **路由** | React Router v7 |
 | **部署** | Nginx on Ubuntu (49.232.49.175) |
@@ -54,38 +55,47 @@ git add -A && git commit -m "..." && git push
 
 ```
 src/
-├── App.tsx                    # 路由配置
-├── main.tsx                   # 入口
-├── index.css                  # Tailwind + 全局样式 + 动画网格背景
+├── App.tsx                    # 路由配置 + 滚动置顶
+├── main.tsx                   # 入口（scrollRestoration=manual）
+├── index.css                  # Tailwind + CSS变量 + 卡片系统 + 动画
 ├── components/
-│   ├── Layout.tsx             # 全局布局（导航 + 页脚 + ScrollToTop）
-│   ├── Navbar.tsx             # 响应式导航栏
+│   ├── Layout.tsx             # 全局布局（导航 + 页脚）
+│   ├── Navbar.tsx             # 响应式导航栏（毛玻璃 + VT323像素字）
 │   ├── Footer.tsx             # 页脚
-│   ├── ScrollReveal.tsx       # 滚动入场动画
+│   ├── ScrollReveal.tsx       # 滚动入场动画（y:60, 视口6%触发）
 │   ├── PageTransition.tsx     # 页面切换过渡
 │   ├── Counter.tsx            # 数字滚动计数器
-│   ├── TypewriterText.tsx     # 打字机效果
-│   ├── PlaceholderImage.tsx   # Demo 页占位图组件
-│   └── ...
+│   ├── ErrorBoundary.tsx      # React 错误边界
+│   ├── effects/
+│   │   ├── PhysicsHero.tsx    # Matter.js物理方块Canvas（220桌面/100移动）
+│   │   ├── SplashScreen.tsx   # 启动画面
+│   │   ├── TerminalEasterEgg.tsx  # Ctrl+K 终端彩蛋
+│   │   ├── TiltCard3D.tsx     # 3D倾斜卡片
+│   │   ├── TypewriterText.tsx # 打字机效果
+│   │   ├── GlowCard.tsx       # 发光卡片
+│   │   ├── ParticleField.tsx  # 粒子场（备用）
+│   │   └── NoiseOverlay.tsx   # 噪点覆盖层
+│   ├── sections/
+│   │   └── Credibility.tsx    # 关键指标（GSAP ScrollTrigger pin + 柱状图）
+│   └── ui/
+│       ├── Lightbox.tsx       # 图片灯箱
+│       └── BeforeAfter.tsx    # 前后对比滑块
 ├── pages/
-│   ├── Home.tsx               # 首页（Hero + 服务 + 项目 + 流程 + FAQ + CTA）
-│   ├── ProjectDetail.tsx      # 项目详情页（轮播 + 概述 + 能力 + 技术方案）
+│   ├── Home.tsx               # 首页（9个section + 物理方块 + 滚动揭示）
+│   ├── ProjectDetail.tsx      # 项目详情页
 │   ├── Admin.tsx              # 后台管理 CMS（/admin）
-│   ├── NotFound.tsx           # 404 页面
-│   ├── Dashboard.tsx          # Demo: 监控大屏
-│   ├── ApiDocs.tsx            # Demo: API 文档
-│   ├── AdminDemo.tsx          # Demo: 后台管理系统
-│   ├── Marketing.tsx          # Demo: 营销网站
-│   ├── SaaS.tsx               # Demo: SaaS 产品
-│   ├── Ecommerce.tsx          # Demo: 电商平台
-│   ├── MobileApp.tsx          # Demo: 移动 App
-│   └── Corporate.tsx          # Demo: 企业官网
+│   ├── About.tsx              # 关于页
+│   ├── Contact.tsx            # 联系页
+│   ├── NotFound.tsx           # 404
+│   └── [Demo].tsx             # Demo页面（Dashboard/ApiDocs/AdminDemo等）
 ├── data/
-│   ├── config.ts              # 个人信息、服务、统计、流程、FAQ（可编辑）
-│   ├── projects.ts            # 项目数据（真实项目 + Demo 模板）
-│   └── adminStore.ts          # 后台管理数据层（localStorage 持久化）
+│   ├── config.ts              # 个人信息、服务、流程、FAQ、客户（可编辑）
+│   ├── projects.ts            # 7个真实项目 + 项目分组
+│   ├── usePortfolioData.ts    # 统一数据Hook（API→localStorage→默认）
+│   ├── adminStore.ts          # 后台管理数据层
+│   └── auth.ts                # 后台认证
 └── ...
-public/projects/               # 项目截图（SVG 占位图 + 用户上传的实际截图）
+public/uploads/portfolio/       # 项目截图
 ```
 
 ---
@@ -94,18 +104,30 @@ public/projects/               # 项目截图（SVG 占位图 + 用户上传的�
 
 | 路由 | 页面 | 说明 |
 |------|------|------|
-| `/` | Home | 首页 |
-| `/project/:id` | ProjectDetail | 项目详情（图片轮播 + 概述 + 能力） |
+| `/` | Home | 首页（9个section：Hero→服务→指标→档案→流程→客户→技术→FAQ→CTA） |
+| `/project/:id` | ProjectDetail | 项目详情（图片轮播 + 概述 + 能力 + 技术方案） |
+| `/about` | About | 关于页 |
+| `/contact` | Contact | 联系页 |
 | `/admin` | Admin | 后台管理 CMS |
+| `/dashboard` | Demo | 实时监控大屏 |
+| `/api-docs` | Demo | API 开发者门户 |
+| `/admin-demo` | Demo | 后台管理系统 |
 | `/marketing` | Demo | 营销网站 |
 | `/saas` | Demo | SaaS 产品 |
 | `/ecommerce` | Demo | 电商平台 |
 | `/mobile-app` | Demo | 移动 App |
 | `/corporate` | Demo | 企业官网 |
-| `/dashboard` | Demo | 实时监控大屏 |
-| `/api-docs` | Demo | API 开发者门户 |
-| `/admin-demo` | Demo | 后台管理系统 |
 | `*` | 404 | 页面未找到 |
+
+## 设计系统
+
+- **暗色科技主题**：底色 `#02030A`，五色强调（cyan/pink/purple/blue/gold）
+- **像素字体**：VT323 用于导航、badge、编号、FAQ问题、流程标题
+- **正文字体**：Space Mono 等宽，行高 1.78
+- **标题统一**：所有section使用 badge + 两行大字（白+彩色），`max-w-[90rem]` 统一容器
+- **标题光晕**：双层 textShadow，彩色行匹配badge颜色
+- **圆角统一**：`var(--radius-lg)` = 16px 全局统一
+- **暖色点缀**：body背景含金色径向光晕，卡片hover混入金色
 
 ---
 
@@ -132,14 +154,41 @@ public/projects/               # 项目截图（SVG 占位图 + 用户上传的�
 
 | 效果 | 实现 | 位置 |
 |------|------|------|
-| 粒子网络 | Canvas + requestAnimationFrame | Hero 背景 |
-| 光标辉光 | rAF + DOM 直接操作 | Hero 背景 |
-| 终端打字 | 逐字符输出 + 随机延迟 | Hero 右栏 |
-| 图片视差 | `useScroll` + `useTransform` | 项目卡片 |
-| 3D 倾斜 | `useMotionValue` + spring | 项目卡片 |
-| 数字滚动 | `useSpring` + `useTransform` | 统计数字 |
-| 网格渐变背景 | CSS `background-position` 动画 | 全站 body |
-| 交错入场 | Framer Motion stagger | 卡片列表 |
+| **物理方块** | Matter.js Engine + Canvas 2D渲染，动态section拦截体，独立闪烁 | PhysicsHero.tsx (portal to body, z-index:0) |
+| **滚动入场** | Framer Motion `whileInView`，视口6%触发，y:60→0, dur:0.85s | ScrollReveal.tsx |
+| **FAQ级联揭示** | `useScroll` + `useTransform`，逐项映射滚动进度→透明度 | Home.tsx → FaqRevealGrid |
+| **关键指标** | GSAP ScrollTrigger pin + scrub 柱状图动画 | Credibility.tsx |
+| **3D倾斜** | `useMotionValue` + spring | TiltCard3D.tsx |
+| **数字滚动** | `useSpring` + `useTransform` | Counter.tsx |
+| **打字机** | 逐字符输出 + 随机延迟 | TypewriterText.tsx |
+| **标题光晕** | 双层textShadow（内光14-16px/0.40-0.50 + 外光48-56px/0.10-0.20） | 各section h2 |
+| **Hero标题脉动** | CSS @keyframes text-glow-pulse (4s infinite) | index.css |
+| **CRT扫描线** | Canvas fillRect 每6px一行 rgba(0,0,0,0.10) | PhysicsHero.tsx |
+| **终端彩蛋** | Ctrl+K 触发全屏终端 | TerminalEasterEgg.tsx |
+| **交错入场** | Framer Motion stagger delay | 卡片列表 |
+
+## 卡片系统
+
+5层卡片（`index.css`），统一毛玻璃质感：
+
+| 层级 | 用途 | 特征 |
+|------|------|------|
+| `card-solid` | 常规卡片 | blur(20px), 内顶高光, hover上浮2px |
+| `card-premium` | 重点卡片（FAQ等） | blur(32px), hover含金色暖光 |
+| `card-glass` | 高透玻璃（CTA等） | blur(40px), 最通透 |
+| `card-float` | 深度悬浮 | blur(48px), hover上浮4px |
+| `card-glow` | 发光卡片（特色服务等） | blur(24px), hover青色光晕 |
+
+## 物理方块系统
+
+Matter.js 驱动的 Canvas 背景层（`PhysicsHero.tsx`）：
+
+- **数量**：桌面220个 / 移动100个，上限320个
+- **调色板**：cyan / pink / purple / blue / gold，各色不同maxAlpha
+- **动态拦截体**：每个 `[data-section-physics]` section 创建2-5个随机薄片拦截体
+- **FAQ特殊处理**：`isFaq` 检测 → 1-2个窄平台（14-24%宽度）
+- **渐变蒙版**：Hero区域无蒙版 → 底部rgba(12,8,10,0.13) 微暖色调
+- **自然沉降检测**：平均速度<0.05持续2秒后冻结，无硬性超时
 
 ---
 
